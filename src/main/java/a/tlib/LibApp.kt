@@ -30,6 +30,8 @@ object LibApp {
      */
     const val LOGGER_TAG = "logtag"
 
+
+
     lateinit var app: Application
     fun init(appContext: Application) {
         appContext.apply {

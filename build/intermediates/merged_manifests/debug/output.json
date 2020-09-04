@@ -1,0 +1,1 @@
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkData":{"type":"MAIN","splits":[],"versionCode":102,"versionName":"1.5.7","enabled":true,"outputFile":"tLib-debug.aar","fullName":"debug","baseName":"debug","dirName":""},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"a.tlib","split":""}}]

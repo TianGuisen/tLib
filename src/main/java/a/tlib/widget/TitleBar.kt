@@ -1,5 +1,6 @@
 package a.tlib.widget
 
+import a.tlib.LibApp
 import a.tlib.R
 import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
@@ -30,7 +31,7 @@ open class TitleBar : FrameLayout {
 
     open fun init() {
         view = LayoutInflater.from(context).inflate(R.layout.view_title, this)
-        view.setBackgroundColor(getcolor(R.color.black))
+        view.setBackgroundColor(LibApp.titleBarColor)
     }
 
     fun setTitle(string: String?): TextView {

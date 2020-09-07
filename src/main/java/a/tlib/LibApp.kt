@@ -1,9 +1,6 @@
 package a.tlib
 
-import a.tlib.utils.ActStackManager
-import a.tlib.utils.AppUtil
-import a.tlib.utils.CrashCollectHandler
-import a.tlib.utils.ToastUtil
+import a.tlib.utils.*
 import a.tlib.utils.retrofit.HostConfig
 import android.app.Application
 import android.content.Context
@@ -29,8 +26,7 @@ object LibApp {
      * Logger日志的tag
      */
     const val LOGGER_TAG = "logtag"
-
-
+    var titleBarColor = 0
 
     lateinit var app: Application
     fun init(appContext: Application) {
@@ -49,7 +45,12 @@ object LibApp {
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
             }
+            titleBarColor=getcolor(R.color.black)
         }
+    }
+
+    fun initTitleBarColor(color: Int) {
+        titleBarColor = color
     }
 
     private fun initX5() {

@@ -16,6 +16,7 @@ object GsonUtil {
             .registerTypeAdapter(Double::class.java, DoubleTypeAdapter())
             .registerTypeAdapter(Long::class.java, LongTypeAdapter())
             .registerTypeAdapter(String::class.java, StringTypeAdapter())
+            .registerTypeAdapter(Boolean::class.java, BooleanTypeAdapter())
             .create()
 
     /**

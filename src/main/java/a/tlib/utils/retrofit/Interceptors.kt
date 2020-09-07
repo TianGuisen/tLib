@@ -1,4 +1,3 @@
-
 import a.tlib.BuildConfig
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
@@ -24,7 +23,8 @@ object Interceptors {
      * Logger网络请求日志的tag
      */
     const val LOGGER_NET_TAG = "retrofit"
-    var token= sp.getString("sid", "")!!
+    var token = sp.getString("sid", "")!!
+
     /**
      * host切换拦截器
      * @type 0是普通请求，1是直播请求
@@ -69,12 +69,13 @@ object Interceptors {
                     .addHeader("Version", BuildConfig.VERSION_NAME)
                     .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
                     .addHeader("Device", AppUtil.deviceId)
+                    .addHeader("appType", "youbao")
                     .method(originalRequest.method, originalRequest.body)
             if (token.isNotEmpty()) {  //统一将token 传入
                 requestBuilder.addHeader("token", token)
             }
             val request = requestBuilder.build()
-            if (request.method.equals("POST")&& request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
+            if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
                 return chain.proceed(request.newBuilder().url(request.url.toString()).post(sortMap(request.body!!).build()).build())
             }
             return chain.proceed(request)
@@ -87,7 +88,7 @@ object Interceptors {
     class LoggerInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val orgRequest = chain.request()
-            var response: Response?=null
+            var response: Response? = null
             try {
                 // chain.proceed开始请求
                 response = chain.proceed(orgRequest)

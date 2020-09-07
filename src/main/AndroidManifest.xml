@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="a.tlib">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
 <!--        华为扫码-->
         <activity android:name="com.huawei.hms.hmsscankit.ScanKitActivity" />

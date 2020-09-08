@@ -1,4 +1,5 @@
 import a.tlib.BuildConfig
+import a.tlib.LibApp
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
@@ -69,7 +70,7 @@ object Interceptors {
                     .addHeader("Version", BuildConfig.VERSION_NAME)
                     .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
                     .addHeader("Device", AppUtil.deviceId)
-                    .addHeader("appType", "youbao")
+                    .addHeader("appType", LibApp.appType)
                     .method(originalRequest.method, originalRequest.body)
             if (token.isNotEmpty()) {  //统一将token 传入
                 requestBuilder.addHeader("token", token)

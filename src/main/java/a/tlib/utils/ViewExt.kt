@@ -1,9 +1,13 @@
 package a.tlib.utils
 
+import android.content.Context
 import android.graphics.Paint
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 fun View.gone() {
     visibility = View.GONE
@@ -53,6 +57,16 @@ fun View.setSingClick(function: (View) -> Unit): View {
     return this
 }
 
+
+fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? = null) {
+    if (ctx != null && this != null) {
+        val requestBuilder = Glide.with(ctx).load(url)
+        if (ro != null) {
+            requestBuilder.apply(ro)
+        }
+        requestBuilder.into(this)
+    }
+}
 //inline fun singClick(crossinline function: (View) -> Unit): View.OnClickListener {
 //    var temTime: Long = 0
 //    return object : View.OnClickListener {

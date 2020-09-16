@@ -5,7 +5,7 @@ object ResCode {
     /**
      * 重新登录
      */
-    const val TOKEN_OVERDUE = "100"
+    const val TOKEN_OVERDUE = "12"
     //失败
     const val RESPONSE_ERROR = -1
     const val RESPONSE_ERROR2 = 1003

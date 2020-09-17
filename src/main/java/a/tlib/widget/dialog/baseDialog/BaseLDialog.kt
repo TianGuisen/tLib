@@ -1,5 +1,8 @@
 package a.tlib.widget.dialog.baseDialog
 
+import a.tlib.R
+import a.tlib.utils.AppUtil
+import a.tlib.utils.AutoSizeUtil
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Configuration
@@ -10,17 +13,15 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
+import androidx.annotation.IdRes
+import androidx.annotation.StyleRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import a.tlib.R
-import a.tlib.utils.AppUtil
-import a.tlib.utils.AutoSizeUtil
-import androidx.annotation.*
 import com.orhanobut.logger.YLog
-import me.jessyan.autosize.AutoSize
-import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.internal.CustomAdapt
 
 
@@ -375,7 +376,15 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
 
     fun showTag(manager: FragmentManager) {
         try {
-            show(manager, baseParams.tag)
+            val mDismissed = DialogFragment::class.java.getDeclaredField("mDismissed")
+            mDismissed.isAccessible = true
+            mDismissed.set(this, false)
+            val mShownByMe = DialogFragment::class.java.getDeclaredField("mShownByMe")
+            mShownByMe.isAccessible = true
+            mShownByMe.set(this, true)
+            manager.beginTransaction()
+                    .add(this, tag)
+                    .commitAllowingStateLoss()
         } catch (e: Exception) {
             YLog.d(e)
         }

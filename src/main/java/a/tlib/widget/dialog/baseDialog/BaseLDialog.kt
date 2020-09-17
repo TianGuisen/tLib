@@ -375,7 +375,15 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
 
     fun showTag(manager: FragmentManager) {
         try {
-            show(manager, baseParams.tag)
+            val mDismissed = DialogFragment::class.java.getDeclaredField("mDismissed")
+            mDismissed.isAccessible = true
+            mDismissed.set(this, false)
+            val mShownByMe = DialogFragment::class.java.getDeclaredField("mShownByMe")
+            mShownByMe.isAccessible = true
+            mShownByMe.set(this, true)
+            manager.beginTransaction()
+                    .add(this, tag)
+                    .commitAllowingStateLoss()
         } catch (e: Exception) {
             YLog.d(e)
         }

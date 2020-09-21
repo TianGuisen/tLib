@@ -14,7 +14,7 @@ interface IObserver<T> {
     var tag: String?
     var repeat: Int
     var showToast: Boolean
-
+    var jumpLogin: Boolean
     fun onSucces(t: ResWrapper<T>)
 
     fun onFailure(t: ResWrapper<T>?) {
@@ -57,17 +57,18 @@ interface IObserver<T> {
     }
 
     fun isSuccess(t: ResWrapper<T>): Boolean {
-        return t.code == ResCode.RESPONSE_SUCCESS2|| t.code == ResCode.RESPONSE_SUCCESS
+        return t.code == ResCode.RESPONSE_SUCCESS2 || t.code == ResCode.RESPONSE_SUCCESS
     }
 
     /**
      * 检查登录
      */
     fun checkLogin(t: ResWrapper<T>): Boolean {
-        if (t.code == ResCode.TOKEN_OVERDUE.toInt()) {
-            //跳转到登陆界面
-//            LiveEventBus.get().with("" + ResCode.TOKEN_OVERDUE).post(null);
-            LiveEventBus.get(ResCode.TOKEN_OVERDUE).post(null)
+        if (t.code == ResCode.TOKEN_OVERDUE) {
+            if (jumpLogin) {
+                //跳转到登陆界面
+                LiveEventBus.get(ResCode.TOKEN_OVERDUE.toString()).post(null)
+            }
             return false
         }
         return true

@@ -231,7 +231,7 @@ class LoadView : FrameLayout {
             val errorRetryView = mLoginView!!.findViewById<View>(R.id.tv_login)
             if (null != errorRetryView) {
                 errorRetryView.setOnClickListener {
-                    LiveEventBus.get(ResCode.TOKEN_OVERDUE).post(null)
+                    LiveEventBus.get(ResCode.TOKEN_OVERDUE.toString()).post(null)
                 }
             }
             mOtherIds.add(mLoginView!!.id)

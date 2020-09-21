@@ -1,3 +1,4 @@
+
 import a.tlib.BuildConfig
 import a.tlib.LibApp
 import a.tlib.utils.AppUtil
@@ -7,7 +8,6 @@ import a.tlib.utils.retrofit.HostConfig
 import a.tlib.utils.sp
 import android.net.Uri
 import com.orhanobut.logger.Printer
-import com.orhanobut.logger.YLog
 import com.orhanobut.logger.YLog2
 import okhttp3.*
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull

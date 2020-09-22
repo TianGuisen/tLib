@@ -4,6 +4,8 @@ import a.tlib.utils.retrofit.LoadView
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.lb.baselib.retrofit.ResCode
+import com.lb.baselib.retrofit.ResWrapper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
@@ -107,8 +109,12 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> {
     /**
      *失败处理
      */
-    fun loadFailure() {
-        lv?.showError()
+    fun loadFailure(it: ResWrapper<*>?) {
+        if (it != null && it.code == ResCode.TOKEN_OVERDUE) {
+            lv?.showLogin()
+        } else {
+            lv?.showError()
+        }
         srl?.finishRefresh(false)
         srl?.finishLoadMore(false)
     }

@@ -6,16 +6,17 @@ import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import com.ruffian.library.widget.RFrameLayout
 import com.ruffian.library.widget.RTextView
+import com.ruffian.library.widget.RView
 
-open class TitleBar : FrameLayout {
-    lateinit var view: View
+open class TitleBar : RFrameLayout {
+    lateinit var view: TitleBar
     val tv_title by lazy { view.findViewById<TextView>(R.id.tv_title) }
     val fl_back by lazy { view.findViewById<FrameLayout>(R.id.fl_back) }
     val iv_back by lazy { view.findViewById<ImageView>(R.id.iv_back) }
@@ -30,8 +31,8 @@ open class TitleBar : FrameLayout {
     }
 
     open fun init() {
-        view = LayoutInflater.from(context).inflate(R.layout.view_title, this)
-        view.setBackgroundColor(LibApp.titleBarColor)
+        view= RView.inflate(context,R.layout.view_title, this) as TitleBar
+        view.helper.setBackgroundColorNormal(LibApp.titleBarColor)
     }
 
     fun setTitle(string: String?): TextView {
@@ -46,7 +47,7 @@ open class TitleBar : FrameLayout {
     }
 
     fun setBarColor(color: Int) {
-        view.setBackgroundColor(getcolor(color))
+        view.helper.setBackgroundColorNormal(getcolor(color))
     }
 
     /**
@@ -55,7 +56,7 @@ open class TitleBar : FrameLayout {
     fun setWhiteStyle() {
         tv_title.setTextColor(getcolor(R.color.black))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
-        view.setBackgroundColor(getcolor(R.color.white))
+        view.helper.setBackgroundColorNormal(getcolor(R.color.white))
     }
 
     /**
@@ -64,7 +65,7 @@ open class TitleBar : FrameLayout {
     fun setTransparentStyle() {
         tv_title.setTextColor(getcolor(R.color.color_ecc498))
         iv_back.setImageResource(R.drawable.img_titlebar_back_white_live)
-        view.setBackgroundColor(getcolor(R.color.translucent))
+        view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
     }
 
     /**

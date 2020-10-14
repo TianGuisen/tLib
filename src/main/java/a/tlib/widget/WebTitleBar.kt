@@ -18,7 +18,7 @@ class WebTitleBar : TitleBar {
 
     override fun init() {
         view = RView.inflate(context, R.layout.view_title_web, this) as WebTitleBar
-        view.setBackgroundColor(getcolor(R.color.black))
+        view.helper.setBackgroundColorNormal(getcolor(R.color.black))
         view.findViewById<RFrameLayout>(R.id.fl_close).setSingClick {
 
         }

@@ -402,7 +402,7 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
     override fun getSizeInDp(): Float {
         return 1080f
     }
-
+    
     companion object {
         private const val KEY_PARAMS = "key_params"
         private const val KEY_VIEW_HANDLER = "view_handler"

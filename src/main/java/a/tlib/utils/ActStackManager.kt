@@ -18,10 +18,12 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
         stack = Stack()
     }
 
+    @JvmStatic
     fun register(app: Application) {
         app.registerActivityLifecycleCallbacks(this)
     }
 
+    @JvmStatic
     fun unRegister(app: Application) {
         app.unregisterActivityLifecycleCallbacks(this)
     }
@@ -29,16 +31,19 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * @param activity 需要添加进栈管理的activity
      */
+    @JvmStatic
     fun addActivity(activity: Activity?) {
         stack.add(activity)
     }
 
+    @JvmStatic
     fun getSize() = stack.size
 
     /**
      * @param activity 需要从栈管理中删除的activity
      * @return
      */
+    @JvmStatic
     fun removeActivity(activity: Activity?): Boolean {
         return stack.remove(activity)
     }
@@ -46,6 +51,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * 判断要跳转的页面是否是当前页面
      */
+    @JvmStatic
     fun isStartOldActivity(activity: Activity): Boolean {
         if (getTopActivity().localClassName.equals(activity.localClassName)) {
             return true
@@ -56,6 +62,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * 获取栈顶部的act
      */
+    @JvmStatic
     fun getTopActivity(): Activity {
         return stack.peek()
     }
@@ -64,6 +71,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
      * @param activity 查询指定activity在栈中的位置，从栈顶开始
      * @return
      */
+    @JvmStatic
     fun searchActivity(activity: Activity): Int {
         return stack.search(activity)
     }
@@ -71,6 +79,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * @param activity 将指定的activity从栈中删除然后finish()掉
      */
+    @JvmStatic
     fun finishActivity(activity: Activity) {
         activity.finish()
         stack.remove(activity)
@@ -79,6 +88,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * @param activity 将指定的activity从栈中删除然后finish()掉
      */
+    @JvmStatic
     fun finishActivity(activity: Class<out Activity>) {
         findActivity(activity)?.let {
             it.finish()
@@ -89,6 +99,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * @param activity 将指定类名的activity从栈中删除并finish()掉
      */
+    @JvmStatic
     fun finishActivityClass(activity: Class<out Activity>?) {
         if (activity != null) {
             val iterator = stack.iterator()
@@ -105,6 +116,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * 销毁所有的activity
      */
+    @JvmStatic
     fun finishAllActivity() {
         while (!stack.isEmpty()) {
             stack.pop().finish()
@@ -114,6 +126,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     /**
      * 通过class找到activity
      */
+    @JvmStatic
     fun findActivity(activity: Class<out Activity>): Activity? {
         stack.forEach {
             if (it.javaClass == activity) {

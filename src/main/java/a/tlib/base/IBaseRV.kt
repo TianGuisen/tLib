@@ -20,6 +20,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> {
     var lv: LoadView?
     var enableloadMore: Boolean
     fun initRVView() {
+        rv.scheduleLayoutAnimation()
         rv.adapter = adapter
         srl?.setOnRefreshListener {
             page = 1

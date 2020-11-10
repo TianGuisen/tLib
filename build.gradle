@@ -123,7 +123,7 @@ dependencies {
     api 'com.jakewharton:disklrucache:2.0.2'
     api 'com.github.vipulasri:timelineview:1.1.5'
     //版本更新https://github.com/azhon/AppUpdate
-    api 'com.azhon:appupdateX:3.0.0'
+    api 'com.azhon:appupdateX:3.0.2'
     //webView,https://github.com/yangchong211/YCWebView/wiki/02.%E8%AF%A5%E5%BA%93%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8
     api 'cn.yc:WebViewLib:1.4.0'
     //图片压缩https://github.com/nanchen2251/CompressHelper

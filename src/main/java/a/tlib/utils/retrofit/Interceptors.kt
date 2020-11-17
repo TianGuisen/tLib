@@ -170,7 +170,7 @@ object Interceptors {
 
     private fun sortMap(requestBody: RequestBody): FormBody.Builder {
         val builder = FormBody.Builder()
-        val stringMap = HashMap<String, String>()
+        val stringMap = Hashtable<String, String>()
         for (i in 0 until (requestBody as FormBody).size) {
             stringMap[URLDecoder.decode(requestBody.encodedName(i).toString(), "utf-8")] = URLDecoder.decode(requestBody.encodedValue(i).toString(), "utf-8")
         }

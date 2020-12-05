@@ -1,18 +1,18 @@
 package a.tlib.base
 
+import a.tlib.R
+import a.tlib.utils.retrofit.LoadView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import a.tlib.R
-import a.tlib.utils.retrofit.LoadView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
  * @author 田桂森 2020/5/23 0023
  * 列表页面继承这个，集合bean需要实现IRVListBean
  */
-abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> : BaseActivity(), IBaseRV<T, B> {
+abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T,out BaseViewHolder>> : BaseActivity(), IBaseRV<T, B> {
     override val layoutId = R.layout.act_common_list
     abstract override var adapter: B
     override lateinit var rv: RecyclerView

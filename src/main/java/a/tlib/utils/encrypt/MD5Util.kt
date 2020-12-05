@@ -1,6 +1,5 @@
 package a.tlib.utils.encrypt
 
-import com.orhanobut.logger.YLog
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
@@ -37,9 +36,7 @@ object MD5Util {
 //        }
         infoStr = infoStr.replace("\\", "\\\\").replace("\"", "\\\"")
         infoStr = appKay + infoStr + appSecret
-        YLog.d(infoStr)
         stringMap.put("_sign", encode((encode(infoStr))))
-        YLog.d(stringMap["_sign"])
         return stringMap
     }
 

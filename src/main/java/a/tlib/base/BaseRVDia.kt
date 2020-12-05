@@ -1,20 +1,20 @@
 package a.tlib.base
 
+import a.tlib.R
+import a.tlib.utils.retrofit.LoadView
+import a.tlib.widget.dialog.baseDialog.BaseLDialog
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import a.tlib.R
-import a.tlib.utils.retrofit.LoadView
-import a.tlib.widget.dialog.baseDialog.BaseLDialog
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
  * @author 田桂森 2020/5/7 0007
  * 列表页面继承这个，集合bean需要实现IRVListBean
  */
-abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> : BaseLDialog<BaseRVDia<T, B>>(), IBaseRV<T, B> {
+abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> : BaseLDialog<BaseRVDia<T, B>>(), IBaseRV<T, B> {
     override var layoutId = R.layout.fra_common_list
     abstract override var adapter: B
     override lateinit var rv: RecyclerView
@@ -26,7 +26,7 @@ abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder
     override fun initView(view: View) {
         view.apply {
             rv = findViewById(R.id.rv)
-            rv.layoutManager= LinearLayoutManager(context)
+            rv.layoutManager = LinearLayoutManager(context)
             srl = findViewById(R.id.srl)
             lv = findViewById(R.id.lv)
         }

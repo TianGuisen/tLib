@@ -1,6 +1,7 @@
 package a.tlib.base
 
 import a.tlib.utils.retrofit.LoadView
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -11,7 +12,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 /**
  * @author 田桂森 2020/5/25 0025
  */
-interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> {
+interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> {
     var page: Int //有的接口用的page
     var lastId: String//有的接口用的lastId
     var adapter: B
@@ -21,6 +22,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, BaseViewHolder>> {
     var enableloadMore: Boolean
     fun initRVView() {
         rv.adapter = adapter
+        Log.d("onCreateAdapter", adapter.javaClass.simpleName)//用于快速定位
         srl?.setOnRefreshListener {
             page = 1
             lastId = ""

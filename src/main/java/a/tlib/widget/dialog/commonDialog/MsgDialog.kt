@@ -1,17 +1,18 @@
 package a.tlib.widget.dialog.commonDialog
 
 
+import a.tlib.R
+import a.tlib.utils.AppUtil
+import a.tlib.utils.getcolor
+import a.tlib.widget.dialog.baseDialog.BaseLDialog
+import a.tlib.widget.dialog.baseDialog.ViewHandlerListener
+import a.tlib.widget.dialog.baseDialog.ViewHolder
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.fragment.app.FragmentManager
-import a.tlib.R
-import a.tlib.utils.getcolor
-import a.tlib.widget.dialog.baseDialog.BaseLDialog
-import a.tlib.widget.dialog.baseDialog.ViewHandlerListener
-import a.tlib.widget.dialog.baseDialog.ViewHolder
 
 /**
  * 普通的msg dialog
@@ -26,7 +27,11 @@ open class MsgDialog : BaseLDialog<MsgDialog>() {
             }
         }
     }
-
+    init {
+        if (AppUtil.isHorizontalScreen()){
+            setWidthScale(0.5f)
+        }
+    }
     override var layoutId = R.layout.dialog_msg
 
     private var isShowSinge = false

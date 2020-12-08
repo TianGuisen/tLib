@@ -5,8 +5,8 @@ sealed class BooleanExt<out T>
 object Otherwise : BooleanExt<Nothing>()
 class WithData<T>(val data: T) : BooleanExt<T>()
 
-inline fun <T> Boolean.yes(function: () -> T): BooleanExt<T> {
-    if (this) {
+inline fun <T> Boolean?.yes(function: () -> T): BooleanExt<T> {
+    if (this!=null&&this) {
         return WithData(function())
     } else {
         return Otherwise

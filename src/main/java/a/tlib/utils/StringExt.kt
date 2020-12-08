@@ -56,7 +56,16 @@ fun String.subEnd(i: Int) = this.substring(this.length - i)
  * 获取前面i个字符串
  */
 fun String.subStart(i: Int) = this.substring(0, i)
-
+/**
+ * 删除前面i位,默认为1
+ */
+fun String.delFirst(i: Int = 1): String {
+    try {
+        return this.substring(i, this.length - i)
+    } catch (a: Exception) {
+        return ""
+    }
+}
 /**
  * 删除最后i位,默认为1
  */

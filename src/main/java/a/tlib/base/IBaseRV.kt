@@ -62,6 +62,15 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         enableloadMore = b
     }
 
+    /**
+     * 主动刷新，重置页码
+     */
+    fun refresh(){
+        page=1
+        lastId=""
+        loadListData()
+    }
+    
     fun onRefresh() {
 
     }
@@ -107,7 +116,8 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     abstract fun onViewInited()
 
     abstract fun loadListData()
-
+    
+    
     /**
      *失败处理
      */

@@ -14,21 +14,37 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
  * @version v1.0, 2019-05-23 15:48  由有播科技（杭州）有限公司开发
  */
 
+/**
+ * 精确移动到指定索引
+ *
+ * @param position 索引
+ * @param offset 偏移量
+ */
 fun RecyclerView.scrollToPositionWithOffset(position: Int, offset: Int = 0) {
     when (val lm = layoutManager) {
         is StaggeredGridLayoutManager -> lm.scrollToPositionWithOffset(position, offset)
         is LinearLayoutManager -> lm.scrollToPositionWithOffset(position, offset)
     }
 }
+/** 移动到顶部 */
 fun RecyclerView.scrollToTop() {
     scrollToPositionWithOffset(0)
 }
+/** 移动到底部 */
 fun RecyclerView.scrollToBottom() {
     adapter?.let {
         scrollToPositionWithOffset(it.itemCount - 1)
     }
 }
-
+/**
+ * RecyclerView快速配置
+ *
+ * @param layoutManager LayoutManager，默认垂直方向布局
+ * @param hasFixedSize 布局高度是否固定，默认固定
+ * @param supportsChangeAnimations 是否展示动画，默认不展示
+ * @param decoration 分割线，默认无
+ * @param adapter 适配器
+ */
 fun RecyclerView.applyLinearConfig(
         layoutManager: RecyclerView.LayoutManager = WrapLinearLayoutManager(context),
         hasFixedSize: Boolean = true,
@@ -42,7 +58,14 @@ fun RecyclerView.applyLinearConfig(
     if (null != decoration) addItemDecoration(decoration)
     if (null != adapter) this.adapter = adapter
 }
-
+/**
+ * RecyclerView快速配置（水平方向）
+ *
+ * @param hasFixedSize 布局高度是否固定，默认固定
+ * @param supportsChangeAnimations 是否展示动画，默认不展示
+ * @param decoration 分割线，默认无
+ * @param adapter 适配器，默认无
+ */
 fun RecyclerView.applyHorizontalLinearConfig(
     hasFixedSize: Boolean = true,
     supportsChangeAnimations: Boolean = false,
@@ -52,7 +75,15 @@ fun RecyclerView.applyHorizontalLinearConfig(
     val lm = WrapLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     applyLinearConfig(lm, hasFixedSize, supportsChangeAnimations, decoration, adapter)
 }
-
+/**
+ * RecyclerView快速配置（网格布局）
+ *
+ * @param spanCount 列数
+ * @param hasFixedSize 布局高度是否固定，默认固定
+ * @param supportsChangeAnimations 是否展示动画，默认不展示
+ * @param decoration 分割线，默认无
+ * @param adapter 适配器，默认无
+ */
 fun RecyclerView.applyGridConfig(
     spanCount: Int,
     hasFixedSize: Boolean = true,
@@ -66,7 +97,14 @@ fun RecyclerView.applyGridConfig(
     if (null != decoration) addItemDecoration(decoration)
     if (null != adapter) this.adapter = adapter
 }
-
+/**
+ * RecyclerView快速配置（瀑布流）
+ *
+ * @param spanCount 列数
+ * @param supportsChangeAnimations 是否展示动画，默认不展示
+ * @param decoration 分割线，默认无
+ * @param adapter 适配器，默认无
+ */
 fun RecyclerView.applyStaggeredGridConfig(
     spanCount: Int,
     supportsChangeAnimations: Boolean = false,

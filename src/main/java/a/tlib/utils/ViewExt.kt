@@ -46,6 +46,9 @@ val TextView.string get() = this.text.toString()
  */
 const val INTERVAL = 400
 
+/**
+ * 防重复点击
+ */
 fun View.setSingClick(function: (View) -> Unit): View {
     var temTime: Long = 0
     this.setOnClickListener {
@@ -57,7 +60,9 @@ fun View.setSingClick(function: (View) -> Unit): View {
     return this
 }
 
-
+/**
+ * 加载图片
+ */
 fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? = null) {
     if (ctx != null && this != null) {
         val requestBuilder = Glide.with(ctx).load(url)

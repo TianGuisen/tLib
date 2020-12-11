@@ -5,6 +5,8 @@ import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import java.math.BigDecimal
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -56,6 +58,7 @@ fun String.subEnd(i: Int) = this.substring(this.length - i)
  * 获取前面i个字符串
  */
 fun String.subStart(i: Int) = this.substring(0, i)
+
 /**
  * 删除前面i位,默认为1
  */
@@ -66,6 +69,7 @@ fun String.delFirst(i: Int = 1): String {
         return ""
     }
 }
+
 /**
  * 删除最后i位,默认为1
  */
@@ -121,6 +125,18 @@ fun String?.toint(): Int {
         return 0
     } else {
         return toInt
+    }
+}
+
+/**
+ *string转int,null会转成0
+ */
+fun String?.tolong(): Long {
+    val toLong = this?.toLong()
+    if (toLong == null) {
+        return 0
+    } else {
+        return toLong
     }
 }
 
@@ -262,7 +278,7 @@ fun String.zoomStart(x: Int = 1, rate: Float = 1.5f): SpannableString {
  * @param isLastSeparator 是否查找最后一个分隔字符串（多次出现分隔字符串时选取最后一个），true为选取最后一个
  * @return 切割后的字符串
  */
-fun CharSequence?.subBefore(separator: String, isLastSeparator: Boolean=true): String {
+fun CharSequence?.subBefore(separator: String, isLastSeparator: Boolean = true): String {
     if (this.isNullOrEmpty()) {
         return ""
     }
@@ -303,4 +319,16 @@ fun CharSequence?.subAfter(separator: String, isLastSeparator: Boolean = true): 
     return if (-1 == pos || this.length - 1 == pos) {
         ""
     } else str.substring(pos + separator.length)
+}
+
+/** 字符串时间转换 */
+fun String?.formatDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): String {
+    var ms = this.tolong()
+    // 处理Unix 10位时间戳
+    if (ms.toString().length == 10) ms *= 1000
+    return try {
+        SimpleDateFormat(pattern, Locale.CHINA).format(Date(ms))
+    } catch (e: Exception) {
+        ""
+    }
 }

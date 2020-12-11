@@ -5,8 +5,6 @@ import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import java.math.BigDecimal
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 /**
@@ -319,16 +317,4 @@ fun CharSequence?.subAfter(separator: String, isLastSeparator: Boolean = true): 
     return if (-1 == pos || this.length - 1 == pos) {
         ""
     } else str.substring(pos + separator.length)
-}
-
-/** 字符串时间转换 */
-fun String?.formatDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): String {
-    var ms = this.tolong()
-    // 处理Unix 10位时间戳
-    if (ms.toString().length == 10) ms *= 1000
-    return try {
-        SimpleDateFormat(pattern, Locale.CHINA).format(Date(ms))
-    } catch (e: Exception) {
-        ""
-    }
 }

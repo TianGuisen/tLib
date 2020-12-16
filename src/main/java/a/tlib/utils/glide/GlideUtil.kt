@@ -6,7 +6,12 @@ import android.content.Context
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 
 
 /**
@@ -50,5 +55,25 @@ object GlideUtil {
         }
     }
 
+    @SuppressLint("CheckResult")
+    @JvmStatic
+    fun loadGif(ctx: Context? = null, url: Any? = null, iv: ImageView? = null, ro: RequestOptions? = null) {
+        if (ctx != null && iv != null) {
+            val requestBuilder = Glide.with(ctx).asGif().load(url)
+                    .listener(object : RequestListener<GifDrawable> {
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<GifDrawable>?, isFirstResource: Boolean): Boolean {
+                            return false
+                        }
 
+                        override fun onResourceReady(resource: GifDrawable?, model: Any?, target: Target<GifDrawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            resource?.setLoopCount(GifDrawable.LOOP_INTRINSIC)
+                            return false
+                        }
+                    })
+            if (ro != null) {
+                requestBuilder.apply(ro)
+            }
+            requestBuilder.into(iv)
+        }
+    }
 }

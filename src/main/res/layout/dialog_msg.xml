@@ -24,9 +24,11 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="28dp"
+        android:scrollbars="vertical"
         android:textColor="@color/color_9b"
-        android:visibility="gone"
-        android:textSize="15dp" />
+        android:maxLines="10"
+        android:textSize="15dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_msg_sub"

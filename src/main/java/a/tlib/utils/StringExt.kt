@@ -62,7 +62,7 @@ fun String.subStart(i: Int) = this.substring(0, i)
  */
 fun String.delFirst(i: Int = 1): String {
     try {
-        return this.substring(i, this.length - i)
+        return this.substring(i, this.length)
     } catch (a: Exception) {
         return ""
     }

@@ -106,7 +106,7 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
     //https://github.com/LuckSiege/PictureSelector相册选择,需要及时检查使用最新版本
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.8'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
     //弹窗https://github.com/razerdp/BasePopup
     api 'com.github.razerdp:BasePopup:2.2.3'
     //switch开关https://github.com/bitvale/Switcher

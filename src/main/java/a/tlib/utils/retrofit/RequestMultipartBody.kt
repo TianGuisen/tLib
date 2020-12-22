@@ -19,7 +19,7 @@ class RequestMultipartBody {
     }
 
     private val parts = mutableListOf<MultipartBody.Part>()
-    fun putText(key: String, value: String): RequestMultipartBody{
+    fun putText(key: String, value: String): RequestMultipartBody {
         val textData = MultipartBody.Part.createFormData(key, value)
         parts.add(textData)
         return this
@@ -29,6 +29,17 @@ class RequestMultipartBody {
         val imageBody: RequestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val filedata = MultipartBody.Part.createFormData(name, fileName, imageBody)
         parts.add(filedata)
+        return this
+    }
+
+    fun putImgs(name: String, fileName: String, fileList: MutableList<File>): RequestMultipartBody {
+        var fileName2=fileName
+        fileList.forEach { file ->
+            fileName2=fileName2+1
+            val imageBody: RequestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+            val filedata = MultipartBody.Part.createFormData(name, fileName2, imageBody)
+            parts.add(filedata)
+        }
         return this
     }
 

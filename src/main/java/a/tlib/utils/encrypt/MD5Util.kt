@@ -34,7 +34,7 @@ object MD5Util {
 //        mapDescSort.forEach {
 //            infoStr=infoStr+(it.key + it.value)
 //        }
-        infoStr = infoStr.replace("\\", "\\\\").replace("\"", "\\\"")
+//        infoStr = infoStr.replace("\\", "\\\\").replace("\"", "\\\"")
         infoStr = appKay + infoStr + appSecret
         stringMap.put("_sign", encode((encode(infoStr))))
         return stringMap

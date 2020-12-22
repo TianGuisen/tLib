@@ -14,18 +14,27 @@ import java.io.Serializable
 fun Fragment.getStringArgument(key: String): String {
     return this.arguments?.getString(key) ?: ""
 }
+
 fun Fragment.getIntArgument(key: String, defaultValue: Int = 0): Int {
     return this.arguments?.getInt(key, defaultValue) ?: defaultValue
 }
+
 fun Fragment.getLongArgument(key: String, defaultValue: Long = 0): Long {
     return this.arguments?.getLong(key, defaultValue) ?: defaultValue
 }
+
 fun Fragment.getDoubleArgument(key: String, defaultValue: Double = 0.0): Double {
     return this.arguments?.getDouble(key, defaultValue) ?: defaultValue
 }
+
 fun Fragment.getBooleanArgument(key: String, defaultValue: Boolean = false): Boolean {
     return this.arguments?.getBoolean(key, defaultValue) ?: defaultValue
 }
+
 fun Fragment.getSerializableArgument(key: String): Serializable? {
     return this.arguments?.getSerializable(key)
+}
+
+fun <T> Fragment.getListArgument(key: String): MutableList<T> {
+    return this.arguments?.getSerializable(key) as MutableList<T>
 }

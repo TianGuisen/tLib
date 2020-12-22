@@ -68,7 +68,12 @@ object DateUtil {
     fun getTimeDataTwo(time: Long): String {
         return SimpleDateFormat(FORMAT_TOW).format(Date(time))
     }
-
+    /**
+     * yyyy-mm-dd
+     */
+    fun getTimeDataY_M_D(time: Long): String {
+        return SimpleDateFormat(DEFAULT_FORMAT_DATE).format(Date(time))
+    }
     /**
      * yyyy-MM-dd HH:mm:ss格式
      */

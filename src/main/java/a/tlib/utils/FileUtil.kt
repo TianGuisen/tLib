@@ -7,12 +7,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
+import android.text.TextUtils
+import android.util.Base64
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStream
 import java.text.DecimalFormat
 import java.util.concurrent.ExecutionException
 
@@ -153,5 +158,34 @@ object FileUtil {
     @JvmStatic
     fun createFile(downloadPath: String?, fileName: String?): File? {
         return File(downloadPath, fileName)
+    }
+    @JvmStatic
+    fun imageToBase64(path: String?): String {
+        if (TextUtils.isEmpty(path)) {
+            return ""
+        }
+        var `is`: InputStream? = null
+        var data: ByteArray? = null
+        var result: String? = null
+        try {
+            `is` = FileInputStream(path)
+            //创建一个字符流大小的数组。
+            data = ByteArray(`is`.available())
+            //写入数组
+            `is`.read(data)
+            //用默认的编码格式进行编码
+            result = Base64.encodeToString(data, Base64.DEFAULT)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        } finally {
+            if (null != `is`) {
+                try {
+                    `is`.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return result!!
     }
 }

@@ -45,7 +45,13 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         onViewInited()
     }
 
-
+    /**
+     * 设置背景色
+     */
+    fun setBackGroundColor(color:Int){
+        rv.setBackgroundColor(color)
+        lv?.setBackgroundColor(color)
+    }
     /**
      * 开启或禁止下拉刷新，默认开启
      */

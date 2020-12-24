@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 /**
  * @author 田桂森 2020/12/22 0022
  */
-class MyViewHolder(view: View) : BaseViewHolder(view) {
+open class MyViewHolder(view: View) : BaseViewHolder(view) {
 
     fun setImageUrl(id: Int, url: Any? = null, ro: RequestOptions? = null) {
         if (url == null) return

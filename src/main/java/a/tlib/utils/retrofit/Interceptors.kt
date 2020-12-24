@@ -68,7 +68,7 @@ object Interceptors {
             val requestBuilder = originalRequest.newBuilder()
                     .addHeader("Content-Type", "application/json; charset=utf-8")
                     .addHeader("Platform", "Android_ALL")
-                    .addHeader("Version", BuildConfig.VERSION_NAME)
+                    .addHeader("Version", AppUtil.getVersionName())
                     .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
                     .addHeader("Device", AppUtil.deviceId)
                     .addHeader("appType", LibApp.appType)

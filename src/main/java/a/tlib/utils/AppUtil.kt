@@ -7,6 +7,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -23,6 +25,22 @@ import android.view.inputmethod.InputMethodManager
 object AppUtil {
     var sdkVersion = Build.VERSION.SDK_INT
 
+    /**
+     * 获取版本号
+     */
+    fun getVersionName(): String {
+        val manager: PackageManager = LibApp.app.getPackageManager()
+        val info: PackageInfo = manager.getPackageInfo(LibApp.app.getPackageName(), 0)
+        return info.versionName
+    }
+    /**
+     * 获取版本号
+     */
+    fun getVersionCode(): Int {
+        val manager: PackageManager = LibApp.app.getPackageManager()
+        val info: PackageInfo = manager.getPackageInfo(LibApp.app.getPackageName(), 0)
+        return info.versionCode
+    }
     /**
      * 网络是否链接
      */

@@ -318,3 +318,20 @@ fun CharSequence?.subAfter(separator: String, isLastSeparator: Boolean = true): 
         ""
     } else str.substring(pos + separator.length)
 }
+
+/***
+ * 获取url 指定name的value;
+ */
+fun CharSequence.getUrlValueByName( name: String): String {
+    var result = ""
+    val index = this.indexOf("?")
+    val temp = this.substring(index + 1)
+    val keyValue = temp.split("&".toRegex()).toTypedArray()
+    for (str in keyValue) {
+        if (str.contains(name)) {
+            result = str.replace("$name=", "")
+            break
+        }
+    }
+    return result
+}

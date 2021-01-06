@@ -9,16 +9,23 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-fun View.gone() {
-    visibility = View.GONE
+fun View.gone(boolean: Boolean=true) {
+    visibility =  if (boolean) View.GONE else View.VISIBLE
 }
 
-fun View.show() {
-    visibility = View.VISIBLE
+fun View.show(boolean: Boolean=true) {
+    visibility =if (boolean) View.VISIBLE else View.INVISIBLE
 }
 
-fun View.hide() {
-    visibility = View.INVISIBLE
+/**
+ * true显示，false gone
+ */
+fun View.showGone(boolean: Boolean=true) {
+    visibility =if (boolean) View.VISIBLE else View.GONE
+}
+
+fun View.hide(boolean: Boolean=true) {
+    visibility =if (boolean) View.INVISIBLE else View.VISIBLE
 }
 
 fun View.isShow() = visibility == View.VISIBLE

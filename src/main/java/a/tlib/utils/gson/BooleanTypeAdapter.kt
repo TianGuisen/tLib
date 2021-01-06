@@ -30,18 +30,14 @@ class BooleanTypeAdapter : TypeAdapter<Boolean?>() {
             }
             if (json.peek() == JsonToken.NUMBER) {
                 val b = json.nextInt()
-                return b==1
+                return b == 1
             }
-            return if (json.peek() == JsonToken.STRING) {
+            if (json.peek() == JsonToken.STRING) {
                 val str = json.nextString()
-                try {
-                    str.toBoolean()
-                } catch (e: NumberFormatException) {
-                  false
-                }
+                return str == "1"
             } else {
                 value = json.nextBoolean()
-                value
+                return  value
             }
         } catch (e: Exception) {
         }

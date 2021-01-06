@@ -126,7 +126,13 @@ class LoadView : FrameLayout {
             }
         }
     }
-
+    /**
+     * 空列表时
+     */
+    fun setEmptyTextImg(text: String,imgId:Int=0) {
+        mEmptyText = text
+        mEmptyIcon=imgId
+    }
     /**
      * 空列表时显示的文字内容
      */
@@ -190,7 +196,9 @@ class LoadView : FrameLayout {
             addView(mEmptyView, 0, layoutParams)
         }
         mEmptyView?.findViewById<TextView>(R.id.tv_empty)?.setText(mEmptyText)
-        mEmptyView?.findViewById<ImageView>(R.id.iv_icon)?.setImageDrawable(resources.getDrawable(mEmptyIcon))
+        if (mEmptyIcon != 0) {
+            mEmptyView?.findViewById<ImageView>(R.id.iv_icon)?.setImageDrawable(resources.getDrawable(mEmptyIcon))
+        }
         showView(mEmptyView)
     }
 

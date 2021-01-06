@@ -108,7 +108,7 @@ dependencies {
     //https://github.com/LuckSiege/PictureSelector相册选择,需要及时检查使用最新版本
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
     //弹窗https://github.com/razerdp/BasePopup
-    api 'com.github.razerdp:BasePopup:2.2.3'
+    api 'com.github.razerdp:BasePopup_Candy:2.2.13.210105.1'
     //switch开关https://github.com/bitvale/Switcher
     api 'com.bitvale:switcher:1.1.0'
     //时间，城市选择器https://github.com/Bigkoo/Android-PickerView

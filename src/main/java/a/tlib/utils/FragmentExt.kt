@@ -31,10 +31,16 @@ fun Fragment.getBooleanArgument(key: String, defaultValue: Boolean = false): Boo
     return this.arguments?.getBoolean(key, defaultValue) ?: defaultValue
 }
 
-fun Fragment.getSerializableArgument(key: String): Serializable? {
-    return this.arguments?.getSerializable(key)
+fun <T> Fragment.getSerializableArgument(key: String): T? {
+    this.arguments?.getSerializable(key)?.let {
+        return it as T
+    }
+    return null
 }
 
-fun <T> Fragment.getListArgument(key: String): MutableList<T> {
-    return this.arguments?.getSerializable(key) as MutableList<T>
+fun <T> Fragment.getListArgument(key: String): MutableList<T>? {
+    this.arguments?.getSerializable(key)?.let {
+        return it as MutableList<T>
+    }
+    return mutableListOf()
 }

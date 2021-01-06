@@ -45,13 +45,18 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         onViewInited()
     }
 
+    fun isFirstPage(): Boolean {
+        return page == 1 && lastId == ""
+    }
+
     /**
      * 设置背景色
      */
-    fun setBackGroundColor(color:Int){
+    fun setBackGroundColor(color: Int) {
         rv.setBackgroundColor(color)
         lv?.setBackgroundColor(color)
     }
+
     /**
      * 开启或禁止下拉刷新，默认开启
      */
@@ -67,16 +72,16 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         srl?.setEnableLoadMore(b)
         enableloadMore = b
     }
-
+    
     /**
      * 主动刷新，重置页码
      */
-    fun refresh(){
-        page=1
-        lastId=""
+    fun refresh() {
+        page = 1
+        lastId = ""
         loadListData()
     }
-    
+
     fun onRefresh() {
 
     }
@@ -122,8 +127,8 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     abstract fun onViewInited()
 
     abstract fun loadListData()
-    
-    
+
+
     /**
      *失败处理
      */

@@ -18,7 +18,7 @@ import a.tlib.utils.IntentUtil.internalStartActivityForResult
  * enableAnimation默认开启动画，某些场景会有bug要关闭
  */
 
-inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) =
+inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = false) =
         internalStartActivity(this, T::class.java, params, enableAnimation)
 
 fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) {
@@ -30,7 +30,7 @@ fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>, enableAn
 //    }
 }
 
-inline fun <reified T : Activity> Fragment.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) =
+inline fun <reified T : Activity> Fragment.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = false) =
         internalStartActivity(activity!!, T::class.java, params, enableAnimation)
 
 inline fun <reified T : Activity> Activity.startActForResult(requestCode: Int, vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) =

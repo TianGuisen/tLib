@@ -14,8 +14,8 @@ inline fun <T> Boolean?.yes(function: () -> T): BooleanExt<T> {
 }
 
 
-inline fun <T> Boolean.no(function: () -> T): BooleanExt<T> {
-    if (this) {
+inline fun <T> Boolean?.no(function: () -> T): BooleanExt<T> {
+    if (this!=null&&this) {
         return Otherwise
     } else {
         return WithData(function())
@@ -23,7 +23,8 @@ inline fun <T> Boolean.no(function: () -> T): BooleanExt<T> {
 }
 
 @Suppress("UNCHECKED_CAST")
-inline fun <T> BooleanExt<T>.otherwise(function: () -> T): T = when (this) {
+inline fun <T> BooleanExt<T>?.otherwise(function: () -> T): T = when (this) {
     is Otherwise -> function()
     is WithData<T> -> this.data
+    else -> function()
 }

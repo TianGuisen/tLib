@@ -32,7 +32,7 @@ object DateUtil {
      */
     val MS_FORMAT_TIME = "mm:ss"
 
-    val FORMAT_TOW = "MM月dd HH:mm"
+    val FORMAT_TOW = "MM月dd日 HH:mm"
 
     val FORMAT_MOUTH_DAY_MINUTE = "MM月dd日  HH:mm:ss"
 

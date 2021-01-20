@@ -31,7 +31,7 @@ open class TitleBar : RFrameLayout {
     }
 
     open fun init() {
-        view= RView.inflate(context,R.layout.view_title, this) as TitleBar
+        view = RView.inflate(context, R.layout.view_title, this) as TitleBar
         view.helper.setBackgroundColorNormal(LibApp.titleBarColor)
     }
 
@@ -57,6 +57,15 @@ open class TitleBar : RFrameLayout {
         tv_title.setTextColor(getcolor(R.color.black))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
         view.helper.setBackgroundColorNormal(getcolor(R.color.white))
+    }
+
+    /**
+     * 透明风格
+     */
+    fun setTransparentStyle2() {
+        tv_title.setTextColor(getcolor(R.color.black))
+        iv_back.setImageResource(R.drawable.img_titlebar_back)
+        view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
     }
 
     /**

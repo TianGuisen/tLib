@@ -4,6 +4,7 @@ import a.tlib.R
 import a.tlib.utils.AutoSizeUtil
 import android.content.Context
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -43,6 +44,9 @@ open class TRecyclerView : RecyclerView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
+    override fun onTouchEvent(e: MotionEvent?): Boolean {
+        return super.onTouchEvent(e)
+    }
     private val imageLoadScrollListener: OnScrollListener = object : OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

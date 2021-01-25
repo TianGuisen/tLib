@@ -63,9 +63,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-        ImmersionBar.with(this).statusBarColor(color).statusBarDarkFont(false).navigationBarColor(R.color.black).autoStatusBarDarkModeEnable(true, 0.2f).init()
+        ImmersionBar.with(this).statusBarColor(color).navigationBarColor(R.color.white).autoStatusBarDarkModeEnable(true, 0.2f).init()
     }
-
     fun setTitle(title: String?): TextView {
         val tv_title = titleBar!!.setTitle(title)
         return tv_title

@@ -65,7 +65,10 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-        ImmersionBar.with(this).navigationBarColor(R.color.white).statusBarDarkFont(false).init()
+        ImmersionBar.with(this)
+                .navigationBarColor(R.color.white)
+                .autoNavigationBarDarkModeEnable(true)
+                .statusBarDarkFont(false).init()
     }
 
     fun setTitle(title: String): TextView {

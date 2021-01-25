@@ -63,7 +63,7 @@ open class TitleBar : RFrameLayout {
      * 透明风格
      */
     fun setTransparentStyle2() {
-        tv_title.setTextColor(getcolor(R.color.black))
+        tv_title.setTextColor(getcolor(R.color.c_111))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
         view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
     }

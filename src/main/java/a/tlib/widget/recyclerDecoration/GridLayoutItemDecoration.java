@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
- * https://github.com/happylishang/RecyclerItemDecoration/blob/master/app/src/main/java/com/snail/labaffinity/itemdorc/GridLayoutItemDecoration.java
+ * 废弃，用2
  */
 public class GridLayoutItemDecoration extends RecyclerView.ItemDecoration {
 

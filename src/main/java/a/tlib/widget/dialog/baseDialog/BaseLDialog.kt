@@ -151,6 +151,8 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
             it.attributes
             //Set dialog width
             when {
+                baseParams.widthDp > 0f -> params.width = dp2px(mContext, baseParams.widthDp)
+                baseParams.widthPt > 0f -> params.width = AutoSizeUtil.pt2px(baseParams.widthPt)
                 baseParams.widthScale > 0f -> {
                     if ((this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && baseParams.keepWidthScale)
                             || this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
@@ -159,12 +161,12 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
                         params.width = (point.x * baseParams.widthScale).toInt()
                     }
                 }
-                baseParams.widthDp > 0f -> params.width = dp2px(mContext, baseParams.widthDp)
-                baseParams.widthPt > 0f -> params.width = AutoSizeUtil.pt2px(baseParams.widthPt)
             }
 
             //Set dialog height
             when {
+                baseParams.heightDp > 0f -> params.height = dp2px(mContext, baseParams.heightDp)
+                baseParams.heightPt > 0f -> params.height = AutoSizeUtil.pt2px(baseParams.heightPt)
                 baseParams.heightScale > 0f -> {
                     if ((this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && baseParams.keepHeightScale)
                             || this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
@@ -173,8 +175,6 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
                         params.height = (point.y * baseParams.heightScale).toInt()
                     }
                 }
-                baseParams.heightDp > 0f -> params.height = dp2px(mContext, baseParams.heightDp)
-                baseParams.heightPt > 0f -> params.height = AutoSizeUtil.pt2px(baseParams.heightPt)
             }
             //Set Window verticalMargin
             params.verticalMargin = baseParams.verticalMargin
@@ -249,6 +249,12 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
 
     fun setWidthPt(pt: Float): T {
         baseParams.widthPt = pt
+        return this as T
+    }
+
+    fun setWidthHeightPt(width: Int,height:Int): T {
+        baseParams.widthPt = width.toFloat()
+        baseParams.heightPt = height.toFloat()
         return this as T
     }
 
@@ -402,7 +408,7 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
     override fun getSizeInDp(): Float {
         return 1080f
     }
-    
+
     companion object {
         private const val KEY_PARAMS = "key_params"
         private const val KEY_VIEW_HANDLER = "view_handler"

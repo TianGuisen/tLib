@@ -5,8 +5,6 @@
     <!--适配安卓10分区问题,解决IM        android:requestLegacyExternalStorage="true"-->
 
     <application android:requestLegacyExternalStorage="true">
-        <!--        华为扫码-->
-        <activity android:name="com.huawei.hms.hmsscankit.ScanKitActivity" />
         <!--        沉浸状态栏适配-->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data

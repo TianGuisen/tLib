@@ -224,7 +224,7 @@
     <color name="status_bar_color_transparent_black">#00000000</color>
 
     <color name="color_b87800">#b87800</color>
-    <color name="color_e42d00">#e42d00</color>
+    <color name="c_e42d">#e42d00</color>
     <color name="b3b">#B3B3B3</color>
     <color name="color_e3e3e3">#e3e3e3</color>
 </resources>

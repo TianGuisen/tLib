@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import a.tlib.utils.StringUtils
+import a.tlib.utils.getcolor
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.AutoSizeConfig
@@ -63,8 +64,13 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-        ImmersionBar.with(this).statusBarColor(color).navigationBarColor(R.color.white).autoStatusBarDarkModeEnable(true, 0.2f).init()
+        ImmersionBar.with(this)
+                .statusBarColor(color)
+                .navigationBarColor(R.color.white)
+                .autoDarkModeEnable(true)
+                .init()
     }
+
     fun setTitle(title: String?): TextView {
         val tv_title = titleBar!!.setTitle(title)
         return tv_title
@@ -80,7 +86,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     fun setWhiteStyle() {
         titleBar?.setWhiteStyle()
-        ImmersionBar.with(this).statusBarDarkFont(true).init()
+        ImmersionBar.with(this).statusBarColor(R.color.status_bar_color_transparent_black).navigationBarColor(R.color.white).autoDarkModeEnable(true).init()
     }
 
     open fun setTitleBar() = R.id.title_bar

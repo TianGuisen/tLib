@@ -10,28 +10,42 @@ import androidx.fragment.app.Fragment
 import a.tlib.utils.IntentUtil.createIntent
 import a.tlib.utils.IntentUtil.fillBundleArguments
 import a.tlib.utils.IntentUtil.fillIntentArguments
-import a.tlib.utils.IntentUtil.internalStartActivity
 import a.tlib.utils.IntentUtil.internalStartActivityForResult
+import android.os.Parcel
+import android.view.View
+import com.gyf.immersionbar.ImmersionBar
+import com.hw.ycshareelement.YcShareElement
+import com.hw.ycshareelement.transition.ShareElementInfo
+import java.util.*
 
 /**
  * @author 田桂森 2020/2/22
  * enableAnimation默认开启动画，某些场景会有bug要关闭
  */
 
-inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = false) =
-        internalStartActivity(this, T::class.java, params, enableAnimation)
+inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>) =
+        this.startActivity(createIntent(this, T::class.java, params))
 
-fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) {
+/**
+ * 带动画跳转
+ * android:transitionName="simple_img"
+ */
+inline fun <reified T : Activity> Activity.startAct(view: View, cover: String, vararg params: Pair<String, Any?>){
+    val optionsBundle = YcShareElement.buildOptionsBundle(this) {
+        arrayOf<ShareElementInfo<*>>(ShareElementInfo(view, ShareElementInfo3(cover, AppUtil.getScreenWidth(), AppUtil.getScreenHeight())))
+    }
+    this.startActivity(createIntent(this, T::class.java, params),optionsBundle)
+}
+        
+
+
+fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>) {
     fillIntentArguments(intent, params)
-//    if (this is Activity && enableAnimation&&AppUtil.sdkVersion>23) {
-//        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-//    } else {
-        startActivity(intent)
-//    }
+    startActivity(intent)
 }
 
 inline fun <reified T : Activity> Fragment.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = false) =
-        internalStartActivity(activity!!, T::class.java, params, enableAnimation)
+        this.startActivity(createIntent(this.activity!!, T::class.java, params))
 
 inline fun <reified T : Activity> Activity.startActForResult(requestCode: Int, vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) =
         internalStartActivityForResult(this, T::class.java, requestCode, params, enableAnimation)
@@ -116,20 +130,6 @@ inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO
 inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
 object IntentUtil {
-
-    @JvmStatic
-    fun internalStartActivity(
-            ctx: Context,
-            activity: Class<out Activity>,
-            params: Array<out Pair<String, Any?>>,
-            enableAnimation: Boolean
-    ) {
-//        if (ctx is Activity && enableAnimation&&AppUtil.sdkVersion>23) {
-//            ctx.startActivity(createIntent(ctx, activity, params), ActivityOptions.makeSceneTransitionAnimation(ctx).toBundle())
-//        } else {
-            ctx.startActivity(createIntent(ctx, activity, params))
-//        }
-    }
 
     @JvmStatic
     fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any?>>): Intent {
@@ -219,7 +219,52 @@ object IntentUtil {
 //        if (enableAnimation&&AppUtil.sdkVersion>23) {
 //            act.startActivityForResult(createIntent(act, activity, params), requestCode, ActivityOptions.makeSceneTransitionAnimation(act).toBundle())
 //        } else {
-            act.startActivityForResult(createIntent(act, activity, params), requestCode)
+        act.startActivityForResult(createIntent(act, activity, params), requestCode)
 //        }
     }
+}
+class ShareElementInfo3 : Parcelable {
+    var url: String?=null
+    var width = 0
+    var height = 0
+
+    constructor(url: String?=null, width: Int, height: Int) {
+        this.url = url
+        this.width = width
+        this.height = height
+    }
+
+
+    override fun equals(o: Any?): Boolean {
+        if (this === o) {
+            return true
+        }
+        if (o == null || javaClass != o.javaClass) {
+            return false
+        }
+        val baseData: ShareElementInfo3 = o as ShareElementInfo3
+        return width == baseData.width && height == baseData.height &&
+                url == baseData.url
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(url, width, height)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(url)
+        dest.writeInt(width)
+        dest.writeInt(height)
+    }
+
+    protected fun BaseData(`in`: Parcel) {
+        url = `in`.readString()
+        width = `in`.readInt()
+        height = `in`.readInt()
+    }
+
 }

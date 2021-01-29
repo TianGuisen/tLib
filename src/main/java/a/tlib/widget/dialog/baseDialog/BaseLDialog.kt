@@ -6,6 +6,7 @@ import a.tlib.utils.AutoSizeUtil
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Configuration
+import android.graphics.Color
 import android.graphics.Point
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,8 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.FloatRange
 import androidx.annotation.IdRes
@@ -21,6 +24,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ImmersionBar.getNavigationBarHeight
 import com.orhanobut.logger.YLog
 import me.jessyan.autosize.internal.CustomAdapt
 
@@ -30,6 +35,7 @@ import me.jessyan.autosize.internal.CustomAdapt
  * Date 2018/6/26
  * @author limuyang
  * https://github.com/limuyang2/LDialog/blob/master/README_CN.md
+ *
  */
 @Suppress("UNCHECKED_CAST")
 abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
@@ -71,6 +77,7 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //全屏
         //Restore UI status
 //        savedInstanceState?.let {
 //            baseParams = it.getParcelable(KEY_PARAMS)
@@ -124,7 +131,11 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
      * 初始化沉浸式
      */
     open protected fun initImmersionBar() {
-
+//        ImmersionBar.with(this)
+//                .navigationBarColor(R.color.black)
+//                .navigationBarDarkIcon(false)
+//                .autoNavigationBarDarkModeEnable(true)
+//                .init()
     }
 
     //save UI state
@@ -176,10 +187,18 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
                     }
                 }
             }
-            //Set Window verticalMargin
-            params.verticalMargin = baseParams.verticalMargin
-
             it.attributes = params
+            //处理底部弹出时候，遮挡导航栏的问题
+//            if (params.gravity == Gravity.BOTTOM) {
+//                view?.post {
+//                    dialog?.window?.apply {
+//                        val lp = attributes.apply {
+//                            height = view!!.measuredHeight + getNavigationBarHeight(act)
+//                        }
+//                        attributes = lp
+//                    }
+//                }
+//            }
             if (baseParams.backgroundDrawableRes == 0) {
                 it.setBackgroundDrawable(null)
             } else {
@@ -252,7 +271,7 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
         return this as T
     }
 
-    fun setWidthHeightPt(width: Int,height:Int): T {
+    fun setWidthHeightPt(width: Int, height: Int): T {
         baseParams.widthPt = width.toFloat()
         baseParams.heightPt = height.toFloat()
         return this as T
@@ -286,11 +305,6 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
      */
     fun setKeepHeightScale(isKeep: Boolean): T {
         baseParams.keepHeightScale = isKeep
-        return this as T
-    }
-
-    fun setVerticalMargin(@FloatRange(from = 0.0, to = 0.1) verticalMargin: Float): T {
-        baseParams.verticalMargin = verticalMargin
         return this as T
     }
 
@@ -436,8 +450,6 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
             var heightPt: Float = 0f,
             var keepWidthScale: Boolean = false,
             var keepHeightScale: Boolean = false,
-            var verticalMargin: Float = 0f,
-
             var gravity: Int = Gravity.CENTER,
             var tag: String = "TDialog",
             var cancelable: Boolean = true,

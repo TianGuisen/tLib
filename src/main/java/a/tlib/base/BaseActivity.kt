@@ -42,9 +42,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         act = this
         WebView.enableSlowWholeDocumentDraw()
-        if (layoutId != 0) {
-            setContentView(layoutId)
-        }
+        setContentView(layoutId)
         initImmersionBar()
         initView()
     }

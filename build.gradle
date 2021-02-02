@@ -146,4 +146,5 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     //过渡动画https://github.com/yellowcath/YcShareElement/blob/master/README_CN.md
     api 'com.github.yellowcath:YcShareElement:1.3.2.x'
+    
 }

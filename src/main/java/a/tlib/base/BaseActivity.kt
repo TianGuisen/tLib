@@ -84,7 +84,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     fun setWhiteStyle() {
         titleBar?.setWhiteStyle()
-        ImmersionBar.with(this).statusBarColor(R.color.status_bar_color_transparent_black).navigationBarColor(R.color.white).autoDarkModeEnable(true).init()
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.status_bar_color_transparent_black)
+                .navigationBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarDarkIcon(true)
+                .init()
     }
 
     open fun setTitleBar() = R.id.title_bar

@@ -235,27 +235,25 @@ object DateUtil {
      */
     fun secondToTime(second: Long, dayUnitStr: String = "", hourUnitStr: String = "", minuteUnitStr: String = "", secondUnitStr: String = ""): String {
         var str = ""
-        
-        val day = second / (3600 * 24)
-        if (day > 0&&dayUnitStr.isNotEmpty()) {
-            str=day.toString()+dayUnitStr
+        var second = second
+        val day = second / (24 * 60 * 60)
+        if (day > 0 && dayUnitStr.isNotEmpty()) {
+            str = day.toString() + dayUnitStr
         }
-        
-        val hour = second / (second-day* 24)
-        if (hour > 0&&hourUnitStr.isNotEmpty()) {
-            str=str+hour.toString()+hourUnitStr
+        second = second - day * 24 * 60 * 60
+        val hour = second / (60 * 60)
+        if (hour > 0 && hourUnitStr.isNotEmpty()) {
+            str = str + hour.toString() + hourUnitStr
         }
-
-        val minute = second / (second-day* 24-hour*60)
-        if (minute > 0&&minuteUnitStr.isNotEmpty()) {
-            str=str+minute.toString()+minuteUnitStr
+        second = second - hour * 60 * 60
+        val minute = second / 60
+        if (minute > 0 && minuteUnitStr.isNotEmpty()) {
+            str = str + minute.toString() + minuteUnitStr
         }
-        
-        val second2 = second / (second-day* 24-hour*60-minute*60)
-        if (second2 > 0&&secondUnitStr.isNotEmpty()) {
-            str=str+second2.toString()+secondUnitStr
+        second = second - minute * 60
+        if (second > 0 && secondUnitStr.isNotEmpty()) {
+            str = str + second.toString() + secondUnitStr
         }
-        
         return str
     }
 

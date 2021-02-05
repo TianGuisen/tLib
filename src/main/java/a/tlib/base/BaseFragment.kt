@@ -29,7 +29,6 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
     var statusBarView: View? = null//状态填充兰
     var isFirstLoadData = true//第一次创建的时候
     var isFirstShowLoadData = true//第一次显示的时候
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mRootView = inflater.inflate(layoutId, null)
         return mRootView
@@ -68,6 +67,8 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         ImmersionBar.with(this)
                 .statusBarColor(R.color.status_bar_color_transparent_black)
                 .navigationBarColor(R.color.white)
+//                .statusBarDarkFont(true)
+//                .navigationBarDarkIcon(true)
                 .autoDarkModeEnable(true)
                 .init()
     }

@@ -50,10 +50,6 @@ object LibApp {
         }
     }
 
-    fun initTitleBarColor(color: Int) {
-        titleBarColor = color
-    }
-
     private fun initX5() {
         //腾讯x5
         QbSdk.initX5Environment(app, object : QbSdk.PreInitCallback {

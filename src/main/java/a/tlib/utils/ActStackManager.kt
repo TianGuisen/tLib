@@ -4,14 +4,20 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import com.jeremyliao.liveeventbus.LiveEventBus
 import java.util.*
 
 /**
  * @author 田桂森 2019/5/16
  */
 object ActStackManager : Application.ActivityLifecycleCallbacks {
+    /**
+     * APP前后台状态切换,true是到前台，false是到后台了
+     */
+    const val APP_FRONT_STATUS = "app_front_status"
 
-
+    //打开的Activity数量统计
+    private var activityStartCount = 0
     private val stack: Stack<Activity>
 
     init {
@@ -154,7 +160,12 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStarted(activity: Activity?) {
-
+        activityStartCount++;
+        //数值从0变到1说明是从后台切到前台
+        if (activityStartCount == 1) {
+            //从后台切到前台
+            LiveEventBus.get(APP_FRONT_STATUS,Boolean::class.java).post(true)
+        }
     }
 
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
@@ -162,6 +173,11 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStopped(activity: Activity?) {
-
+        activityStartCount--;
+        //数值从1到0说明是从前台切到后台
+        if (activityStartCount == 0) {
+            //从前台切到后台
+            LiveEventBus.get(APP_FRONT_STATUS,Boolean::class.java).post(false)
+        }
     }
 }

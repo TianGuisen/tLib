@@ -4,7 +4,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--适配安卓10分区问题,解决IM        android:requestLegacyExternalStorage="true"-->
 
-    <application android:requestLegacyExternalStorage="true">
+    <application
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true">
+        <!--       usesCleartextTraffic glide加载https图片-->
         <!--        沉浸状态栏适配-->
         <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
@@ -23,10 +26,10 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="1920" />
-<!--        glide加载https图片-->
+        <!--        glide加载https图片-->
         <meta-data
             android:name="a.tlib.utils.glide.OkHttpGlideModule"
-            android:value="AppGlideModule"/>
+            android:value="AppGlideModule" />
     </application>
 
 

@@ -17,6 +17,7 @@ import javax.net.ssl.X509TrustManager
 
 /**
  * @author 田桂森 2020/11/4 0004
+ * glide加载https图片
  */
 @GlideModule
 class OkHttpGlideModule : AppGlideModule() {

@@ -23,6 +23,10 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="1920" />
+<!--        glide加载https图片-->
+        <meta-data
+            android:name="a.tlib.utils.glide.OkHttpGlideModule"
+            android:value="AppGlideModule"/>
     </application>
 
 

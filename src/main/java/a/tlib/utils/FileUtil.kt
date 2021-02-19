@@ -104,6 +104,21 @@ object FileUtil {
         return size
     }
 
+    /**
+     * 获取缓存大小
+     * @param context
+     * @return
+     * @throws Exception
+     */
+    @Throws(java.lang.Exception::class)
+    fun getTotalCacheSize(context: Context): Long {
+        var cacheSize = getFolderSize(context.cacheDir)
+        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+            cacheSize += getFolderSize(context.externalCacheDir!!)
+        }
+        return cacheSize
+    }
+    
     fun deleteFiles(root: File) {
         val files = root.listFiles()
         if (files != null) {

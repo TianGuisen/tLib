@@ -124,7 +124,6 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
 
     }
 
-
     override fun onResume() {
         super.onResume()
         Glide.with(this).resumeRequests()

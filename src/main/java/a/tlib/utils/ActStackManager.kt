@@ -15,6 +15,7 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
      * APP前后台状态切换,true是到前台，false是到后台了
      */
     const val APP_FRONT_STATUS = "app_front_status"
+    var isFront = false
 
     //打开的Activity数量统计
     private var activityStartCount = 0
@@ -164,7 +165,8 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
         //数值从0变到1说明是从后台切到前台
         if (activityStartCount == 1) {
             //从后台切到前台
-            LiveEventBus.get(APP_FRONT_STATUS,Boolean::class.java).post(true)
+            isFront=true
+            LiveEventBus.get(APP_FRONT_STATUS, Boolean::class.java).post(true)
         }
     }
 
@@ -177,7 +179,8 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
         //数值从1到0说明是从前台切到后台
         if (activityStartCount == 0) {
             //从前台切到后台
-            LiveEventBus.get(APP_FRONT_STATUS,Boolean::class.java).post(false)
+            isFront=false
+            LiveEventBus.get(APP_FRONT_STATUS, Boolean::class.java).post(false)
         }
     }
 }

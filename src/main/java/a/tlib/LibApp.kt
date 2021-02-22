@@ -28,7 +28,6 @@ object LibApp {
     const val LOGGER_TAG = "logtag"
     var titleBarColor = 0
     var appType = ""
-
     lateinit var app: Application
     fun init(appContext: Application) {
         appContext.apply {

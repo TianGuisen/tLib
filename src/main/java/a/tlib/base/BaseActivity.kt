@@ -1,6 +1,7 @@
 package a.tlib.base
 
 import a.tlib.R
+import a.tlib.utils.StringUtils
 import a.tlib.utils.gson.GsonUtil
 import a.tlib.widget.TitleBar
 import android.content.Context
@@ -20,11 +21,8 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
-import a.tlib.utils.StringUtils
-import a.tlib.utils.getcolor
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
-import me.jessyan.autosize.AutoSizeConfig
 
 
 /**
@@ -42,7 +40,9 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         act = this
         WebView.enableSlowWholeDocumentDraw()
-        setContentView(layoutId)
+        if (layoutId > 0) {
+            setContentView(layoutId)
+        }
         initImmersionBar()
         initView()
     }
@@ -82,6 +82,9 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         titleBar?.setRightClick(res, listener)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+    }
     fun setWhiteStyle() {
         titleBar?.setWhiteStyle()
         ImmersionBar.with(this)
@@ -101,7 +104,6 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     abstract fun initView()
-
     override fun getResources(): Resources {
         if (Looper.getMainLooper().thread == Thread.currentThread()) {//解决某些手机某些情况下竖屏适配失败的问题
             AutoSizeCompat.autoConvertDensity(super.getResources(), 1080f, super.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)

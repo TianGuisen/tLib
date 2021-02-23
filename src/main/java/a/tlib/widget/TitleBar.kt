@@ -54,9 +54,10 @@ open class TitleBar : RFrameLayout {
      * 白色风格
      */
     fun setWhiteStyle() {
-        tv_title.setTextColor(getcolor(R.color.black))
+        tv_title.setTextColor(getcolor(R.color.c_111))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
         view.helper.setBackgroundColorNormal(getcolor(R.color.white))
+        tv_right.setTextColor(getcolor(R.color.c_111))
     }
 
     /**

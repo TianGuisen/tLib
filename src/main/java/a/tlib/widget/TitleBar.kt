@@ -4,6 +4,7 @@ import a.tlib.LibApp
 import a.tlib.R
 import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
+import a.tlib.utils.show
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -23,6 +24,7 @@ open class TitleBar : RFrameLayout {
     val iv_right by lazy { view.findViewById<ImageView>(R.id.iv_right) }
     val fl_right by lazy { view.findViewById<FrameLayout>(R.id.fl_right) }
     val tv_right by lazy { view.findViewById<RTextView>(R.id.tv_right) }
+    val view_line by lazy { view.findViewById<View>(R.id.view_line) }
 
     constructor(context: Context) : super(context, null) {}
 
@@ -76,6 +78,10 @@ open class TitleBar : RFrameLayout {
         tv_title.setTextColor(getcolor(R.color.color_ecc498))
         iv_back.setImageResource(R.drawable.img_titlebar_back_white_live)
         view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
+    }
+
+    fun showLine() {
+        view_line.show()
     }
 
     /**

@@ -65,7 +65,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         ImmersionBar.with(this)
                 .statusBarColor(color)
                 .navigationBarColor(R.color.white)
-                .autoDarkModeEnable(true)
+                .statusBarDarkFont(true)
                 .init()
     }
 

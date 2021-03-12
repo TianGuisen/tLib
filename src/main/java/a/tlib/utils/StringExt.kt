@@ -45,22 +45,22 @@ inline fun <T> CharSequence?.isNullOrBlank(function: () -> T) = isNullOrBlank().
 /**
  * 获取最后位置的字符串
  */
-fun String.lastStr(): String = this.get(this.length - 1).toString()
+fun CharSequence.lastStr(): String = this.get(this.length - 1).toString()
 
 /**
  * 获取从i开始到结束的字符串
  */
-fun String.subEnd(i: Int) = this.substring(this.length - i)
+fun CharSequence.subEnd(i: Int) = this.substring(this.length - i)
 
 /**
  * 获取前面i个字符串
  */
-fun String.subStart(i: Int) = this.substring(0, i)
+fun CharSequence.subStart(i: Int) = this.substring(0, i)
 
 /**
  * 删除前面i位,默认为1
  */
-fun String.delFirst(i: Int = 1): String {
+fun CharSequence.delFirst(i: Int = 1): String {
     try {
         return this.substring(i, this.length)
     } catch (a: Exception) {
@@ -71,7 +71,7 @@ fun String.delFirst(i: Int = 1): String {
 /**
  * 删除最后i位,默认为1
  */
-fun String.delLast(i: Int = 1): String {
+fun CharSequence.delLast(i: Int = 1): String {
     try {
         return this.substring(0, this.length - i)
     } catch (a: Exception) {
@@ -136,6 +136,41 @@ fun String?.tolong(): Long {
     } else {
         return toLong
     }
+}
+/**
+ * 限制最大最小值
+ */
+fun Int.limitMinMax(mix: Int? = null, max: Int? = null): Int {
+    if (mix != null && this < mix) {
+        return mix
+    } else if (max != null && this > max) {
+        return max
+    }
+    return this
+}
+
+/**
+ * 限制最大最小值
+ */
+fun Double.limitMinMax(mix: Double? = null, max: Double? = null): Double {
+    if (mix != null && this < mix) {
+        return mix
+    } else if (max != null && this > max) {
+        return max
+    }
+    return this
+}
+
+/**
+ * 限制最大最小值
+ */
+fun Float.limitMinMax(mix: Double? = null, max: Double? = null): Float {
+    if (mix != null && this < mix) {
+        return mix.toFloat()
+    } else if (max != null && this > max) {
+        return max.toFloat()
+    }
+    return this
 }
 
 /**
@@ -225,7 +260,7 @@ fun String.decimals1(): String {
  * 缩小第一位的字
  * @param value
  */
-fun String.zoomSmallFirst(): SpannableString {
+fun CharSequence.zoomSmallFirst(): SpannableString {
     var spannableString = SpannableString(this)
     if (isNotEmpty()) {
         spannableString.setSpan(RelativeSizeSpan(0.7f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -234,10 +269,10 @@ fun String.zoomSmallFirst(): SpannableString {
 }
 
 /**
- * 缩放小数点前的字
+ * 缩放小数点前的字，默认放大1.5倍
  * @param value
  */
-fun String.zoomPointBefor(rate: Float = 1.5f): SpannableString {
+fun CharSequence.zoomPointBefor(rate: Float = 1.5f): SpannableString {
     var spannableString = SpannableString(this)
     if (isNotEmpty()) {
         if (contains(".")) {
@@ -248,10 +283,10 @@ fun String.zoomPointBefor(rate: Float = 1.5f): SpannableString {
 }
 
 /**
- * 缩放前面的X个字Y倍
+ * 缩放前面的X个字Y倍，默认放大第一个字1.5位
  * @param value
  */
-fun String.zoomStart(x: Int = 1, rate: Float = 1.5f): SpannableString {
+fun CharSequence.zoomStart(x: Int = 1, rate: Float = 1.5f): SpannableString {
     var spannableString = SpannableString(this)
     if (isNotEmpty()) {
         spannableString.setSpan(RelativeSizeSpan(rate), 0, x, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -322,7 +357,7 @@ fun CharSequence?.subAfter(separator: String, isLastSeparator: Boolean = true): 
 /***
  * 获取url 指定name的value;
  */
-fun CharSequence.getUrlValueByName( name: String): String {
+fun CharSequence.getUrlValueByName(name: String): String {
     var result = ""
     val index = this.indexOf("?")
     val temp = this.substring(index + 1)

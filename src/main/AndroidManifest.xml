@@ -2,8 +2,10 @@
     package="a.tlib">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--适配安卓10分区问题,解决IM        android:requestLegacyExternalStorage="true"-->
+    <!--    把应用切换到前台的权限-->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
 
+    <!--适配安卓10分区问题,解决IM        android:requestLegacyExternalStorage="true"-->
     <application
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">

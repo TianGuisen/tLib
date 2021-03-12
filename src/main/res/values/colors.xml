@@ -22,6 +22,7 @@
     <color name="c_333">#333333</color>
     <color name="c_dbd">#DBDBDB</color>
     <color name="c_fe4">#FE4019</color>
+    <color name="c_cf4">#CF4C45</color>
     <color name="textColor06">#666666</color>
     <color name="textColor08">#888888</color>
     <color name="textColor09">#999999</color>
@@ -214,6 +215,7 @@
     <color name="color_d0">#D0132B</color>
     <color name="color_fced">#FCEDCF</color>
     <color name="color_ffec">#FFECEB</color>
+    <color name="c_ffe5">#FFE5BD</color>
     <color name="color_6e4d">#6E4D2C</color>
     <color name="c_111">#111111</color>
     <color name="c_d01">#D0132B</color>

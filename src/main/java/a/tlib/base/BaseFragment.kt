@@ -67,9 +67,9 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         ImmersionBar.with(this)
                 .statusBarColor(R.color.status_bar_color_transparent_black)
                 .navigationBarColor(R.color.white)
-//                .statusBarDarkFont(true)
+                .statusBarDarkFont(true)
 //                .navigationBarDarkIcon(true)
-                .autoDarkModeEnable(true)
+//                .autoDarkModeEnable(true)
                 .init()
     }
 

@@ -1,6 +1,5 @@
 package a.tlib.utils
 
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,165 +17,10 @@ object DateUtil {
     val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
     /**
-     * yyyy-MM-dd字符串
+     * 获取当前日期
      */
-    val DEFAULT_FORMAT_DATE = "yyyy-MM-dd"
-
-    /**
-     * HH:mm:ss字符串
-     */
-    val DEFAULT_FORMAT_TIME = "HH:mm:ss"
-
-    /**
-     * mm:ss字符串
-     */
-    val MS_FORMAT_TIME = "mm:ss"
-
-    val FORMAT_TOW = "MM月dd日 HH:mm"
-
-    val FORMAT_MOUTH_DAY_MINUTE = "MM月dd日  HH:mm:ss"
-
-    val FORMAT_YEAR_MOUTH_DAY = "yyyy/MM/dd"
-
-    val YMDHMFormat by lazy { SimpleDateFormat("yyyy/MM/dd HH:mm") }
-    val HMSMDFormat by lazy { SimpleDateFormat("HH:mm:ss MM/dd") }
-
-    /**
-     * yy/mm/dd
-     */
-    fun getTimeYearMouthDay(time: Long): String {
-        return SimpleDateFormat(FORMAT_YEAR_MOUTH_DAY).format(Date(time))
-    }
-
-    /**
-     * dd HH:mm
-     */
-    fun getTimeHourMinuteSecond(time: Long): String {
-        return SimpleDateFormat(DEFAULT_FORMAT_TIME).format(Date(time))
-    }
-
-    /**
-     * mm dd HH:mm
-     */
-    fun getTimeMouthDayHourMinute(time: Long): String {
-        return SimpleDateFormat(FORMAT_MOUTH_DAY_MINUTE).format(Date(time))
-    }
-
-    /**
-     * mm dd HH:mm
-     */
-    fun getTimeDataTwo(time: Long): String {
-        return SimpleDateFormat(FORMAT_TOW).format(Date(time))
-    }
-
-    /**
-     * yyyy-mm-dd
-     */
-    fun getTimeDataY_M_D(time: Long): String {
-        return SimpleDateFormat(DEFAULT_FORMAT_DATE).format(Date(time))
-    }
-
-    /**
-     * yyyy-MM-dd HH:mm:ss格式
-     */
-    val defaultDateTimeFormat: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
-
-        override fun initialValue(): SimpleDateFormat {
-            return SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT)
-        }
-
-    }
-
-    /**
-     * yyyy-MM-dd格式
-     */
-    val defaultDateFormat: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
-
-        override fun initialValue(): SimpleDateFormat {
-            return SimpleDateFormat(DEFAULT_FORMAT_DATE)
-        }
-
-    }
-
-    /**
-     * HH:mm:ss格式
-     */
-    val defaultTimeFormat: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
-
-        override fun initialValue(): SimpleDateFormat {
-            return SimpleDateFormat(DEFAULT_FORMAT_TIME)
-        }
-
-    }
-
-    /**
-     * mm:ss格式
-     */
-    val msTimeFormat: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
-
-        override fun initialValue(): SimpleDateFormat {
-            return SimpleDateFormat(MS_FORMAT_TIME)
-        }
-
-    }
-
-    /**
-     * 将long时间转成yyyy-MM-dd HH:mm:ss字符串<br></br>
-     *
-     * @param timeInMillis 时间long值
-     * @return yyyy-MM-dd HH:mm:ss
-     */
-    fun getDateTimeFromMillis(timeInMillis: Long): String {
-        return getDateTimeFormat(Date(timeInMillis))
-    }
-
-    /**
-     * 将long时间转成yyyy-MM-dd HH:mm字符串
-     */
-    fun getYMDHMFromMillis(timeInMillis: Long): String {
-        return YMDHMFormat.format(Date(timeInMillis))
-    }
-
-    /**
-     * 将date转成yyyy-MM-dd HH:mm:ss字符串
-     * <br></br>
-     *
-     * @param date Date对象
-     * @return yyyy-MM-dd HH:mm:ss
-     */
-    fun getDateTimeFormat(date: Date): String {
-        return dateSimpleFormat(date, defaultDateTimeFormat.get())
-    }
-
-    /**
-     * 将date转成yyyy-MM-dd字符串<br></br>
-     *
-     * @param date Date对象
-     * @return yyyy-MM-dd
-     */
-    fun getDateFormat(date: Date): String {
-        return dateSimpleFormat(date, defaultDateFormat.get())
-    }
-
-    /**
-     * 获得HH:mm:ss的时间
-     *
-     * @param date
-     * @return
-     */
-    fun getTimeFormat(date: Date): String {
-        return dateSimpleFormat(date, defaultTimeFormat.get())
-    }
-
-    /**
-     * 获得mm:ss的时间
-     *
-     * @param date
-     * @return
-     */
-    @JvmStatic
-    fun getTimeMSFormat(date: Date): String {
-        return dateSimpleFormat(date, msTimeFormat.get())
+    fun getCurrentTime(formatterStr: String): String {
+        return SimpleDateFormat(formatterStr).format(Date(System.currentTimeMillis()))
     }
 
     /**
@@ -193,6 +37,89 @@ object DateUtil {
         if (format == null)
             format2 = defaultDateTimeFormat.get()
         return if (date == null) "" else format2!!.format(date)
+    }
+
+    /**
+     * 将时间戳date 按照formatStr格式转成字符串
+     * @param format 格式比如yyyy-MM-dd HH:mm:ss
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    fun dateSimpleFormat(date: Date, formatStr: String): String {
+        return SimpleDateFormat(formatStr).format(date)
+    }
+
+    /**
+     * 将时间戳date long按照formatStr格式转成字符串
+     * @param format 格式比如yyyy-MM-dd HH:mm:ss
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    fun dateSimpleFormat(date: Long, formatStr: String): String {
+        var date = date
+        if (date < 10000000000) {
+            date = date * 1000
+        }
+        return SimpleDateFormat(formatStr).format(date)
+    }
+
+    /**
+     * 秒转时间
+     * second时间
+     * 后面为对应时间的单位文字，比如天/时/分，比如-，比如/
+     */
+    fun secondToTime(second: Long, dayUnitStr: String? = null, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
+        var str = ""
+        var second = second
+        val day = second / (24 * 60 * 60)
+        if (day > 0 && dayUnitStr != null) {
+            str = day.toString() + dayUnitStr
+        }
+        second = second - day * 24 * 60 * 60
+        val hour = second / (60 * 60)
+        if (hour > 0 && hourUnitStr != null) {
+            str = str + hour.toString() + hourUnitStr
+        }
+        second = second - hour * 60 * 60
+        val minute = second / 60
+        if (minute > 0 && minuteUnitStr != null) {
+            str = str + minute.toString() + minuteUnitStr
+        }
+        second = second - minute * 60
+        if (second > 0) {
+            str = str + second.toString() + secondUnitStr
+        }
+        return str
+    }
+
+    /**
+     * yyyy-MM-dd HH:mm:ss格式
+     */
+    val defaultDateTimeFormat: ThreadLocal<SimpleDateFormat> = object : ThreadLocal<SimpleDateFormat>() {
+
+        override fun initialValue(): SimpleDateFormat {
+            return SimpleDateFormat(DEFAULT_DATE_TIME_FORMAT)
+        }
+
+    }
+
+    /**
+     * 将long时间转成yyyy-MM-dd HH:mm:ss字符串<br></br>
+     *
+     * @param timeInMillis 时间long值
+     * @return yyyy-MM-dd HH:mm:ss
+     */
+    fun getDateTimeFromMillis(timeInMillis: Long): String {
+        return dateSimpleFormat(timeInMillis, "yyyy-MM-dd HH:mm:ss")
+    }
+
+    /**
+     * 获得mm:ss的时间
+     *
+     * @param date
+     * @return
+     */
+    @JvmStatic
+    fun getTimeMSFormat(date: Date): String {
+        return dateSimpleFormat(date, "mm:ss")
     }
 
 
@@ -228,34 +155,6 @@ object DateUtil {
         return date.time / 1000
     }
 
-    /**
-     * 秒转时间
-     * second时间
-     * 后面为对应时间的单位文字，比如天/时/分，比如-，比如/
-     */
-    fun secondToTime(second: Long, dayUnitStr: String = "", hourUnitStr: String = "", minuteUnitStr: String = "", secondUnitStr: String = ""): String {
-        var str = ""
-        var second = second
-        val day = second / (24 * 60 * 60)
-        if (day > 0 && dayUnitStr.isNotEmpty()) {
-            str = day.toString() + dayUnitStr
-        }
-        second = second - day * 24 * 60 * 60
-        val hour = second / (60 * 60)
-        if (hour > 0 && hourUnitStr.isNotEmpty()) {
-            str = str + hour.toString() + hourUnitStr
-        }
-        second = second - hour * 60 * 60
-        val minute = second / 60
-        if (minute > 0 && minuteUnitStr.isNotEmpty()) {
-            str = str + minute.toString() + minuteUnitStr
-        }
-        second = second - minute * 60
-        if (second > 0 && secondUnitStr.isNotEmpty()) {
-            str = str + second.toString() + secondUnitStr
-        }
-        return str
-    }
 
     /**
      * 根据制定的单位获取特定的日期

@@ -31,7 +31,6 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_youbo_goods_retrun" />
         </com.ruffian.library.widget.RFrameLayout>
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"

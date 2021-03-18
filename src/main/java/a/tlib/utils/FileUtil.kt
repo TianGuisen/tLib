@@ -14,10 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.text.DecimalFormat
 import java.util.concurrent.ExecutionException
 
@@ -33,7 +30,9 @@ object FileUtil {
 
     /**
      * 文件存放路径
+     * android/data/com.haibaoshow.youbo/
      */
+    @JvmField
     val fileType = Environment.getExternalStorageDirectory().toString() + "/youbo/"
 
 
@@ -118,7 +117,7 @@ object FileUtil {
         }
         return cacheSize
     }
-    
+
     fun deleteFiles(root: File) {
         val files = root.listFiles()
         if (files != null) {
@@ -174,6 +173,7 @@ object FileUtil {
     fun createFile(downloadPath: String?, fileName: String?): File? {
         return File(downloadPath, fileName)
     }
+
     @JvmStatic
     fun imageToBase64(path: String?): String {
         if (TextUtils.isEmpty(path)) {
@@ -202,5 +202,36 @@ object FileUtil {
             }
         }
         return result!!
+    }
+
+    /**
+     * 从assets目录中复制某文件内容
+     *
+     * @param assetFileName assets目录下的文件
+     * @param newFileName   复制到/data/data/package_name/files/目录下文件名
+     */
+    @JvmStatic
+    fun copyAssetsToAppFiles(context: Context, assetFileName: String, newFileName: String) {
+        var `is`: InputStream? = null
+        var fos: FileOutputStream? = null
+        try {
+            `is` = context.getAssets().open(assetFileName)
+            fos = context.openFileOutput(newFileName, Context.MODE_PRIVATE)
+            var byteCount = 0
+            val buffer = ByteArray(1024)
+            while (`is`.read(buffer).also { byteCount = it } != -1) {
+                fos!!.write(buffer, 0, byteCount)
+            }
+            fos!!.flush()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                `is`?.close()
+                fos?.close()
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }

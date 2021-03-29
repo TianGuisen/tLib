@@ -88,7 +88,7 @@ dependencies {
     //https://github.com/JeremyLiao/LiveEventBus
     api 'com.jeremyliao:live-event-bus-x:1.5.7'
     //UI库,https://github.com/RuffianZhong/RWidgetHelper,需要及时检查使用最新版本
-    api 'com.ruffian.library:RWidgetHelper-AndroidX:0.0.6'
+    api 'com.ruffian.library:RWidgetHelper-AndroidX:0.0.9'
     api 'com.google.android.material:material:1.1.0'
 //    api 'com.tencent.bugly:crashreport_upgrade:1.4.2'
 //    api 'com.tencent.bugly:nativecrashreport:3.7.1'

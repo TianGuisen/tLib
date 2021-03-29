@@ -1,4 +1,3 @@
-
 import a.tlib.BuildConfig
 import a.tlib.LibApp
 import a.tlib.utils.AppUtil
@@ -121,8 +120,11 @@ object Interceptors {
                             }
                             requestString.delete(requestString.length - 1, requestString.length)
                         }
-                    } else {
-                        requestString.append("\nbody:" + buffer.readString(charset))
+                    } else if (body is MultipartBody) {
+                        requestString.append("\nbody:")
+                        body.parts.forEach {
+                            requestString.append(it.headers)
+                        }
                     }
                 }
                 //打印请求json

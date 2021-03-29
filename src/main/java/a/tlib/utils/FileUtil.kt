@@ -1,14 +1,21 @@
 package a.tlib.utils
 
+import a.tlib.LibApp
 import a.tlib.LibApp.app
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
+import android.content.*
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
+import android.os.FileUtils
+import android.provider.DocumentsContract
+import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Base64
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -16,7 +23,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
 import java.text.DecimalFormat
+import java.util.*
 import java.util.concurrent.ExecutionException
+
 
 /**
  * @author 田桂森 2020/1/6 0006
@@ -170,7 +179,7 @@ object FileUtil {
      * @return 文件
      */
     @JvmStatic
-    fun createFile(downloadPath: String?, fileName: String?): File? {
+    fun createFile(downloadPath: String, fileName: String): File? {
         return File(downloadPath, fileName)
     }
 
@@ -233,5 +242,221 @@ object FileUtil {
                 e.printStackTrace()
             }
         }
+    }
+
+    /**
+     * 通过path获取文件名
+     */
+    @JvmStatic
+    fun getFileNameFromPath(path: String?, split: Char = '/'): String? {
+        if (path.isNullOrBlank()) return null
+        val cut = path.lastIndexOf(split)
+        if (cut != -1) return path.substring(cut + 1)
+        return path
+    }
+
+    /**
+     * 通过uri获取文件扩展名
+     */
+    @JvmStatic
+    fun getExtension(uri: Uri?): String {
+        var name = if (uri == null) return "" else ""
+        app.contentResolver.query(uri, null, null, null, null)
+                ?.use { c: Cursor ->
+                    if (c.moveToFirst()) name = getExtension(c.getString(c.getColumnIndex(OpenableColumns.DISPLAY_NAME)))
+                }
+        return name
+    }
+
+    /**
+     * url : https://app-xxx-oss/xxx.gif
+     * fileName : xxx.gif
+     * @return 默认返回gif, fullExtension=false ;
+     *         substring时不加1为 .gif, fullExtension=true
+     */
+    @JvmStatic
+    private fun getExtension(pathOrName: String?, split: Char, fullExtension: Boolean = false): String {
+        if (pathOrName.isNullOrBlank()) return ""
+        val dot = pathOrName.lastIndexOf(split)
+        return if (dot != -1) pathOrName.substring(
+                if (fullExtension) dot
+                else (dot + 1)
+        ).toLowerCase(Locale.getDefault())
+        else "" // No extension.
+    }
+
+    /**
+     * 通过path获取文件扩展名，比如jpg
+     */
+    @JvmStatic
+    fun getExtension(pathOrName: String): String = getExtension(pathOrName, '.', false)
+
+    /**
+     * 通过path获取文件扩展名，比如.jpg
+     */
+    @JvmStatic
+    fun getExtensionFull(pathOrName: String): String = getExtension(pathOrName, '.', true)
+
+    /**
+     * 通过Uri获取文件名
+     */
+    @JvmStatic
+    fun getFileNameFromUri(uri: Uri?): String? {
+        if (uri == null) return null
+        var filename: String? = null
+
+        val resolver = LibApp.app.contentResolver
+        val mimeType = resolver.getType(uri)
+
+        if (mimeType == null) {
+            filename = getFileNameFromPath(getFileAbsolutePath(app, uri))
+        } else {
+            resolver.query(uri, null, null, null, null)?.use { c: Cursor ->
+                val nameIndex = c.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                c.moveToFirst()
+                filename = c.getString(nameIndex)
+            }
+        }
+        return filename
+    }
+
+    /**
+     * 根据Uri获取文件绝对路径，解决Android4.4以上版本Uri转换 兼容Android 10
+     *
+     * @param context
+     * @param uri
+     */
+    @JvmStatic
+    fun getFileAbsolutePath(context: Context?, uri: Uri?): String? {
+        if (context == null || uri == null) {
+            return null
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return getRealFilePath(context, uri)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && DocumentsContract.isDocumentUri(context, uri)) {
+            if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).toTypedArray()
+                val type = split[0]
+                if ("primary".equals(type, ignoreCase = true)) {
+                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                }
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                val id = DocumentsContract.getDocumentId(uri)
+                val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
+                return getDataColumn(context, contentUri, null, null)
+            } else if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).toTypedArray()
+                val type = split[0]
+                var contentUri: Uri? = null
+                if ("image" == type) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                } else if ("video" == type) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                } else if ("audio" == type) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                }
+                val selection = MediaStore.Images.Media._ID + "=?"
+                val selectionArgs = arrayOf(split[1])
+                return getDataColumn(context, contentUri!!, selection, selectionArgs)
+            }
+        } // MediaStore (and general)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return uriToFileApiQ(context, uri)
+        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            // Return the remote address
+            return if ("com.google.android.apps.photos.content".equals(uri.getAuthority())) {
+                uri.lastPathSegment
+            } else getDataColumn(context, uri, null, null)
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            return uri.path
+        }
+        return null
+    }
+
+    /**
+     * Android 10 以上适配
+     * @param context
+     * @param uri
+     * @return
+     */
+    @JvmStatic
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private fun uriToFileApiQ(context: Context, uri: Uri): String? {
+        var file: File? = null
+        //android10以上转换
+        if (uri.scheme == ContentResolver.SCHEME_FILE) {
+            file = File(uri.path)
+        } else if (uri.scheme == ContentResolver.SCHEME_CONTENT) {
+            //把文件复制到沙盒目录
+            val contentResolver = context.contentResolver
+            val cursor = contentResolver.query(uri, null, null, null, null)
+            if (cursor!!.moveToFirst()) {
+                val displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                try {
+                    val `is` = contentResolver.openInputStream(uri)
+                    val cache = File(context.externalCacheDir!!.absolutePath, displayName)
+                    val fos = FileOutputStream(cache)
+                    FileUtils.copy(`is`!!, fos)
+                    file = cache
+                    fos.close()
+                    `is`!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        return file!!.absolutePath
+    }
+
+    /**
+     * 4.4以下uri转path
+     */
+    @JvmStatic
+    private fun getRealFilePath(context: Context, uri: Uri?): String? {
+        if (null == uri) {
+            return null
+        }
+        val scheme = uri.scheme
+        var data: String? = null
+        if (scheme == null) {
+            data = uri.path
+        } else if (ContentResolver.SCHEME_FILE == scheme) {
+            data = uri.path
+        } else if (ContentResolver.SCHEME_CONTENT == scheme) {
+            val projection = arrayOf(MediaStore.Images.ImageColumns.DATA)
+            val cursor: Cursor? = context.contentResolver.query(uri, projection, null, null, null)
+
+//            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    val index: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                    if (index > -1) {
+                        data = cursor.getString(index)
+                    }
+                }
+                cursor.close()
+            }
+        }
+        return data
+    }
+
+    @JvmStatic
+    private fun getDataColumn(context: Context, uri: Uri, selection: String? = null, selectionArgs: Array<String>? = null): String? {
+        var cursor: Cursor? = null
+        val column = MediaStore.Images.Media.DATA
+        val projection = arrayOf(column)
+        try {
+            cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                val index = cursor.getColumnIndexOrThrow(column)
+                return cursor.getString(index)
+            }
+        } finally {
+            cursor?.close()
+        }
+        return null
     }
 }

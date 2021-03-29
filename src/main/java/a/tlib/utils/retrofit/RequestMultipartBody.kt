@@ -1,5 +1,7 @@
 package a.tlib.utils.retrofit
 
+import com.orhanobut.logger.YLog
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -7,12 +9,9 @@ import java.io.File
 
 /**
  * @author 田桂森 2020/5/10 0010
- * MultipartBody上传文字和图片
- *
-@POST("")
-@Multipart
-fun post(@Part partList: List<MultipartBody.Part>): Single<ResWrapper<Any>>
+ *废弃，使用@UpLoadFileType上传
  */
+@Deprecated("废弃，使用@UpLoadFileType上传")
 class RequestMultipartBody {
     companion object {
         fun create() = RequestMultipartBody()
@@ -25,6 +24,13 @@ class RequestMultipartBody {
         return this
     }
 
+//    fun putFile(name: String, fileName: String, file: File, progressListener:  ((progress:Long,total:Long,finish:Boolean)->Unit)?=null): RequestMultipartBody {
+//        var upLoadBody = UploadFileRequestBody(file, progressListener)
+//        val filedata = MultipartBody.Part.createFormData(name, fileName, upLoadBody)
+//        parts.add(filedata)
+//        return this
+//    }
+
     fun putImg(name: String, fileName: String, file: File): RequestMultipartBody {
         val imageBody: RequestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val filedata = MultipartBody.Part.createFormData(name, fileName, imageBody)
@@ -33,9 +39,9 @@ class RequestMultipartBody {
     }
 
     fun putImgs(name: String, fileName: String, fileList: MutableList<File>): RequestMultipartBody {
-        var fileName2=fileName
+        var fileName2 = fileName
         fileList.forEach { file ->
-            fileName2=fileName2+1
+            fileName2 = fileName2 + 1
             val imageBody: RequestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
             val filedata = MultipartBody.Part.createFormData(name, fileName2, imageBody)
             parts.add(filedata)

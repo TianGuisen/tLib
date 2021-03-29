@@ -48,45 +48,4 @@ fun <T> Observable<T>.bindMain(life: LifecycleOwner): ObservableSubscribeProxy<T
             .observeOn(AndroidSchedulers.mainThread())
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(life, Lifecycle.Event.ON_DESTROY)))
 }
-///**
-// * 订阅在io,回调在main
-// * 传入fragment会绑定生命周期在destroy的时候取消订阅
-// * 传入actvity会绑定生命周期在destroy的时候取消订阅
-// */
-//fun <T> ioMain(life: LifecycleProvider<*>): SingleTransformer<T, T> {
-//    return object : SingleTransformer<T, T> {
-//        @SuppressLint("CheckResult")
-//        override fun apply(upstream: Single<T>): SingleSource<T> {
-//            if (life is BaseFragment) {
-//                upstream.compose(life.bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-//            } else if (life is BaseActivity) {
-//                upstream.compose(life.bindUntilEvent(ActivityEvent.DESTROY))
-//            }
-//            return upstream.subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//
-//        }
-//    }
-//}
-//
-///**
-// * 订阅在io,回调在io
-// * 传入fragment会绑定生命周期在destroy的时候取消订阅
-// * 传入actvity会绑定生命周期在destroy的时候取消订阅
-// */
-//fun <T> ioIo(life: LifecycleProvider<*>): SingleTransformer<T, T> {
-//    return object : SingleTransformer<T, T> {
-//        @SuppressLint("CheckResult")
-//        override fun apply(upstream: Single<T>): SingleSource<T> {
-//            if (life is BaseFragment) {
-//                upstream.compose(life.bindUntilEvent(FragmentEvent.DESTROY_VIEW))
-//            } else if (life is BaseActivity) {
-//                upstream.compose(life.bindUntilEvent(ActivityEvent.DESTROY))
-//            }
-//            return upstream.subscribeOn(Schedulers.io())
-//                    .observeOn(Schedulers.io())
-//        }
-//    }
-//}
-
 

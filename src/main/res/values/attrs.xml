@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    公共的自定义属性-->
+    <attr name="t_text" format="string" />
+    <attr name="t_textColor" format="color" />
+    <attr name="t_textSize" format="dimension" />
 
     <declare-styleable name="PagerSlidingTab">
         <attr name="indicatorColor" format="color" />
@@ -100,6 +104,11 @@
 
     <declare-styleable name="TRecyclerView">
         <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="RotateTextView">
+        <attr name="t_textColor" />
+        <attr name="t_text" />
+        <attr name="t_textSize" />
     </declare-styleable>
 
 </resources>

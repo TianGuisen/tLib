@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * @author 田桂森 2021/3/23 0023
  */
-class GlidePagerAdapter(private val list: List<String>) : PagerAdapter() {
+class GlidePagerAdapter(var list: MutableList<String>) : PagerAdapter() {
     override fun getCount(): Int {
         return list.size
     }
@@ -24,7 +24,7 @@ class GlidePagerAdapter(private val list: List<String>) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val imageView = ImageView(container.context)
-        imageView.load(container.context, list[position], bannerCommonOptions)
+        imageView.load(container.context, list[position], RequestOptions().fitCenter())
         container.addView(imageView)
         return imageView
     }
@@ -35,11 +35,9 @@ class GlidePagerAdapter(private val list: List<String>) : PagerAdapter() {
 
 }
 
-class GlidePagerAdapter2(private val list: List<String>) : PagerAdapter() {
+class GlidePagerAdapter2(var list: MutableList<String>) : PagerAdapter() {
     var op = RequestOptions()
             .fitCenter()
-            .error(R.drawable.banner_null_img)
-            .placeholder(R.drawable.banner_null_img)
             .transform(RotateTransformation(90f))
 
     override fun getCount(): Int {

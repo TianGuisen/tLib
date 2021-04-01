@@ -42,7 +42,7 @@ object FileUtil {
      * android/data/com.haibaoshow.youbo/
      */
     @JvmField
-    val fileType = Environment.getExternalStorageDirectory().toString() + "/youbo/"
+    val fileType = app.getExternalFilesDir(null).toString() + "/youbo/"
 
 
     /**
@@ -340,7 +340,7 @@ object FileUtil {
                 val split = docId.split(":".toRegex()).toTypedArray()
                 val type = split[0]
                 if ("primary".equals(type, ignoreCase = true)) {
-                    return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                    return app.getExternalFilesDir(null).toString() + "/" + split[1]
                 }
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 val id = DocumentsContract.getDocumentId(uri)

@@ -24,13 +24,6 @@ class RequestMultipartBody {
         return this
     }
 
-//    fun putFile(name: String, fileName: String, file: File, progressListener:  ((progress:Long,total:Long,finish:Boolean)->Unit)?=null): RequestMultipartBody {
-//        var upLoadBody = UploadFileRequestBody(file, progressListener)
-//        val filedata = MultipartBody.Part.createFormData(name, fileName, upLoadBody)
-//        parts.add(filedata)
-//        return this
-//    }
-
     fun putImg(name: String, fileName: String, file: File): RequestMultipartBody {
         val imageBody: RequestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         val filedata = MultipartBody.Part.createFormData(name, fileName, imageBody)

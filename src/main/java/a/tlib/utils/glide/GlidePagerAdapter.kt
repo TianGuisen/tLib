@@ -32,7 +32,6 @@ class GlidePagerAdapter(var list: MutableList<String>) : PagerAdapter() {
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
     }
-
 }
 
 class GlidePagerAdapter2(var list: MutableList<String>) : PagerAdapter() {

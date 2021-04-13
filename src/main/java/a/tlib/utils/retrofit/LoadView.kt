@@ -51,6 +51,8 @@ class LoadView : FrameLayout {
     var mEmptyIcon: Int = R.drawable.order_black
     var mEmptyText: String = "还没有数据哦~"
 
+    var enableErrorView = true//默认开启错误视图
+
     /**
      * 获取当前状态
      */
@@ -126,13 +128,15 @@ class LoadView : FrameLayout {
             }
         }
     }
+
     /**
      * 空列表时
      */
-    fun setEmptyTextImg(text: String,imgId:Int=0) {
+    fun setEmptyTextImg(text: String, imgId: Int = 0) {
         mEmptyText = text
-        mEmptyIcon=imgId
+        mEmptyIcon = imgId
     }
+
     /**
      * 空列表时显示的文字内容
      */
@@ -255,6 +259,10 @@ class LoadView : FrameLayout {
      * @param layoutParams 布局参数
      */
     fun showError(view: View?, layoutParams: ViewGroup.LayoutParams) {
+        if (!enableErrorView) {
+            showContent()
+            return
+        }
         checkNull(view, "Error view is null.")
         checkNull(layoutParams, "Layout params is null.")
         viewStatus = STATUS_ERROR

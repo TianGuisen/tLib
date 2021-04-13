@@ -15,6 +15,33 @@ import com.ruffian.library.widget.iface.RHelper
  */
 open class MyViewHolder(view: View) : BaseViewHolder(view) {
 
+    fun gone(id: Int, boolean: Boolean = true) {
+        getView<View>(id).let {
+            it.visibility = if (boolean) View.GONE else View.VISIBLE
+        }
+    }
+
+    fun show(id: Int, boolean: Boolean = true) {
+        getView<View>(id).let {
+            it.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    fun showGone(id: Int, boolean: Boolean = true) {
+        getView<View>(id).let {
+            it.visibility = if (boolean) View.VISIBLE else View.GONE
+        }
+    }
+
+    fun hide(id: Int, boolean: Boolean = true) {
+        getView<View>(id).let {
+            it.visibility = if (boolean) View.INVISIBLE else View.VISIBLE
+        }
+    }
+
+    fun isShow(id: Int) = getView<View>(id).visibility == View.VISIBLE
+    fun isHide(id: Int) = getView<View>(id).visibility == View.INVISIBLE || getView<View>(id).visibility == View.GONE
+
     fun setImageUrl(id: Int, url: Any? = null, ro: RequestOptions? = null) {
         if (url == null) return
         getView<ImageView>(id).let {
@@ -33,5 +60,5 @@ open class MyViewHolder(view: View) : BaseViewHolder(view) {
             it.isSelected = select
         }
     }
-    
+
 }

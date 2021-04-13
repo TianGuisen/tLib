@@ -41,7 +41,7 @@ fun <T> Single<T>.bindMain(life: LifecycleOwner): SingleSubscribeProxy<T> {
 }
 
 /**
- * 绑定生命周期，并回调在子线程
+ * 绑定生命周期，并回调在主线程
  */
 fun <T> Observable<T>.bindMain(life: LifecycleOwner): ObservableSubscribeProxy<T> {
     return subscribeOn(Schedulers.io())

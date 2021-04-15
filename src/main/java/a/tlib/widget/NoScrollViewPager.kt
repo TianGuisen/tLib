@@ -30,7 +30,7 @@ class NoScrollViewPager : ViewPager {
         if (isScroll) {
             return super.onTouchEvent(ev)
         } else {
-            return true
+            return false
         }
     }
 }

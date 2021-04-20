@@ -3,7 +3,6 @@ package com.lb.baselib.retrofit
 import Interceptors
 import a.tlib.BuildConfig
 import a.tlib.utils.gson.GsonUtil.gson
-import a.tlib.utils.retrofit.HostConfig.newHost
 import a.tlib.utils.retrofit.converter.FileConverterFactory
 import a.tlib.utils.retrofit.rxjava2Adapter.RxJava2CallAdapterFactory
 import okhttp3.Interceptor
@@ -31,44 +30,8 @@ object RetrofitService {
     @JvmField
     val fileConverterFactory = FileConverterFactory()
 
-    /**
-     * 直播的请求
-     */
-    val retrofitLive: Retrofit by lazy {
-        val retrofitParams = RetrofitParams()
-        retrofitParams.interceptors.add(Interceptors.HostInterceptor(1))
-        retrofitParams.interceptors.add(paramInterceptor)
-        retrofitParams.interceptors.add(loggerInterceptor)
-        retrofitParams.converterFactory = gsonConverterFactory
-        createRetrofit(retrofitParams)
-    }
-
-    /**
-     * 其他请求
-     */
-    val retrofitOther: Retrofit by lazy {
-        val retrofitParams = RetrofitParams()
-        retrofitParams.interceptors.add(paramInterceptor)
-        retrofitParams.interceptors.add(loggerInterceptor)
-        retrofitParams.converterFactory = gsonConverterFactory
-        createRetrofit(retrofitParams)
-    }
-
-    /**
-     * new
-     */
-    val retrofitNew: Retrofit by lazy {
-        val retrofitParams = RetrofitParams()
-        retrofitParams.interceptors.add(Interceptors.HostInterceptor(2))
-        retrofitParams.interceptors.add(paramInterceptor)
-        retrofitParams.interceptors.add(loggerInterceptor)
-        retrofitParams.converterFactory = gsonConverterFactory
-        createRetrofit(retrofitParams)
-    }
-
     @JvmStatic
-    private fun createRetrofit(params: RetrofitParams): Retrofit {
-
+    fun createRetrofit(params: RetrofitParams): Retrofit {
         val builder = OkHttpClient.Builder()
         for (interceptor in params.interceptors) {
             builder.addInterceptor(interceptor)
@@ -77,7 +40,6 @@ object RetrofitService {
             builder.sslSocketFactory(createSSLSocketFactory(), TrustAllCerts())
                     .hostnameVerifier(TrustAllHostnameVerifier())
         }
-
         builder.retryOnConnectionFailure(true)
                 .connectTimeout(15, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -93,6 +55,7 @@ object RetrofitService {
     }
 
     // 屏蔽证书
+    @JvmStatic
     private fun createSSLSocketFactory(): SSLSocketFactory {
         var ssfFactory: SSLSocketFactory? = null
         try {
@@ -105,11 +68,12 @@ object RetrofitService {
         return ssfFactory!!
     }
 
-    private class RetrofitParams {
-        val interceptors = mutableListOf<Interceptor>()
-        var baseUrl = newHost
-        lateinit var converterFactory: Converter.Factory
-    }
+}
+
+class RetrofitParams {
+    val interceptors = mutableListOf<Interceptor>()
+    var baseUrl = ""
+    lateinit var converterFactory: Converter.Factory
 }
 
 private class TrustAllCerts : X509TrustManager {

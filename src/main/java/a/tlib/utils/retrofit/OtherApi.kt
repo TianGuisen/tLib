@@ -1,16 +1,25 @@
 package a.tlib.utils.retrofit
 
 import a.tlib.bean.WXBean
+import com.lb.baselib.retrofit.RetrofitParams
 import com.lb.baselib.retrofit.RetrofitService
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.ResponseBody
+import retrofit2.Retrofit
 import retrofit2.http.*
 
 /**
  * @author 田桂森 2020/6/10 0010
+ * 其他请求
  */
-val otherApi = RetrofitService.retrofitOther.create(OtherApi::class.java)
+val otherApi: OtherApi by lazy {
+    val retrofitParams = RetrofitParams()
+    retrofitParams.interceptors.add(RetrofitService.paramInterceptor)
+    retrofitParams.interceptors.add(RetrofitService.loggerInterceptor)
+    retrofitParams.converterFactory = RetrofitService.gsonConverterFactory
+    RetrofitService.createRetrofit(retrofitParams).create(OtherApi::class.java)
+}
 
 interface OtherApi {
     /**
@@ -24,7 +33,7 @@ interface OtherApi {
      */
     @GET("https://api.weixin.qq.com/sns/userinfo")
     fun getWXInfo(@Query("access_token") access_token: String, @Query("openid") openid: String): Single<WXBean>
-    
+
     /**
      * 断点下载
      *

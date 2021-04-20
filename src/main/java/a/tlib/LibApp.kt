@@ -1,7 +1,6 @@
 package a.tlib
 
 import a.tlib.utils.*
-import a.tlib.utils.retrofit.HostConfig
 import android.app.Application
 import android.content.Context
 import android.os.Build
@@ -33,7 +32,6 @@ object LibApp {
         appContext.apply {
             app = this
             ActStackManager.register(this)
-            HostConfig.setEnvironment(HostConfig.environmentSP)//设置新框架url
             initLog()
             ToastUtil.init(this)
             fixWebView()

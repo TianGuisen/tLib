@@ -1,15 +1,12 @@
-import a.tlib.BuildConfig
 import a.tlib.LibApp
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
-import a.tlib.utils.retrofit.HostConfig
 import a.tlib.utils.sp
 import android.net.Uri
 import com.orhanobut.logger.Printer
 import com.orhanobut.logger.YLog2
 import okhttp3.*
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okio.Buffer
 import org.json.JSONArray
 import org.json.JSONException
@@ -26,37 +23,6 @@ object Interceptors {
     const val LOGGER_NET_TAG = "retrofit"
     var token = sp.getString("sid", "")!!
 
-    /**
-     * host切换拦截器
-     * @type 0是普通请求，1是直播请求
-     */
-    class HostInterceptor(val type: Int) : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val request = chain.request()
-            val oldHttpUrl = request.url
-            val builder = request.newBuilder()
-            val newBaseUrl: HttpUrl?
-            newBaseUrl = when (type) {
-                1 -> {
-                    HostConfig.liveHost.toHttpUrlOrNull()
-                }
-                2 -> {
-                    HostConfig.newHost.toHttpUrlOrNull()
-                }
-                else -> request.url
-            }
-            newBaseUrl?.run {
-                val newHttpUrl = oldHttpUrl
-                        .newBuilder()
-                        .scheme(scheme)
-                        .host(host)
-                        .port(port)
-                        .build()
-                return chain.proceed(builder.url(newHttpUrl).build())
-            }
-            return chain.proceed(request)
-        }
-    }
 
     /**
      * 参数拦截器
@@ -102,11 +68,6 @@ object Interceptors {
                 val body: RequestBody? = orgRequest.body
                 val buffer = Buffer()
                 body?.writeTo(buffer)
-                var charset = Charset.forName("UTF-8")
-                val contentType = body?.contentType()
-                if (contentType != null) {
-                    charset = contentType.charset(Charset.forName("UTF-8"))
-                }
                 var requestString = StringBuffer("code=" + response?.code +
                         "|method=" + orgRequest.method +
                         "|url=" + Uri.decode(orgRequest.url.toString()) +
@@ -154,7 +115,6 @@ object Interceptors {
                 val jsonObject = JSONObject(json)
                 val message = jsonObject.toString(2)
                 //日志打印不全的时候debug这里复制全部数据
-                d(message)
                 d(message)
                 return
             }

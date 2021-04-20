@@ -1,4 +1,4 @@
-package a.tlib.widget.recyclerDecoration;
+package a.tlib.widget.layoutManager;
 
 import android.content.Context;
 import android.util.AttributeSet;

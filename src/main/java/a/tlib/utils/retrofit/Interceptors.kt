@@ -155,6 +155,7 @@ object Interceptors {
                 val message = jsonObject.toString(2)
                 //日志打印不全的时候debug这里复制全部数据
                 d(message)
+                d(message)
                 return
             }
             if (json.startsWith("[")) {

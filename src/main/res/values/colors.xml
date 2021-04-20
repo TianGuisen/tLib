@@ -34,6 +34,7 @@
     <color name="textcolor_nor">#5c5c5c</color>
     <color name="textShouAdver_grey">#505050</color>
     <color name="transparent">#00000000</color>
+    <color name="c_e2b">#E2B259</color>
 
     <color name="grey_d8">#d8d8d8</color>
     <color name="txt_bg_order">#FF4965</color>
@@ -217,6 +218,7 @@
     <color name="color_ffec">#FFECEB</color>
     <color name="c_ffe5">#FFE5BD</color>
     <color name="color_6e4d">#6E4D2C</color>
+    <color name="c_6e4">#6E4933</color>
     <color name="c_111">#111111</color>
     <color name="c_d01">#D0132B</color>
     <color name="color_ebeb">#EBEBEB</color>

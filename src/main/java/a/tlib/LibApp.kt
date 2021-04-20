@@ -129,7 +129,7 @@ object LibApp {
             mHiddenApiWarningShown.isAccessible = true
             mHiddenApiWarningShown.setBoolean(activityThread, true)
         } catch (e: Exception) {
-            e.printStackTrace()
+            
         }
     }
 

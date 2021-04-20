@@ -10,7 +10,8 @@ import java.io.IOException
 
 /**
  * 上传文件 请求转换器
- * Created by fangs on 2018/11/12.
+ * 如果要实现进度监听，Api中方法的返回类型需要是Observable而不是Single
+ * 因为Single没有onNext方法，进度观察在Observable的onNext方法中。
  */
 class FileRequestBodyConverter : Converter<ArrayMap<String, Any>, RequestBody> {
     //进度发射器
@@ -53,7 +54,7 @@ class FileRequestBodyConverter : Converter<ArrayMap<String, Any>, RequestBody> {
             val requestBody = FileProgressRequestBody(file, "multipart/form-data", uploadOnSubscribe)
             builder.addFormDataPart("file", file.name, requestBody)
         }
-        uploadOnSubscribe!!.setmSumLength(sumLeng)
+        uploadOnSubscribe?.setmSumLength(sumLeng)
         return builder
     }
 
@@ -64,7 +65,7 @@ class FileRequestBodyConverter : Converter<ArrayMap<String, Any>, RequestBody> {
         // TODO 为了简单起见，没有判断file的类型
         val requestBody = FileProgressRequestBody(file, "multipart/form-data", uploadOnSubscribe)
         builder.addFormDataPart("file", file.name, requestBody)
-        uploadOnSubscribe!!.setmSumLength(sumLeng)
+        uploadOnSubscribe?.setmSumLength(sumLeng)
         return builder
     }
 }

@@ -52,7 +52,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     /**
      * 设置背景色
      */
-    fun setBackGroundColor(color: Int) {
+    fun setBackgroundColor(color: Int) {
         rv.setBackgroundColor(color)
         lv?.setBackgroundColor(color)
     }
@@ -72,7 +72,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         srl?.setEnableLoadMore(b)
         enableloadMore = b
     }
-    
+
     /**
      * 主动刷新，重置页码
      */

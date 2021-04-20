@@ -9,6 +9,7 @@ import a.tlib.utils.AutoSizeUtil
 
 /**
  * @author 田桂森 2019/6/14
+ * 废弃，使用SpacesItemDecoration
  * 空格分隔线
  */
 class TSpaceItemDecoration : RecyclerView.ItemDecoration() {
@@ -118,9 +119,9 @@ class TSpaceItemDecoration : RecyclerView.ItemDecoration() {
     override fun onDrawOver(c: Canvas, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
         super.onDrawOver(c, parent, state)
         // 获取RecyclerView当前屏幕Child view的个数
-        val childCount = parent.childCount
+//        val childCount = parent.childCount
         // 获取所有Child view的个数
-        val itemCount = parent.adapter?.itemCount
+//        val itemCount = parent.adapter?.itemCount
         // 通过Canvas绘制矩形（分割线）
 //            c.drawRect(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), mPaint)
     }

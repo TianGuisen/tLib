@@ -141,7 +141,7 @@ public class RxTextTool {
          * @param color 前景色
          * @return {@link Builder}
          */
-        public Builder setForegroundColor(@ColorInt int color) {
+        public Builder setTextColor(@ColorInt int color) {
             this.foregroundColor = color;
             return this;
         }

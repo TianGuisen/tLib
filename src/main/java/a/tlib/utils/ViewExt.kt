@@ -3,11 +3,11 @@ package a.tlib.utils
 import android.content.Context
 import android.graphics.Paint
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 fun View.gone(boolean: Boolean = true) {
     visibility = if (boolean) View.GONE else View.VISIBLE
@@ -57,6 +57,50 @@ val EditText.string get() = this.text.toString()
 
 val TextView.string get() = this.text.toString()
 
+fun View.setPaddingPT(left: Int, top: Int, right: Int, bottom: Int) {
+    setPadding(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+}
+
+/**
+ * @horizontal
+ * @vertical
+ */
+fun View.setMarginPT(horizontal: Int, vertical: Int) {
+    setMarginPT(horizontal, vertical, horizontal, vertical)
+}
+
+fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
+    val params = layoutParams
+    if (params is LinearLayout.LayoutParams) {
+        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+    } else if (params is RelativeLayout.LayoutParams) {
+        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+    } else if (params is FrameLayout.LayoutParams) {
+        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+    } else if (params is SmartRefreshLayout.LayoutParams) {
+        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+    }
+    layoutParams = params
+}
+
+fun View.setWidthHeight(width: Int, height: Int) {
+    val params = layoutParams
+    if (params is LinearLayout.LayoutParams) {
+        params.width = AutoSizeUtil.pt2px(width.toFloat())
+        params.height = AutoSizeUtil.pt2px(height.toFloat())
+    } else if (params is RelativeLayout.LayoutParams) {
+        params.width = AutoSizeUtil.pt2px(width.toFloat())
+        params.height = AutoSizeUtil.pt2px(height.toFloat())
+    } else if (params is FrameLayout.LayoutParams) {
+        params.width = AutoSizeUtil.pt2px(width.toFloat())
+        params.height = AutoSizeUtil.pt2px(height.toFloat())
+    } else if (params is SmartRefreshLayout.LayoutParams) {
+        params.width = AutoSizeUtil.pt2px(width.toFloat())
+        params.height = AutoSizeUtil.pt2px(height.toFloat())
+    }
+    layoutParams = params
+}
+
 /**
  * 双击间隔时间
  */
@@ -74,6 +118,24 @@ fun View.setSingClick(function: (View) -> Unit): View {
         }
     }
     return this
+}
+
+/**
+ * 防重复点击，多个控件共用一个监听使用
+ */
+fun setSingClick(vararg views: View, function: (View) -> Unit) {
+    var temTime: Long = 0
+    val clickLis=object :View.OnClickListener{
+        override fun onClick(v: View) {
+            if (System.currentTimeMillis() - temTime > INTERVAL) {
+                temTime = System.currentTimeMillis()
+                function(v)
+            }
+        }
+    }
+    for (view in views) {
+        view.setOnClickListener (clickLis)
+    }
 }
 
 /**

@@ -18,13 +18,13 @@ import com.ruffian.library.widget.RView
 
 open class TitleBar : RFrameLayout {
     lateinit var view: TitleBar
-    val tv_title by lazy { view.findViewById<TextView>(R.id.tv_title) }
-    val fl_back by lazy { view.findViewById<FrameLayout>(R.id.fl_back) }
-    val iv_back by lazy { view.findViewById<ImageView>(R.id.iv_back) }
-    val iv_right by lazy { view.findViewById<ImageView>(R.id.iv_right) }
-    val fl_right by lazy { view.findViewById<FrameLayout>(R.id.fl_right) }
-    val tv_right by lazy { view.findViewById<RTextView>(R.id.tv_right) }
-    val view_line by lazy { view.findViewById<View>(R.id.view_line) }
+    lateinit var tv_title: TextView
+    lateinit var fl_back: FrameLayout
+    lateinit var iv_back: ImageView
+    lateinit var iv_right: ImageView
+    lateinit var fl_right: FrameLayout
+    lateinit var tv_right: RTextView
+    lateinit var view_line: View
 
     constructor(context: Context) : super(context, null) {}
 
@@ -35,6 +35,13 @@ open class TitleBar : RFrameLayout {
     open fun init() {
         view = RView.inflate(context, R.layout.view_title, this) as TitleBar
         view.helper.setBackgroundColorNormal(getcolor(R.color.black))
+        tv_title = view.findViewById(R.id.tv_title)
+        fl_back = view.findViewById(R.id.fl_back)
+        iv_back = view.findViewById(R.id.iv_back)
+        iv_right = view.findViewById(R.id.iv_right)
+        fl_right = view.findViewById(R.id.fl_right)
+        tv_right = view.findViewById(R.id.tv_right)
+        view_line = view.findViewById(R.id.view_line)
     }
 
     fun setTitle(string: String?): TextView {

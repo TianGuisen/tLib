@@ -125,7 +125,7 @@ fun View.setSingClick(function: (View) -> Unit): View {
  */
 fun setSingClick(vararg views: View, function: (View) -> Unit) {
     var temTime: Long = 0
-    val clickLis=object :View.OnClickListener{
+    val clickLis = object : View.OnClickListener {
         override fun onClick(v: View) {
             if (System.currentTimeMillis() - temTime > INTERVAL) {
                 temTime = System.currentTimeMillis()
@@ -134,7 +134,7 @@ fun setSingClick(vararg views: View, function: (View) -> Unit) {
         }
     }
     for (view in views) {
-        view.setOnClickListener (clickLis)
+        view.setOnClickListener(clickLis)
     }
 }
 
@@ -150,36 +150,3 @@ fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? 
         requestBuilder.into(this)
     }
 }
-//inline fun singClick(crossinline function: (View) -> Unit): View.OnClickListener {
-//    var temTime: Long = 0
-//    return object : View.OnClickListener {
-//        override fun onClick(v: View) {
-//            if (System.currentTimeMillis() - temTime > INTERVAL) {
-//                temTime = System.currentTimeMillis()
-//                function(v)
-//            }
-//        }
-//    }
-//}
-
-//
-//inline fun refreshLis(crossinline refreshLayout: (RefreshLayout) -> Unit): OnRefreshListener {
-//    return object : OnRefreshListener {
-//        override fun onRefresh(refreshLayout: RefreshLayout) {
-//            refreshLayout(refreshLayout)
-//        }
-//    }
-//}
-//
-//inline fun loadMoreLis(crossinline refreshLayout: (RefreshLayout) -> Unit): OnLoadMoreListener {
-//    return object : OnLoadMoreListener {
-//        override fun onLoadMore(refreshLayout: RefreshLayout) {
-//            refreshLayout(refreshLayout)
-//        }
-//    }
-//}
-
-
-
-
-

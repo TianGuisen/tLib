@@ -2,6 +2,7 @@ import a.tlib.LibApp
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
+import a.tlib.utils.isNotNullEmply
 import a.tlib.utils.sp
 import android.net.Uri
 import com.orhanobut.logger.Printer
@@ -23,11 +24,11 @@ object Interceptors {
     const val LOGGER_NET_TAG = "retrofit"
     var token = sp.getString("sid", "")!!
 
-
     /**
      * 参数拦截器
+     * @headerMap  给参数拦截器中添加自定义的请求头
      */
-    class ParamInterceptor : Interceptor {
+    open class ParamInterceptor(val headerMap: MutableMap<String, String>? = null) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
@@ -36,10 +37,16 @@ object Interceptors {
                     .addHeader("Version", AppUtil.getVersionName())
                     .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
                     .addHeader("Device", AppUtil.deviceId)
-                    .addHeader("appType", LibApp.appType)
                     .method(originalRequest.method, originalRequest.body)
-            if (token.isNotEmpty()) {  //统一将token 传入
+            //统一将token 传入
+            if (token.isNotEmpty()) {  
                 requestBuilder.addHeader("token", token)
+            }
+            //添加自定义的其他请求头
+            if (headerMap.isNotNullEmply()) {
+                headerMap!!.forEach {
+                    requestBuilder.addHeader(it.key,it.value)
+                }
             }
             val request = requestBuilder.build()
             if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数

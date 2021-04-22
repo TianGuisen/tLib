@@ -19,16 +19,23 @@ import javax.net.ssl.*
 
 object RetrofitService {
     @JvmField
-    val paramInterceptor = Interceptors.ParamInterceptor()
+    var headerMap: MutableMap<String, String>? = null
 
-    @JvmField
-    val loggerInterceptor = Interceptors.LoggerInterceptor()
+    val paramInterceptor by lazy {
+        Interceptors.ParamInterceptor(headerMap)
+    }
 
-    @JvmField
-    val gsonConverterFactory = GsonConverterFactory.create(gson)
+    val loggerInterceptor by lazy {
+        Interceptors.LoggerInterceptor()
+    }
 
-    @JvmField
-    val fileConverterFactory = FileConverterFactory()
+    val gsonConverterFactory by lazy {
+        GsonConverterFactory.create(gson)
+    }
+
+    val fileConverterFactory by lazy {
+        FileConverterFactory()
+    }
 
     @JvmStatic
     fun createRetrofit(params: RetrofitParams): Retrofit {

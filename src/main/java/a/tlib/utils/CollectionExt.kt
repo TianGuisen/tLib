@@ -12,3 +12,5 @@ public fun <T> List<T>.last(): T? {
     if (isEmpty()) return null
     return this[lastIndex]
 }
+
+fun <K, V> Map<K, V>?.isNotNullEmply(): Boolean = this == null || !isEmpty()

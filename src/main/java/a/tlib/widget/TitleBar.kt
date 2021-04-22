@@ -34,7 +34,7 @@ open class TitleBar : RFrameLayout {
 
     open fun init() {
         view = RView.inflate(context, R.layout.view_title, this) as TitleBar
-        view.helper.setBackgroundColorNormal(LibApp.titleBarColor)
+        view.helper.setBackgroundColorNormal(getcolor(R.color.black))
     }
 
     fun setTitle(string: String?): TextView {

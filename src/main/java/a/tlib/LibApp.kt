@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
+import com.lb.baselib.retrofit.RetrofitService
 import com.orhanobut.logger.*
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -25,10 +26,10 @@ object LibApp {
      * Logger日志的tag
      */
     const val LOGGER_TAG = "logtag"
-    var titleBarColor = 0
-    var appType = ""
     lateinit var app: Application
-    fun init(appContext: Application) {
+
+    @JvmStatic
+    fun init(appContext: Application): LibApp {
         appContext.apply {
             app = this
             ActStackManager.register(this)
@@ -43,10 +44,21 @@ object LibApp {
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
             }
-            titleBarColor=getcolor(R.color.black)
         }
+        return this
     }
 
+    /**
+     * 添加其他请求头
+     */
+    @JvmStatic
+    fun addHeaderMap(vararg params: Pair<String, String>): LibApp {
+        RetrofitService.headerMap = mutableMapOf()
+        RetrofitService.headerMap!!.putAll(params)
+        return this
+    }
+
+    @JvmStatic
     private fun initX5() {
         //腾讯x5
         QbSdk.initX5Environment(app, object : QbSdk.PreInitCallback {
@@ -61,7 +73,8 @@ object LibApp {
         })
     }
 
-    fun initLog() {
+    @JvmStatic
+    private fun initLog() {
         val formatStrategy = TFormatStrategy.newBuilder()
                 .showThreadInfo(false)
                 .methodCount(1)
@@ -86,7 +99,8 @@ object LibApp {
         })
     }
 
-    fun initAutoSize() {
+    @JvmStatic
+    private fun initAutoSize() {
         AutoSizeConfig.getInstance()
                 .setCustomFragment(true)
 //                .setBaseOnWidth(false)//以高度适配
@@ -96,7 +110,7 @@ object LibApp {
                 .setSupportSP(false).supportSubunits = Subunits.PT
     }
 
-
+    @JvmStatic
     private fun initRefresh() {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
@@ -117,6 +131,7 @@ object LibApp {
     /**
      * 隐藏9.0启屏弹窗
      */
+    @JvmStatic
     private fun hidePAPIDialog() {
         try {
             val cls = Class.forName("android.app.ActivityThread")
@@ -127,7 +142,7 @@ object LibApp {
             mHiddenApiWarningShown.isAccessible = true
             mHiddenApiWarningShown.setBoolean(activityThread, true)
         } catch (e: Exception) {
-            
+
         }
     }
 
@@ -135,6 +150,7 @@ object LibApp {
      *  //Android P 以及之后版本不支持同时从多个进程使用具有相同数据目录的WebView
      *  https://blog.csdn.net/W_LIN/article/details/103011926/
      */
+    @JvmStatic
     private fun fixWebView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = AppUtil.getProcessName(app)

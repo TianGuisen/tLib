@@ -45,9 +45,6 @@ object LibApp {
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
             }
-            if (AppUtil.isFirstOpenNewVersion()){
-                migrate(sp, LibApp.app.getSharedPreferences(SPFileName, Context.MODE_PRIVATE))
-            }
         }
         return this
     }

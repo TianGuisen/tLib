@@ -22,27 +22,46 @@ import android.telephony.TelephonyManager
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import com.orhanobut.logger.YLog
 
 
 object AppUtil {
     var sdkVersion = Build.VERSION.SDK_INT
 
+
     /**
      * 获取版本号
      */
+    @JvmStatic
     fun getVersionName(): String {
         val manager: PackageManager = LibApp.app.getPackageManager()
         val info: PackageInfo = manager.getPackageInfo(LibApp.app.getPackageName(), 0)
         return info.versionName
     }
+
     /**
      * 获取版本号
      */
+    @JvmStatic
     fun getVersionCode(): Int {
         val manager: PackageManager = LibApp.app.getPackageManager()
         val info: PackageInfo = manager.getPackageInfo(LibApp.app.getPackageName(), 0)
         return info.versionCode
     }
+
+    /**
+     * 是否第一次打开新版本的app
+     */
+    @JvmStatic
+    fun isFirstOpenNewVersion(): Boolean {
+        var oldVersion by defSP("")
+        if (getVersionName() != oldVersion) {
+            oldVersion = getVersionName()
+            return true
+        }
+        return false
+    }
+
     /**
      * 网络是否链接
      */
@@ -100,8 +119,11 @@ object AppUtil {
         return netType
     }
 
-    fun getProcessName(context: Context?): String? {
-        if (context == null) return null
+    /**
+     * 获取进程名
+     */
+    @JvmStatic
+    fun getProcessName(context: Context): String? {
         val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (processInfo in manager.runningAppProcesses) {
             if (processInfo.pid == Process.myPid()) {
@@ -112,9 +134,19 @@ object AppUtil {
     }
 
     /**
+     * 是否是APP主进程
+     */
+    @JvmStatic
+    fun isMainProcess(context: Context): Boolean {
+        return context.packageName == getProcessName(context)
+    }
+
+    /**
      * 设备id
      */
-    val deviceId: String = Settings.Secure.getString(LibApp.app.contentResolver, Settings.Secure.ANDROID_ID)
+    val deviceId: String by lazy {
+        Settings.Secure.getString(LibApp.app.contentResolver, Settings.Secure.ANDROID_ID)
+    }
 
     /**
      * 拨打电话,需要权限
@@ -221,6 +253,7 @@ object AppUtil {
 
 
     //当本应用位于后台时，则将它切换到最前端
+    @JvmStatic
     fun setTopApp(context: Context) {
         if (isRunningForeground(context)) {
             return
@@ -234,12 +267,13 @@ object AppUtil {
             //找到本应用的 task，并将它切换到前台
             if (taskInfo.topActivity!!.packageName == context.packageName) {
                 activityManager.moveTaskToFront(taskInfo.id, 0)
-                return 
+                return
             }
         }
     }
 
     //判断本应用是否已经位于最前端：已经位于最前端时，返回 true；否则返回 false
+    @JvmStatic
     fun isRunningForeground(context: Context): Boolean {
         val activityManager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager
         val appProcessInfoList = activityManager.runningAppProcesses

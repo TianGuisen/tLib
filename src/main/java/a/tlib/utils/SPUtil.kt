@@ -2,6 +2,8 @@ package a.tlib.utils
 
 import a.tlib.LibApp
 import android.content.Context
+import android.content.SharedPreferences
+import com.tencent.mmkv.MMKV
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -20,7 +22,9 @@ inline fun <reified R, T> R.defSP(key: String, default: T) = SPUtil(key, default
 
 val sp by lazy {
     ///放在SPUtil外面只会加载一次，放在里面每次都会加载
-    LibApp.app.getSharedPreferences(SPFileName, Context.MODE_PRIVATE)
+//    LibApp.app.getSharedPreferences(SPFileName, Context.MODE_PRIVATE)
+    MMKV.initialize(LibApp.app)
+    MMKV.defaultMMKV()!!
 }
 
 class SPUtil<T>(val key: String, val defValue: T) : ReadWriteProperty<Any?, T> {
@@ -39,7 +43,7 @@ class SPUtil<T>(val key: String, val defValue: T) : ReadWriteProperty<Any?, T> {
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         val temKey = if (key.isEmpty()) property.name else key
-        with(sp.edit()) {
+        with(sp) {
             when (value) {
                 is String -> putString(temKey, value)
                 is Boolean -> putBoolean(temKey, value)
@@ -48,11 +52,37 @@ class SPUtil<T>(val key: String, val defValue: T) : ReadWriteProperty<Any?, T> {
                 is Long -> putLong(temKey, value)
                 else -> throw IllegalArgumentException("类型错误")
             }
-            commit()
         }
     }
 }
 
+/**
+ * SharedPreferences的旧数据迁移到mmkv
+ */
+fun migrate(migrateSp:MMKV,preferences: SharedPreferences){
+    val kvs = preferences.all
+    if (kvs != null && kvs.isNotEmpty()) {
+        val iterator = kvs.entries.iterator()
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            val key = entry.key
+            val value = entry.value
+            if (key != null && value != null) {
+                migrateSp.run {
+                    when (value) {
+                        is Boolean -> this.putBoolean(key, value)
+                        is Int ->  this.putInt(key,value)
+                        is Long -> this.putLong(key,value)
+                        is Float -> this.putFloat(key, value)
+                        is String -> this.putString(key,value)
+                        else -> {}
+                    }
+                }
+            }
+        }
+        cleanSP()
+    }
+}
 fun cleanSP(fileName: String = SPFileName) {
-    LibApp.app.getSharedPreferences(fileName, Context.MODE_PRIVATE).edit().clear().commit()
+    LibApp.app.getSharedPreferences(fileName, Context.MODE_PRIVATE).edit().clear().apply()
 }

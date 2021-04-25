@@ -103,8 +103,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 //        super.onSaveInstanceState(outState)
     }
 
-    fun setWhiteStyle(isTrans: Boolean = false) {
-        titleBar?.setBlackStyle(isTrans)
+    fun setWhiteStyle() {
+        titleBar?.setBlackStyle()
         ImmersionBar.with(this)
             .statusBarColor(R.color.status_bar_color_transparent_black)
             .navigationBarColor(R.color.white)

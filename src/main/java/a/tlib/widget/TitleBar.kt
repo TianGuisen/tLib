@@ -6,6 +6,7 @@ import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
 import a.tlib.utils.show
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -17,6 +18,21 @@ import com.ruffian.library.widget.RTextView
 import com.ruffian.library.widget.RView
 
 open class TitleBar : RFrameLayout {
+
+    companion object {
+
+        /**
+         * 白字和图标
+         */
+        const val WhiteStyle = 0
+
+        /**
+         * 黑字和图标
+         */
+        const val BlackStyle = 1
+    }
+
+
     lateinit var view: TitleBar
     lateinit var tv_title: TextView
     lateinit var fl_back: FrameLayout
@@ -31,10 +47,12 @@ open class TitleBar : RFrameLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
     }
-    
+
     open fun init() {
         view = RView.inflate(context, R.layout.view_title, this) as TitleBar
-        view.helper.setBackgroundColorNormal(getcolor(R.color.black))
+        if (LibApp.appSign == 0) {
+            view.helper.setBackgroundColorNormal(getcolor(R.color.black))
+        }
         tv_title = view.findViewById(R.id.tv_title)
         fl_back = view.findViewById(R.id.fl_back)
         iv_back = view.findViewById(R.id.iv_back)
@@ -44,9 +62,17 @@ open class TitleBar : RFrameLayout {
         view_line = view.findViewById(R.id.view_line)
     }
 
-    fun setTitle(string: String?): TextView {
+    fun setTitle(string: String?, style: Int = BlackStyle): TextView {
         if (string.isNotNullEmpty()) {
             tv_title.text = string
+        }
+        when (style) {
+            BlackStyle -> {
+                setBlackStyle()
+            }
+            WhiteStyle -> {
+                setWhiteStyle()
+            }
         }
         return tv_title
     }
@@ -60,18 +86,30 @@ open class TitleBar : RFrameLayout {
     }
 
     /**
-     * 白色风格
+     *  黑字
+     */
+    fun setBlackStyle() {
+        tv_title.setTextColor(getcolor(R.color.c_111))
+        if (LibApp.appSign == 0) {
+            view.helper.setBackgroundColorNormal(getcolor(R.color.white))
+        }
+        iv_back.setImageResource(R.drawable.img_titlebar_back)
+        tv_right.setTextColor(getcolor(R.color.c_111))
+    }
+
+    /**
+     *  白字
      */
     fun setWhiteStyle() {
-        tv_title.setTextColor(getcolor(R.color.c_111))
-        iv_back.setImageResource(R.drawable.img_titlebar_back)
-        view.helper.setBackgroundColorNormal(getcolor(R.color.white))
-        tv_right.setTextColor(getcolor(R.color.c_111))
+        tv_title.setTextColor(getcolor(R.color.white))
+        iv_back.setImageResource(R.drawable.ic_youbo_goods_retrun)
+        tv_right.setTextColor(getcolor(R.color.black))
     }
 
     /**
      * 透明风格
      */
+    @Deprecated("废弃")
     fun setTransparentStyle2() {
         tv_title.setTextColor(getcolor(R.color.c_111))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
@@ -81,6 +119,7 @@ open class TitleBar : RFrameLayout {
     /**
      * 透明风格
      */
+    @Deprecated("废弃")
     fun setTransparentStyle() {
         tv_title.setTextColor(getcolor(R.color.color_ecc498))
         iv_back.setImageResource(R.drawable.img_titlebar_back_white_live)

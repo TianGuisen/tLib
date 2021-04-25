@@ -29,6 +29,13 @@ object LibApp {
     const val LOGGER_TAG = "logtag"
     lateinit var app: Application
 
+    /**
+     * APP标记，用于标记不同的app
+     * 0是旧有播
+     * 1是新有播
+     */
+    @JvmStatic
+    var appSign=0
     @JvmStatic
     fun init(appContext: Application): LibApp {
         appContext.apply {

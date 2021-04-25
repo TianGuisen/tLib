@@ -43,6 +43,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         if (layoutId > 0) {
             setContentView(layoutId)
         }
+        titleBar = findViewById(setTitleBar())
+        titleBar?.setOnLeftImageListener {
+            leftClick()
+        }
         initImmersionBar()
         initView()
     }
@@ -51,26 +55,39 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
      * 沉淀式状态栏字体颜色控制，默认情况下是黑底，在修妖修改的界面可以重写此方法，然后把状态栏的底色传进来即可
      */
     open fun initImmersionBar(color: Int = R.color.status_bar_color_transparent_black) {
-        titleBar = findViewById(setTitleBar())
-        titleBar?.let {
-            ImmersionBar.setTitleBar(this, it)
-            it.setOnLeftImageListener {
-                leftClick()
-            }
-        }
+        ImmersionBar.setTitleBar(this, titleBar)
         val statusBarView = findViewById<View>(setStatusBarView())
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
         ImmersionBar.with(this)
-                .statusBarColor(color)
-                .navigationBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init()
+            .statusBarColor(color)
+            .navigationBarColor(R.color.white)
+            .statusBarDarkFont(false)
+            .navigationBarDarkIcon(true)
+            .init()
     }
 
-    fun setTitle(title: String?): TextView {
-        val tv_title = titleBar!!.setTitle(title)
+    fun setTitle(title: String?, style: Int = TitleBar.WhiteStyle): TextView {
+        val tv_title = titleBar!!.setTitle(title, style)
+        when (style) {
+            TitleBar.WhiteStyle -> {
+                ImmersionBar.with(this)
+                    .statusBarColor(R.color.status_bar_color_transparent_black)
+                    .navigationBarColor(R.color.white)
+                    .statusBarDarkFont(false)
+                    .navigationBarDarkIcon(true)
+                    .init()
+            }
+            TitleBar.BlackStyle -> {
+                ImmersionBar.with(this)
+                    .statusBarColor(R.color.status_bar_color_transparent_black)
+                    .navigationBarColor(R.color.white)
+                    .statusBarDarkFont(true)
+                    .navigationBarDarkIcon(true)
+                    .init()
+            }
+        }
         return tv_title
     }
 
@@ -85,14 +102,15 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     override fun onSaveInstanceState(outState: Bundle) {
 //        super.onSaveInstanceState(outState)
     }
-    fun setWhiteStyle() {
-        titleBar?.setWhiteStyle()
+
+    fun setWhiteStyle(isTrans: Boolean = false) {
+        titleBar?.setBlackStyle(isTrans)
         ImmersionBar.with(this)
-                .statusBarColor(R.color.status_bar_color_transparent_black)
-                .navigationBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarDarkIcon(true)
-                .init()
+            .statusBarColor(R.color.status_bar_color_transparent_black)
+            .navigationBarColor(R.color.white)
+            .statusBarDarkFont(true)
+            .navigationBarDarkIcon(true)
+            .init()
     }
 
     open fun setTitleBar() = R.id.title_bar
@@ -106,7 +124,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     abstract fun initView()
     override fun getResources(): Resources {
         if (Looper.getMainLooper().thread == Thread.currentThread()) {//解决某些手机某些情况下竖屏适配失败的问题
-            AutoSizeCompat.autoConvertDensity(super.getResources(), 1080f, super.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            AutoSizeCompat.autoConvertDensity(
+                super.getResources(),
+                1080f,
+                super.getResources()
+                    .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+            )
         }
         val resources = super.getResources()
         var configuration = resources.getConfiguration()
@@ -119,7 +142,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onConfigurationChanged(newConfig: Configuration) {//解决横屏无法适配的问题
         super.onConfigurationChanged(newConfig)
-        AutoSize.autoConvertDensity(this, 1080f, super.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+        AutoSize.autoConvertDensity(
+            this,
+            1080f,
+            super.getResources()
+                .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+        )
     }
 
     override fun onResume() {
@@ -178,7 +206,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
      */
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
         if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 25) {
-            overrideConfiguration!!.uiMode = overrideConfiguration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()
+            overrideConfiguration!!.uiMode =
+                overrideConfiguration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }

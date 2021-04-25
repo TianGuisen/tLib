@@ -24,11 +24,6 @@ import com.gyf.immersionbar.ImmersionBar
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
 
-
-/**
- * @version:      由有播科技（杭州）有限公司开发
- * @date:         2018/10/17  16:54 , @author:  qaufu
- */
 abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     val TAG = this.javaClass.simpleName
     var gson = GsonUtil.gson

@@ -1,8 +1,10 @@
 package a.tlib.base
 
 import a.tlib.R
+import a.tlib.utils.StringUtils
 import a.tlib.utils.gson.GsonUtil
 import a.tlib.widget.TitleBar
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.ImmersionFragment
-import a.tlib.utils.StringUtils
-import android.content.res.Configuration
 import me.jessyan.autosize.internal.CustomAdapt
 
 
@@ -40,7 +40,9 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         act = activity!! as AppCompatActivity
         titleBar = view.findViewById(setTitleBar())
         statusBarView = view.findViewById<View>(setStatusBarView())
-
+        titleBar?.setOnLeftImageListener {
+            activity?.finish()
+        }
         titleBar?.hideBack()
         initView()
         if (isFirstLoadData) {
@@ -55,26 +57,21 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
      * 初始化沉浸标题栏
      */
     override fun initImmersionBar() {
-        titleBar?.let {
-            ImmersionBar.setTitleBar(this, titleBar)
-            it.setOnLeftImageListener {
-                activity?.finish()
-            }
-        }
+        ImmersionBar.setTitleBar(this, titleBar)
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
         ImmersionBar.with(this)
-                .statusBarColor(R.color.status_bar_color_transparent_black)
-                .navigationBarColor(R.color.white)
-                .statusBarDarkFont(true)
+            .statusBarColor(R.color.status_bar_color_transparent_black)
+            .navigationBarColor(R.color.white)
+            .statusBarDarkFont(true)
 //                .navigationBarDarkIcon(true)
 //                .autoDarkModeEnable(true)
-                .init()
+            .init()
     }
 
-    fun setTitle(title: String): TextView {
-        val tv_title = titleBar!!.setTitle(title)
+    fun setTitle(title: String?, style: Int = TitleBar.WhiteStyle): TextView {
+        val tv_title = titleBar!!.setTitle(title, style)
         return tv_title
     }
 

@@ -23,6 +23,7 @@ class WebTitleBar : TitleBar {
         iv_back = view.findViewById(R.id.iv_back)
         iv_right = view.findViewById(R.id.iv_right)
         fl_right = view.findViewById(R.id.fl_right)
+        tv_right = view.findViewById(R.id.tv_right)
         view_line = view.findViewById(R.id.view_line)
         view.findViewById<RFrameLayout>(R.id.fl_close).setSingClick {
 

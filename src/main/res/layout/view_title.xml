@@ -71,7 +71,7 @@
             android:padding="6dp"
             android:textColor="@color/white"
             android:textSize="16dp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/view_line"

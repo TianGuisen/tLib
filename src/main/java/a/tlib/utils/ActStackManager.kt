@@ -143,24 +143,25 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
         return null
     }
 
-    override fun onActivityDestroyed(activity: Activity?) {
+    override fun onActivityDestroyed(activity: Activity) {
         removeActivity(activity)
     }
 
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         Log.d("onCreateAct", activity?.javaClass?.simpleName)//用于快速定位页面对应的代码
         addActivity(activity)
     }
 
-    override fun onActivityPaused(activity: Activity?) {
+    override fun onActivityPaused(activity: Activity) {
 
     }
 
-    override fun onActivityResumed(activity: Activity?) {
+    override fun onActivityResumed(activity: Activity) {
 
     }
 
-    override fun onActivityStarted(activity: Activity?) {
+    override fun onActivityStarted(activity: Activity) {
         activityStartCount++;
         //数值从0变到1说明是从后台切到前台
         if (activityStartCount == 1) {
@@ -170,11 +171,10 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
     }
 
-    override fun onActivityStopped(activity: Activity?) {
+    override fun onActivityStopped(activity: Activity) {
         activityStartCount--;
         //数值从1到0说明是从前台切到后台
         if (activityStartCount == 0) {

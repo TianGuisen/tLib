@@ -156,7 +156,7 @@ object LibApp {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = AppUtil.getProcessName(app)
             if ("com.haibaoshow.youbo" != processName) { //判断不等于默认进程名称
-                WebView.setDataDirectorySuffix(processName)
+                processName?.let { WebView.setDataDirectorySuffix(it) }
             }
         }
     }

@@ -83,5 +83,10 @@
     <array name="dab_ffe">
         <item>#DAB174</item>
         <item>#FFE5BD</item>
-    </array>    
+    </array>
+    <array name="c0f1_383_2d3">
+        <item>#0F131A</item>
+        <item>#0F131A</item>
+        <item>#2D303F</item>
+    </array>
 </resources>

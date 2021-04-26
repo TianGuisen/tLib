@@ -61,16 +61,16 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-        ImmersionBar.with(this)
-            .statusBarColor(R.color.status_bar_color_transparent_black)
-            .navigationBarColor(R.color.white)
-            .statusBarDarkFont(true)
-//                .navigationBarDarkIcon(true)
-//                .autoDarkModeEnable(true)
-            .init()
+//        ImmersionBar.with(this)
+//            .statusBarColor(R.color.status_bar_color_transparent_black)
+//            .navigationBarColor(R.color.white)
+//            .statusBarDarkFont(true)
+////                .navigationBarDarkIcon(true)
+////                .autoDarkModeEnable(true)
+//            .init()
     }
 
-    fun setTitle(title: String?, style: Int = TitleBar.WhiteStyle): TextView {
+    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE): TextView {
         val tv_title = titleBar!!.setTitle(title, style)
         return tv_title
     }

@@ -63,10 +63,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
             .init()
     }
 
-    fun setTitle(title: String?, style: Int = TitleBar.WhiteStyle): TextView {
+    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE): TextView {
         val tv_title = titleBar!!.setTitle(title, style)
         when (style) {
-            TitleBar.WhiteStyle -> {
+            TitleBar.WHITE_STYLE -> {
                 ImmersionBar.with(this)
                     .statusBarColor(R.color.status_bar_color_transparent_black)
                     .navigationBarColor(R.color.white)
@@ -74,7 +74,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
                     .navigationBarDarkIcon(true)
                     .init()
             }
-            TitleBar.BlackStyle -> {
+            TitleBar.BLACK_STYLE -> {
                 ImmersionBar.with(this)
                     .statusBarColor(R.color.status_bar_color_transparent_black)
                     .navigationBarColor(R.color.white)

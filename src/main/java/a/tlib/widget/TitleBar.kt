@@ -6,7 +6,6 @@ import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
 import a.tlib.utils.show
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -24,12 +23,12 @@ open class TitleBar : RFrameLayout {
         /**
          * 白字和图标
          */
-        const val WhiteStyle = 0
+        const val WHITE_STYLE = 0
 
         /**
          * 黑字和图标
          */
-        const val BlackStyle = 1
+        const val BLACK_STYLE = 1
     }
 
 
@@ -62,15 +61,15 @@ open class TitleBar : RFrameLayout {
         view_line = view.findViewById(R.id.view_line)
     }
 
-    fun setTitle(string: String?, style: Int = BlackStyle): TextView {
+    fun setTitle(string: String?, style: Int = BLACK_STYLE): TextView {
         if (string.isNotNullEmpty()) {
             tv_title.text = string
         }
         when (style) {
-            BlackStyle -> {
+            BLACK_STYLE -> {
                 setBlackStyle()
             }
-            WhiteStyle -> {
+            WHITE_STYLE -> {
                 setWhiteStyle()
             }
         }

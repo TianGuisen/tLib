@@ -62,10 +62,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         when (style) {
             TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
                 ImmersionBar.with(this)
-                        .statusBarColor(statusBarColor)
-                        .navigationBarColor(R.color.black)
-                        .statusBarDarkFont(false)
-                        .navigationBarDarkIcon(false)
+                        .statusBarColor(statusBarColor)//状态栏颜色
+                        .navigationBarColor(R.color.black)//导航栏颜色
+                        .statusBarDarkFont(false)//状态栏图标浅色
+                        .navigationBarDarkIcon(false)//导航栏图标浅色
                         .init()
             }
             TitleBar.BLACK_STYLE -> {//透明状态栏，白色导航栏

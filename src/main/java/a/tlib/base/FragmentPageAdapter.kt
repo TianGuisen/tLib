@@ -1,13 +1,13 @@
 package a.tlib.base
 
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 open class FragmentPageAdapter constructor(fm: FragmentManager, private val mFragments: List<Fragment>) : FragmentStatePagerAdapter(fm) {
-
+    override fun getPageTitle(position: Int): CharSequence? {
+        return "aaa"
+    }
     override fun getCount(): Int {
         return mFragments.size
     }

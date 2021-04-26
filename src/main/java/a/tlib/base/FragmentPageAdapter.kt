@@ -5,9 +5,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
 open class FragmentPageAdapter constructor(fm: FragmentManager, private val mFragments: List<Fragment>) : FragmentStatePagerAdapter(fm) {
-    override fun getPageTitle(position: Int): CharSequence? {
-        return "aaa"
-    }
     override fun getCount(): Int {
         return mFragments.size
     }
@@ -23,7 +20,8 @@ open class FragmentPageAdapter constructor(fm: FragmentManager, private val mFra
 /**
  * BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,当前显示的Fragment会被执行到onResume,而其他的Fragment的生命周期只会执行到onStart
  */
-open class FragmentPageAdapter2 constructor(fm: FragmentManager, private val mFragments: List<Fragment>) : FragmentStatePagerAdapter(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+open class FragmentPageAdapter2 constructor(fm: FragmentManager, private val mFragments: List<Fragment>) :
+    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount(): Int {
         return mFragments.size

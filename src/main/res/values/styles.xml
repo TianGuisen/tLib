@@ -73,4 +73,19 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>
+
+    <!--分割线-->
+    <style name="Divide_Line_Style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/divide</item>
+    </style>
+
+    <!--界面右侧下一步小图标-->
+    <style name="Next_Gray_Style">
+        <item name="android:layout_width">13dp</item>
+        <item name="android:layout_height">13dp</item>
+        <item name="android:src">@drawable/next_grey</item>
+        <item name="android:layout_marginLeft">4dp</item>
+    </style>
 </resources>

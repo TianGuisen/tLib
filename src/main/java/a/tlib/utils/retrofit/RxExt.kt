@@ -1,9 +1,9 @@
 package a.tlib.utils.retrofit
 
+//import com.lb.baselib.retrofit.ZipObserver
 import android.content.Context
 import com.lb.baselib.retrofit.NormalObserver
 import com.lb.baselib.retrofit.ResWrapper
-import com.lb.baselib.retrofit.ZipObserver
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.uber.autodispose.SingleSubscribeProxy
 import io.reactivex.Single
@@ -73,26 +73,26 @@ fun <T> SingleSubscribeProxy<ResWrapper<T>>.normalSub(
     subscribe(ob)
 }
 
-/**
- * 并行请求
- */
-fun Single<MutableList<Any>>.zipSub(
-        onSuccess: ((MutableList<Any>) -> Unit)? = null,
-        onFailure: ((ResWrapper<Any>?) -> Unit)? = null,
-        onFinish: (() -> Unit)? = null
-) {
-    val ob = object : ZipObserver<Any>() {
-        override fun onSucces(data: MutableList<Any>) {
-            onSuccess?.let { onSuccess(data) }
-        }
-
-        override fun onFailure(t: ResWrapper<Any>?) {
-            onFailure?.let { onFailure(t) }
-        }
-
-        override fun onFinish() {
-            onFinish?.let { onFinish() }
-        }
-    }
-    subscribe(ob)
-}
+///**
+// * 并行请求
+// */
+//fun Single<MutableList<Any>>.zipSub(
+//        onSuccess: ((MutableList<Any>) -> Unit)? = null,
+//        onFailure: ((ResWrapper<Any>?) -> Unit)? = null,
+//        onFinish: (() -> Unit)? = null
+//) {
+//    val ob = object : ZipObserver<Any>() {
+//        override fun onSucces(data: MutableList<Any>) {
+//            onSuccess?.let { onSuccess(data) }
+//        }
+//
+//        override fun onFailure(t: ResWrapper<Any>?) {
+//            onFailure?.let { onFailure(t) }
+//        }
+//
+//        override fun onFinish() {
+//            onFinish?.let { onFinish() }
+//        }
+//    }
+//    subscribe(ob)
+//}

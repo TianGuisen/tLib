@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.lb.baselib.retrofit.ResCode
 import com.lb.baselib.retrofit.ResWrapper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -47,6 +48,25 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
 
     fun isFirstPage(): Boolean {
         return page == 1 && lastId == ""
+    }
+
+    fun showContent() {
+        lv?.showContent()
+        (rv as ShimmerRecyclerView).hideShimmerAdapter()
+    }
+
+    fun showLoaing() {
+        lv?.showLoading()
+        if (rv is ShimmerRecyclerView){
+            (rv as ShimmerRecyclerView).showShimmerAdapter()
+        }
+    }
+
+    fun showError() {
+        lv?.showError()
+        if (rv is ShimmerRecyclerView){
+            (rv as ShimmerRecyclerView).hideShimmerAdapter()
+        }
     }
 
     /**

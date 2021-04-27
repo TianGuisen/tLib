@@ -60,7 +60,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.7.1'
     api 'com.squareup.retrofit2:converter-gson:2.7.1'
     api 'com.squareup.okhttp3:okhttp:4.3.1'
-//    api 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'//不使用官方的，使用自定义的com.youbo.video.utils.retrofit.rxjava2Adapter;
+//    api 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'//不使用官方的，使用自定义的com.youbo.utils.retrofit.rxjava2Adapter;
 //    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 //     权限问题
     api 'com.hjq:xxpermissions:8.6'

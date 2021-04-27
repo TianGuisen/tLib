@@ -3,7 +3,10 @@ package a.tlib.utils
 import a.tlib.LibApp
 import a.tlib.LibApp.app
 import android.app.Activity
-import android.content.*
+import android.content.ContentResolver
+import android.content.ContentUris
+import android.content.Context
+import android.content.Intent
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
@@ -353,9 +356,7 @@ object FileUtil {
                 var contentUri: Uri? = null
                 if ("image" == type) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                } else if ("video" == type) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-                } else if ("audio" == type) {
+                } else if ("video" == type || "audio" == type) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
                 }
                 val selection = MediaStore.Images.Media._ID + "=?"

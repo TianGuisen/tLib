@@ -1,10 +1,12 @@
 package a.tlib
 
-import a.tlib.utils.*
+import a.tlib.utils.ActStackManager
+import a.tlib.utils.AppUtil
+import a.tlib.utils.CrashCollectHandler
+import a.tlib.utils.ToastUtil
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.webkit.WebView
 import com.lb.baselib.retrofit.RetrofitService
 import com.orhanobut.logger.*
@@ -162,7 +164,7 @@ object LibApp {
     private fun fixWebView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = AppUtil.getProcessName(app)
-            if ("com.haibaoshow.youbo" != processName) { //判断不等于默认进程名称
+            if ("com.youbo.video" != processName&&"com.haibaoshow.youbo" != processName) { //判断不等于默认进程名称
                 processName?.let { WebView.setDataDirectorySuffix(it) }
             }
         }

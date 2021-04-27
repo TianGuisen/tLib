@@ -39,7 +39,7 @@ object FileUtil {
 
     /**
      * 文件存放路径
-     * android/data/com.haibaoshow.youbo/
+     * android/data/com.youbo.video/
      */
     @JvmField
     val fileType = app.getExternalFilesDir(null).toString() + "/youbo/"

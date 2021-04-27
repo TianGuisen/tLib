@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Paint
 import android.view.View
 import android.widget.*
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -48,12 +47,18 @@ fun TextView.addStrike() {
     getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
 }
 
-fun EditText.isEmpty(): Boolean {
+/**
+ * 判断EditText和TextView内容是空,EditText是TextView的子类，都能使用
+ */
+fun TextView.isEmpty(): Boolean {
     return this.text.isEmpty()
 }
-
-val EditText.string get() = this.text.toString()
-
+/**
+ * 判断EditText和TextView内容不是空,EditText是TextView的子类，都能使用
+ */
+fun TextView.isNotEmpty(): Boolean {
+    return this.text.isNotEmpty()
+}
 
 val TextView.string get() = this.text.toString()
 

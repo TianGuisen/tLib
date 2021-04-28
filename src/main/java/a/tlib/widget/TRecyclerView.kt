@@ -8,12 +8,13 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 
 
 /**
  * @author 田桂森 2020/3/9
  */
-open class TRecyclerView : RecyclerView {
+open class TRecyclerView : ShimmerRecyclerView {
     /**
      * app:maxHeight="400dp"设置最大高度
      */

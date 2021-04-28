@@ -36,7 +36,6 @@ class SpacesItemDecoration : Y_DividerItemDecoration {
         } else {
             this.endSize = endSize
         }
-
     }
 
     override fun getDivider(itemPosition: Int, recyclerView: RecyclerView): Y_Divider {

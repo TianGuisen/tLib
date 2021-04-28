@@ -1,10 +1,10 @@
 package a.tlib.widget.recyclerDecoration
 
+import a.tlib.utils.AutoSizeUtil
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import a.tlib.utils.AutoSizeUtil
 
 
 /**
@@ -12,6 +12,7 @@ import a.tlib.utils.AutoSizeUtil
  * 废弃，使用SpacesItemDecoration
  * 空格分隔线
  */
+@Deprecated("废弃")
 class TSpaceItemDecoration : RecyclerView.ItemDecoration() {
     private var firstMarginTop: Int? = null
     private var firstMarginLeft: Int? = null

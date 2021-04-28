@@ -153,7 +153,7 @@ dependencies {
     debugApi 'com.readystatesoftware.chuck:library:1.1.0'
     releaseApi 'com.readystatesoftware.chuck:library-no-op:1.1.0'
     //recyclerView动画https://github.com/wasabeef/recyclerview-animators
-    api 'jp.wasabeef:recyclerview-animators:4.0.2'
+//    api 'jp.wasabeef:recyclerview-animators:4.0.2'
     //阿里layout,https://github.com/alibaba/vlayout
     api 'com.alibaba.android:vlayout:1.2.8@aar'
     //recyclerView的加载中动画https://github.com/sharish/ShimmerRecyclerView

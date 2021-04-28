@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 /**
  * 废弃，用2
  */
+@Deprecated()
 public class GridLayoutItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mSpanCount;

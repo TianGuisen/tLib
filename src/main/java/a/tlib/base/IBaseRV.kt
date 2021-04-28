@@ -57,14 +57,27 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
 
     fun showLoaing() {
         lv?.showLoading()
-        if (rv is ShimmerRecyclerView){
+        if (rv is ShimmerRecyclerView) {
             (rv as ShimmerRecyclerView).showShimmerAdapter()
         }
     }
 
     fun showError() {
         lv?.showError()
-        if (rv is ShimmerRecyclerView){
+        if (rv is ShimmerRecyclerView) {
+            (rv as ShimmerRecyclerView).hideShimmerAdapter()
+        }
+    }
+
+    fun showEmpty() {
+        lv?.showEmpty()
+        if (rv is ShimmerRecyclerView) {
+            (rv as ShimmerRecyclerView).hideShimmerAdapter()
+        }
+    }
+    fun showLogin() {
+        lv?.showLogin()
+        if (rv is ShimmerRecyclerView) {
             (rv as ShimmerRecyclerView).hideShimmerAdapter()
         }
     }
@@ -117,12 +130,12 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         if (page == 1 && lastId.isEmpty()) {
             //第一页
             if (list.isNullOrEmpty()) {
-                lv?.showEmpty()
+                showEmpty()
                 srl?.setNoMoreData(true)
             } else {
                 page++
                 lastId = list.last().getLastId()
-                lv?.showContent()
+                showContent()
             }
             adapter.setList(list)
             srl?.finishRefresh(true)
@@ -154,9 +167,9 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      */
     fun loadFailure(it: ResWrapper<*>?) {
         if (it != null && it.code == ResCode.TOKEN_OVERDUE) {
-            lv?.showLogin()
+            showLogin()
         } else {
-            lv?.showError()
+            showError()
         }
         srl?.finishRefresh(false)
         srl?.finishLoadMore(false)

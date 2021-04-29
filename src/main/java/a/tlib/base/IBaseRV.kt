@@ -1,5 +1,6 @@
 package a.tlib.base
 
+import a.tlib.utils.getcolor
 import a.tlib.utils.retrofit.LoadView
 import a.tlib.widget.TRecyclerView
 import android.util.Log
@@ -86,9 +87,9 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     /**
      * 设置背景色
      */
-    fun setBackgroundColor(color: Int) {
-        rv.setBackgroundColor(color)
-        lv?.setBackgroundColor(color)
+    fun setBackgroundColor(colorId: Int) {
+        rv.setBackgroundColor(getcolor(colorId))
+        lv?.setBackgroundColor(getcolor(colorId))
     }
 
     /**

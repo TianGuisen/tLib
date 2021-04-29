@@ -42,36 +42,44 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         titleBar?.setOnLeftImageListener {
             leftClick()
         }
-        initImmersionBar()
+//        initImmersionBar()
         initView()
     }
 
-    /**
-     * 沉淀式状态栏字体颜色控制，默认情况下是黑底，在修妖修改的界面可以重写此方法，然后把状态栏的底色传进来即可
-     */
-    open fun initImmersionBar(color: Int = R.color.transparent) {
+//    /**
+//     * 沉淀式状态栏字体颜色控制，默认情况下是黑底，在修妖修改的界面可以重写此方法，然后把状态栏的底色传进来即可
+//     */
+//    open fun initImmersionBar(color: Int = R.color.transparent) {
+//        ImmersionBar.setTitleBar(this, titleBar)
+//        val statusBarView = findViewById<View>(setStatusBarView())
+//        if (statusBarView != null) {
+//            ImmersionBar.setStatusBarView(this, statusBarView)
+//        }
+//    }
+
+    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE, statusBarColor: Int = R.color.transparent,
+                 navigationBarColor: Int = -1): TextView? {
         ImmersionBar.setTitleBar(this, titleBar)
         val statusBarView = findViewById<View>(setStatusBarView())
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-    }
-
-    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE, statusBarColor: Int = R.color.transparent): TextView? {
         val tv_title = titleBar?.setTitle(title, style)
         when (style) {
             TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
+                val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
                 ImmersionBar.with(this)
                         .statusBarColor(statusBarColor)//状态栏颜色
-                        .navigationBarColor(R.color.black)//导航栏颜色
+                        .navigationBarColor(navigationBarColor)//导航栏颜色
                         .statusBarDarkFont(false)//状态栏图标浅色
                         .navigationBarDarkIcon(false)//导航栏图标浅色
                         .init()
             }
             TitleBar.BLACK_STYLE -> {//透明状态栏，白色导航栏
+                val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.white
                 ImmersionBar.with(this)
                         .statusBarColor(statusBarColor)
-                        .navigationBarColor(R.color.white)
+                        .navigationBarColor(navigationBarColor)
                         .statusBarDarkFont(true)
                         .navigationBarDarkIcon(true)
                         .init()

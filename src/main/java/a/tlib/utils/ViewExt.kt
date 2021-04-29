@@ -62,19 +62,23 @@ fun TextView.isNotEmpty(): Boolean {
 }
 
 val TextView.string get() = this.text.toString()
-
+/**
+ * 动态设置View的padding，pt
+ */
 fun View.setPaddingPT(left: Int, top: Int, right: Int, bottom: Int) {
     setPadding(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
 }
 
 /**
- * @horizontal
- * @vertical
+ * 动态设置View的margin，pt
  */
 fun View.setMarginPT(horizontal: Int, vertical: Int) {
     setMarginPT(horizontal, vertical, horizontal, vertical)
 }
 
+/**
+ * 动态设置View的margin，pt
+ */
 fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
     val params = layoutParams
     if (params is LinearLayout.LayoutParams) {
@@ -90,6 +94,7 @@ fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
 }
 
 /**
+ * 动态设置View的宽高
  * -1 MATCH_PARENT
  * -2 WRAP_CONTENT
  */

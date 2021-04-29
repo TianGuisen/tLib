@@ -24,6 +24,9 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     fun initRVView() {
         rv.adapter = adapter
         Log.d("onCreateAdapter", adapter.javaClass.simpleName)//用于快速定位
+        enableSRL(false)
+        srl?.setEnableLoadMore(false)
+        srl?.setEnableRefresh(false)
         srl?.setOnRefreshListener {
             page = 1
             lastId = ""
@@ -50,7 +53,17 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         return page == 1 && lastId == ""
     }
 
+    private fun enableSRL(enable: Boolean) {
+        if (enable) {
+
+        }
+        srl?.setEnableLoadMore(enable)
+        srl?.setEnableRefresh(enable)
+    }
+
     fun showContent() {
+        srl?.setEnableLoadMore(enableloadMore)
+        srl?.setEnableRefresh(true)
         lv?.showContent()
         rv.hideShimmerAdapter()
     }
@@ -61,6 +74,9 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      * @itemLoadingLayoutId rv的item loading布局
      */
     fun showLoaing(itemLoadingLayoutId: Int = 0) {
+        srl?.setEnableLoadMore(false)
+        srl?.setEnableRefresh(false)
+        enableSRL(false)
         if (itemLoadingLayoutId != 0) {
             rv.setDemoLayoutReference(itemLoadingLayoutId)
             rv.showShimmerAdapter()

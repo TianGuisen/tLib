@@ -52,14 +52,10 @@ object RetrofitService {
             // 最大正文内容长度(以字节为单位)，在此之后，响应将被截断。
             .maxContentLength(250_000L)
             // List of headers to replace with ** in the Chucker UI
-            .redactHeaders("Auth-Token", "Bearer")
             // Read the whole response body even when the client does not consume the response completely.
             // This is useful in case of parsing errors or when the response body
             // is closed before being read like in Retrofit with Void and Unit types.
             .alwaysReadResponseBody(true)
-            // Use decoder when processing request and response bodies. When multiple decoders are installed they
-            // are applied in an order they were added.
-            // Controls Android shortcut creation.
             .build()
 
 

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.ImmersionFragment
@@ -89,6 +90,24 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
      * 初始化控件
      */
     protected abstract fun initView()
+
+    /**
+     * childFragmentManager或者fragmentManager
+     * framgent切换
+     */
+    fun showHideFragment(fm: FragmentManager, showFragment: BaseFragment, hideFragment: BaseFragment? = null, flId: Int = R.id.fl) {
+        fm.beginTransaction().apply {
+            if (showFragment === hideFragment) return
+            if (showFragment.isFirstLoadData && !showFragment.isAdded) {
+                add(flId, showFragment, showFragment.javaClass.simpleName)
+            }
+            if (hideFragment != null && !hideFragment.isHidden) {
+                hide(hideFragment)
+            }
+            show(showFragment)
+            commitAllowingStateLoss()
+        }
+    }
 
     override fun onVisible() {
         super.onVisible()

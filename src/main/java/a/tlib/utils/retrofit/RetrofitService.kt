@@ -2,9 +2,13 @@ package com.lb.baselib.retrofit
 
 import Interceptors
 import a.tlib.BuildConfig
+import a.tlib.LibApp
 import a.tlib.utils.gson.GsonUtil.gson
 import a.tlib.utils.retrofit.converter.FileConverterFactory
 import a.tlib.utils.retrofit.rxjava2Adapter.RxJava2CallAdapterFactory
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.chuckerteam.chucker.api.RetentionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Converter
@@ -36,6 +40,24 @@ object RetrofitService {
     val fileConverterFactory by lazy {
         FileConverterFactory()
     }
+    val chuckerInterceptor = ChuckerInterceptor.Builder(LibApp.app)
+            // The previously created Collector
+            .collector(ChuckerCollector(
+                    context = LibApp.app,
+                    // Toggles visibility of the push notification
+                    showNotification = true,
+                    // Allows to customize the retention period of collected data
+                    retentionPeriod = RetentionManager.Period.ONE_HOUR
+            ))
+            // 最大正文内容长度(以字节为单位)，在此之后，响应将被截断。
+            .maxContentLength(250_000L)
+            // List of headers to replace with ** in the Chucker UI
+            // Read the whole response body even when the client does not consume the response completely.
+            // This is useful in case of parsing errors or when the response body
+            // is closed before being read like in Retrofit with Void and Unit types.
+            .alwaysReadResponseBody(true)
+            .build()
+
 
     @JvmStatic
     fun createRetrofit(params: RetrofitParams): Retrofit {

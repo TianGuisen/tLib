@@ -101,6 +101,24 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     abstract fun initView()
+
+    /**
+     * framgent切换
+     */
+    fun showHideFragment(showFragment: BaseFragment, hideFragment: BaseFragment? = null, flId: Int = R.id.fl) {
+        supportFragmentManager.beginTransaction().apply {
+            if (showFragment === hideFragment) return
+            if (showFragment.isFirstLoadData && !showFragment.isAdded) {
+                add(flId, showFragment, showFragment.javaClass.simpleName)
+            }
+            if (hideFragment != null && !hideFragment.isHidden) {
+                hide(hideFragment)
+            }
+            show(showFragment)
+            commitAllowingStateLoss()
+        }
+    }
+
     override fun getResources(): Resources {
         if (Looper.getMainLooper().thread == Thread.currentThread()) {//解决某些手机某些情况下竖屏适配失败的问题
             AutoSizeCompat.autoConvertDensity(

@@ -53,6 +53,7 @@ fun TextView.addStrike() {
 fun TextView.isEmpty(): Boolean {
     return this.text.isEmpty()
 }
+
 /**
  * 判断EditText和TextView内容不是空,EditText是TextView的子类，都能使用
  */
@@ -88,20 +89,24 @@ fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
     layoutParams = params
 }
 
+/**
+ * -1 MATCH_PARENT
+ * -2 WRAP_CONTENT
+ */
 fun View.setWidthHeight(width: Int, height: Int) {
     val params = layoutParams
-    if (params is LinearLayout.LayoutParams) {
-        params.width = AutoSizeUtil.pt2px(width.toFloat())
-        params.height = AutoSizeUtil.pt2px(height.toFloat())
-    } else if (params is RelativeLayout.LayoutParams) {
-        params.width = AutoSizeUtil.pt2px(width.toFloat())
-        params.height = AutoSizeUtil.pt2px(height.toFloat())
-    } else if (params is FrameLayout.LayoutParams) {
-        params.width = AutoSizeUtil.pt2px(width.toFloat())
-        params.height = AutoSizeUtil.pt2px(height.toFloat())
-    } else if (params is SmartRefreshLayout.LayoutParams) {
-        params.width = AutoSizeUtil.pt2px(width.toFloat())
-        params.height = AutoSizeUtil.pt2px(height.toFloat())
+    if (params is LinearLayout.LayoutParams || params is RelativeLayout.LayoutParams ||
+            params is FrameLayout.LayoutParams || params is SmartRefreshLayout.LayoutParams) {
+        if (width < 0) {
+            params.width =width
+        } else {
+            params.width = AutoSizeUtil.pt2px(width.toFloat())
+        }
+        if (height < 0) {
+            params.height =height
+        } else {
+            params.height = AutoSizeUtil.pt2px(height.toFloat())
+        }
     }
     layoutParams = params
 }

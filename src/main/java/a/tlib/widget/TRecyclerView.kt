@@ -6,6 +6,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
@@ -29,7 +31,15 @@ open class TRecyclerView : ShimmerRecyclerView {
     private fun init(context: Context, attrs: AttributeSet?) {
         overScrollMode = View.OVER_SCROLL_NEVER//隐藏边缘
         addOnScrollListener(imageLoadScrollListener)
-
+        
+        //android:orientation="horizontal"获取原生属性处理，不处理的话，会无效，有毒
+        val a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerView)
+        val orientation = a.getInt(androidx.recyclerview.R.styleable.RecyclerView_android_orientation, VERTICAL)
+        if (orientation == HORIZONTAL) {
+            layoutManager=LinearLayoutManager(getContext(),HORIZONTAL,false)
+            setDemoLayoutManager(LayoutMangerType.LINEAR_HORIZONTAL)
+        }
+        
         val arr = context.obtainStyledAttributes(attrs, R.styleable.TRecyclerView)
         if (arr != null) {//有手机出现null
             mMaxHeight = arr.getLayoutDimension(R.styleable.TRecyclerView_maxHeight, mMaxHeight)
@@ -49,6 +59,7 @@ open class TRecyclerView : ShimmerRecyclerView {
     override fun onTouchEvent(e: MotionEvent?): Boolean {
         return super.onTouchEvent(e)
     }
+
     private val imageLoadScrollListener: OnScrollListener = object : OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

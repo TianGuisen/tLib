@@ -19,8 +19,8 @@ class SpacesItemDecoration : Y_DividerItemDecoration {
 
     /**
      *@sizePt 间距
-     * @startSize 第一个item的起始间距，默认为sizePt
-     * @endSize 第一个item的最后间距，默认为sizePt
+     * @startSize 第一个item的起始间距，默认为sizePt，传0无起始间距
+     * @endSize 第一个item的最后间距，默认为sizePt，传0无最后间距
      * @color 颜色，默认透明
      */
     constructor(context: Context, sizePt: Float, startSize: Float? = null, endSize: Float? = null, color: Int = Color.TRANSPARENT) : super(context) {
@@ -36,7 +36,6 @@ class SpacesItemDecoration : Y_DividerItemDecoration {
         } else {
             this.endSize = endSize
         }
-
     }
 
     override fun getDivider(itemPosition: Int, recyclerView: RecyclerView): Y_Divider {

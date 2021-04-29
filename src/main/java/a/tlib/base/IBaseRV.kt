@@ -3,10 +3,8 @@ package a.tlib.base
 import a.tlib.utils.retrofit.LoadView
 import a.tlib.widget.TRecyclerView
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.lb.baselib.retrofit.ResCode
 import com.lb.baselib.retrofit.ResWrapper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -53,34 +51,36 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
 
     fun showContent() {
         lv?.showContent()
-        (rv as ShimmerRecyclerView).hideShimmerAdapter()
+        rv.hideShimmerAdapter()
     }
 
-    fun showLoaing() {
-        lv?.showLoading()
-        if (rv is ShimmerRecyclerView) {
-            (rv as ShimmerRecyclerView).showShimmerAdapter()
+    /**
+     * 显示LoadView的loading和rv的loading
+     * 如果传入了itemLoadingLayoutId，那么将不使用LoadView的loading动画
+     * @itemLoadingLayoutId rv的item loading布局
+     */
+    fun showLoaing(itemLoadingLayoutId: Int = 0) {
+        if (itemLoadingLayoutId != 0) {
+            rv.setDemoLayoutReference(itemLoadingLayoutId)
+        } else {
+            lv?.showLoading()
         }
+        rv.showShimmerAdapter()
     }
 
     fun showError() {
         lv?.showError()
-        if (rv is ShimmerRecyclerView) {
-            (rv as ShimmerRecyclerView).hideShimmerAdapter()
-        }
+        rv.hideShimmerAdapter()
     }
 
     fun showEmpty() {
         lv?.showEmpty()
-        if (rv is ShimmerRecyclerView) {
-            (rv as ShimmerRecyclerView).hideShimmerAdapter()
-        }
+        rv.hideShimmerAdapter()
     }
+
     fun showLogin() {
         lv?.showLogin()
-        if (rv is ShimmerRecyclerView) {
-            (rv as ShimmerRecyclerView).hideShimmerAdapter()
-        }
+        rv.hideShimmerAdapter()
     }
 
     /**

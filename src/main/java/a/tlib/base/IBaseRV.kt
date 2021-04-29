@@ -62,10 +62,10 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     fun showLoaing(itemLoadingLayoutId: Int = 0) {
         if (itemLoadingLayoutId != 0) {
             rv.setDemoLayoutReference(itemLoadingLayoutId)
+            rv.showShimmerAdapter()
         } else {
             lv?.showLoading()
         }
-        rv.showShimmerAdapter()
     }
 
     fun showError() {

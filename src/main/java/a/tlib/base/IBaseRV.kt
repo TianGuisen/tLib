@@ -1,6 +1,7 @@
 package a.tlib.base
 
 import a.tlib.utils.retrofit.LoadView
+import a.tlib.widget.TRecyclerView
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -17,7 +18,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     var page: Int //有的接口用的page
     var lastId: String//有的接口用的lastId
     var adapter: B
-    var rv: RecyclerView
+    var rv: TRecyclerView
     var srl: SmartRefreshLayout?
     var lv: LoadView?
     var enableloadMore: Boolean

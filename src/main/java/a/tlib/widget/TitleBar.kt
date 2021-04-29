@@ -102,7 +102,7 @@ open class TitleBar : RFrameLayout {
     fun setWhiteStyle() {
         tv_title.setTextColor(getcolor(R.color.white))
         iv_back.setImageResource(R.drawable.ic_youbo_goods_retrun)
-        tv_right.setTextColor(getcolor(R.color.black))
+        tv_right.setTextColor(getcolor(R.color.white))
     }
 
     /**

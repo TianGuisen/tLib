@@ -2,6 +2,7 @@ package a.tlib.base
 
 import a.tlib.R
 import a.tlib.utils.retrofit.LoadView
+import a.tlib.widget.TRecyclerView
 import a.tlib.widget.dialog.baseDialog.BaseLDialog
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> : BaseLDialog<BaseRVDia<T, B>>(), IBaseRV<T, B> {
     override var layoutId = R.layout.fra_common_list
     abstract override var adapter: B
-    override lateinit var rv: RecyclerView
+    override lateinit var rv: TRecyclerView
     override var srl: SmartRefreshLayout? = null
     override var lv: LoadView? = null
     override var page = 1//有的接口用的page

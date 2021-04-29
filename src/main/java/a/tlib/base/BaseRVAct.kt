@@ -2,6 +2,7 @@ package a.tlib.base
 
 import a.tlib.R
 import a.tlib.utils.retrofit.LoadView
+import a.tlib.widget.TRecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -15,7 +16,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T,out BaseViewHolder>> : BaseActivity(), IBaseRV<T, B> {
     override val layoutId = R.layout.act_common_list
     abstract override var adapter: B
-    override lateinit var rv: RecyclerView
+    override lateinit var rv: TRecyclerView
     override var srl: SmartRefreshLayout? = null
     override var lv: LoadView? = null
     override var page = 1//有的接口用的page

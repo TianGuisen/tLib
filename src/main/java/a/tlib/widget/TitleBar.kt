@@ -77,7 +77,7 @@ open class TitleBar : RFrameLayout {
     }
 
     fun setTitleColor(color: Int) {
-        tv_title.setTextColor(color)
+        tv_title.setTextColor(getcolor(color))
     }
 
     fun setBarColor(color: Int) {

@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lb.baselib.retrofit.ResCode
 import com.lb.baselib.retrofit.ResWrapper
+import com.orhanobut.logger.YLog
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
@@ -21,6 +22,8 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     var srl: SmartRefreshLayout?
     var lv: LoadView?
     var enableloadMore: Boolean
+    var itemLoadingLayoutId: Int
+
     fun initRVView() {
         rv.adapter = adapter
         Log.d("onCreateAdapter", adapter.javaClass.simpleName)//用于快速定位
@@ -54,9 +57,6 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     }
 
     private fun enableSRL(enable: Boolean) {
-        if (enable) {
-
-        }
         srl?.setEnableLoadMore(enable)
         srl?.setEnableRefresh(enable)
     }
@@ -65,7 +65,9 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         srl?.setEnableLoadMore(enableloadMore)
         srl?.setEnableRefresh(true)
         lv?.showContent()
-        rv.hideShimmerAdapter()
+        if (itemLoadingLayoutId != 0) {
+            rv.hideShimmerAdapter()
+        }
     }
 
     /**
@@ -87,17 +89,23 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
 
     fun showError() {
         lv?.showError()
-        rv.hideShimmerAdapter()
+        if (itemLoadingLayoutId != 0) {
+            rv.hideShimmerAdapter()
+        }
     }
 
     fun showEmpty() {
         lv?.showEmpty()
-        rv.hideShimmerAdapter()
+        if (itemLoadingLayoutId != 0) {
+            rv.hideShimmerAdapter()
+        }
     }
 
     fun showLogin() {
         lv?.showLogin()
-        rv.hideShimmerAdapter()
+        if (itemLoadingLayoutId != 0) {
+            rv.hideShimmerAdapter()
+        }
     }
 
     /**

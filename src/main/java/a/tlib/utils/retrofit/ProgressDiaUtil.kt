@@ -1,10 +1,12 @@
 package a.tlib.utils.retrofit
 
 import a.tlib.R
+import a.tlib.widget.loading.LoadingDia
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import com.orhanobut.logger.YLog
 
 
@@ -15,25 +17,26 @@ import com.orhanobut.logger.YLog
  * 耗时对话框工具类
  */
 object ProgressDiaUtil {
-    private var progressDia: Dialog? = null
+    private val progressDia by lazy {
+        LoadingDia.newInstance()
+    }
     private var progressDia2: Dialog? = null
-    fun show(context: Context?, tip: String? = "加载中...") {
+
+    @JvmStatic
+    fun show(fragmentManager: FragmentManager?, tip: String = "加载中...") {
         try {
-            if (progressDia != null && progressDia!!.isShowing) {
-                progressDia!!.dismiss()
-            }
-            progressDia = Dialog(context!!, R.style.CustomProgressDialog_info)
-            val loadView = LayoutInflater.from(context).inflate(R.layout.dia_custom_progress, null)
-            progressDia?.setContentView(loadView)
-            progressDia?.setCanceledOnTouchOutside(false)
-            val tvTip = loadView.findViewById<TextView>(R.id.tvTip)
-            tvTip.setText(tip)
-            progressDia?.show()
+            progressDia.setTest(tip)
+            progressDia.show(fragmentManager)
         } catch (e: Exception) {
             YLog.d(e.toString())
         }
     }
 
+    /**
+     * 废弃
+     */
+    @Deprecated("废弃用上一个")
+    @JvmStatic
     fun show(context: Context?) {
         try {
             if (progressDia2 != null && progressDia2!!.isShowing) {
@@ -54,10 +57,11 @@ object ProgressDiaUtil {
     /**
      * 隐藏耗时对话框
      */
+    @JvmStatic
     fun dismiss() {
         try {
-            if (progressDia != null && progressDia?.isShowing()!!) {
-                progressDia?.dismiss()
+            if (progressDia.isVisible) {
+                progressDia.dismiss()
             }
             if (progressDia2 != null && progressDia2?.isShowing()!!) {
                 progressDia2?.dismiss()

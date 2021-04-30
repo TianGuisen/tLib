@@ -150,6 +150,10 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
         Glide.with(this).pauseRequests()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+//        isFirstShowLoadData=true
+    }
     override fun isBaseOnWidth(): Boolean {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
     }

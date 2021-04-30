@@ -13,7 +13,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
  * @author 田桂森 2020/5/23 0023
  * 列表页面继承这个，集合bean需要实现IRVListBean
  */
-abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T,out BaseViewHolder>> : BaseActivity(), IBaseRV<T, B> {
+abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> : BaseActivity(), IBaseRV<T, B> {
     override val layoutId = R.layout.act_common_list
     abstract override var adapter: B
     override lateinit var rv: TRecyclerView
@@ -22,9 +22,11 @@ abstract class BaseRVAct<T : IRVListBean, B : BaseQuickAdapter<T,out BaseViewHol
     override var page = 1//有的接口用的page
     override var lastId: String = ""//有的接口用的lastId
     override var enableloadMore: Boolean = true
+    override var itemLoadingLayoutId: Int = 0
+
     override fun initView() {
         rv = findViewById(R.id.rv)
-        rv.layoutManager=LinearLayoutManager(this)
+        rv.layoutManager = LinearLayoutManager(this)
         srl = findViewById(R.id.srl)
         lv = findViewById(R.id.lv)
         initRVView()

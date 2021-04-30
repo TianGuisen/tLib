@@ -22,6 +22,7 @@ import a.tlib.R;
 
 /**
  * Created by zzz40500 on 15/4/6.
+ * https://github.com/zzz40500/android-shapeLoadingView
  */
 public class LoadingView extends LinearLayout {
 

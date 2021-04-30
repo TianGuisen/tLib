@@ -6,9 +6,8 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.ruffian.library.widget.RTextView
 import com.ruffian.library.widget.RView
-import com.ruffian.library.widget.helper.RBaseHelper
-import com.ruffian.library.widget.iface.RHelper
 
 /**
  * @author 田桂森 2020/12/22 0022
@@ -60,5 +59,9 @@ open class MyViewHolder(view: View) : BaseViewHolder(view) {
             it.isSelected = select
         }
     }
-
+    fun setTVSelect(id: Int, select: Boolean) {
+        getView<RTextView>(id).let {
+            it.isSelected = select
+        }
+    }
 }

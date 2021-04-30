@@ -24,6 +24,8 @@ abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHo
     override var page = 1//有的接口用的page
     override var lastId: String = ""//有的接口用的lastId
     override var enableloadMore: Boolean = true
+    override var itemLoadingLayoutId: Int = 0
+
     override fun initView(view: View) {
         view.apply {
             rv = findViewById(R.id.rv)

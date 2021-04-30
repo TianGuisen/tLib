@@ -1,5 +1,6 @@
 package a.tlib.base
 
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -12,7 +13,7 @@ open class FragmentPageAdapter constructor(fm: FragmentManager, private val mFra
     override fun getItem(index: Int): Fragment {
         return mFragments[index]
     }
-
+//不销毁页面
 //    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
 //    }
 }

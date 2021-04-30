@@ -75,7 +75,7 @@
     <array name="ff9_e63">
         <item>#FF9B44</item>
         <item>#E63D1C</item>
-    </array> 
+    </array>
     <array name="fff5_efc">
         <item>#FFF5ED</item>
         <item>#EFCBB4</item>
@@ -88,5 +88,10 @@
         <item>#0F131A</item>
         <item>#383A47</item>
         <item>#2D303F</item>
+    </array>
+
+    <array name="fff_f5f6">
+        <item>#FFFFFF</item>
+        <item>#F5F6F6</item>
     </array>
 </resources>

@@ -14,8 +14,8 @@ open class FragmentPageAdapter constructor(fm: FragmentManager, private val mFra
         return mFragments[index]
     }
 //不销毁页面
-//    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-//    }
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+    }
 }
 
 /**

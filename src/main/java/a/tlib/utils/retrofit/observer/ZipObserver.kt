@@ -83,7 +83,7 @@
 //    }
 //
 //    override fun onSuccess(t: MutableList<T>) {
-//        lv?.showContent()
+//        showContent()
 //        onSucces(t)
 //        finishHandle()
 //        onFinish()

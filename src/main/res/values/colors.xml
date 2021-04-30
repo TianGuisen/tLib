@@ -242,5 +242,6 @@
     <color name="shadow">#25808080</color>
     <color name="dialog_bg">#f5f5f5</color>
     <color name="c_404">#404A5C</color>
-
+    <color name="c_6a6a">#6A6A6F</color>
+    <color name="c_ae">#AEAEB8</color>
 </resources>

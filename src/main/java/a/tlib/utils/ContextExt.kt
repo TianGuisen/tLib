@@ -1,19 +1,19 @@
 package a.tlib.utils
 
-import android.app.Activity
-import android.app.ActivityOptions
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.os.Parcelable
-import androidx.fragment.app.Fragment
+import a.tlib.bean.BaseData
+import a.tlib.bean.ShareElementInfo4
 import a.tlib.utils.IntentUtil.createIntent
 import a.tlib.utils.IntentUtil.fillBundleArguments
 import a.tlib.utils.IntentUtil.fillIntentArguments
 import a.tlib.utils.IntentUtil.internalStartActivityForResult
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.os.Parcel
+import android.os.Parcelable
 import android.view.View
-import com.gyf.immersionbar.ImmersionBar
+import androidx.fragment.app.Fragment
 import com.hw.ycshareelement.YcShareElement
 import com.hw.ycshareelement.transition.ShareElementInfo
 import java.util.*
@@ -32,7 +32,7 @@ inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, A
  */
 inline fun <reified T : Activity> Activity.startAct(view: View, cover: String, vararg params: Pair<String, Any?>){
     val optionsBundle = YcShareElement.buildOptionsBundle(this) {
-        arrayOf<ShareElementInfo<*>>(ShareElementInfo(view, ShareElementInfo3(cover, AppUtil.getScreenWidth(), AppUtil.getScreenHeight())))
+        arrayOf<ShareElementInfo<*>>(ShareElementInfo(view, ShareElementInfo4(cover, AppUtil.getScreenWidth(), AppUtil.getScreenHeight())))
     }
     this.startActivity(createIntent(this, T::class.java, params),optionsBundle)
 }
@@ -222,49 +222,4 @@ object IntentUtil {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
 //        }
     }
-}
-class ShareElementInfo3 : Parcelable {
-    var url: String?=null
-    var width = 0
-    var height = 0
-
-    constructor(url: String?=null, width: Int, height: Int) {
-        this.url = url
-        this.width = width
-        this.height = height
-    }
-
-
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
-            return true
-        }
-        if (o == null || javaClass != o.javaClass) {
-            return false
-        }
-        val baseData: ShareElementInfo3 = o as ShareElementInfo3
-        return width == baseData.width && height == baseData.height &&
-                url == baseData.url
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hash(url, width, height)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(url)
-        dest.writeInt(width)
-        dest.writeInt(height)
-    }
-
-    protected fun BaseData(`in`: Parcel) {
-        url = `in`.readString()
-        width = `in`.readInt()
-        height = `in`.readInt()
-    }
-
 }

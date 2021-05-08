@@ -28,8 +28,6 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         rv.adapter = adapter
         Log.d("onCreateAdapter", adapter.javaClass.simpleName)//用于快速定位
         enableSRL(false)
-        srl?.setEnableLoadMore(false)
-        srl?.setEnableRefresh(false)
         srl?.setOnRefreshListener {
             page = 1
             lastId = ""

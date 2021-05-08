@@ -29,13 +29,14 @@ open class TRecyclerView : ShimmerRecyclerView {
     }
 
     private fun init(context: Context, attrs: AttributeSet?) {
+        //默认隐藏加载的动画
+        hideShimmerAdapter()
         overScrollMode = View.OVER_SCROLL_NEVER//隐藏边缘
         addOnScrollListener(imageLoadScrollListener)
-        
         //android:orientation="horizontal"获取原生属性处理，不处理的话，会无效，有毒
         val a = context.obtainStyledAttributes(attrs, R.styleable.RecyclerView)
         val orientation = a.getInt(androidx.recyclerview.R.styleable.RecyclerView_android_orientation, VERTICAL)
-        if (orientation == HORIZONTAL) {
+        if (orientation == HORIZONTAL&&layoutManager is LinearLayoutManager) {
             layoutManager=LinearLayoutManager(getContext(),HORIZONTAL,false)
             setDemoLayoutManager(LayoutMangerType.LINEAR_HORIZONTAL)
         }

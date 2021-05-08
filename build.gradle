@@ -81,11 +81,11 @@ dependencies {
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'com.google.code.gson:gson:2.8.5'
     api 'com.shuyu:gsyVideoPlayer-java:7.1.3'
-    api 'com.shuyu:gsyVideoPlayer-armv5:7.1.3'
+//    api 'com.shuyu:gsyVideoPlayer-armv5:7.1.3'
     api 'com.shuyu:gsyVideoPlayer-armv7a:7.1.3'
-    api 'com.shuyu:gsyVideoPlayer-arm64:7.1.3'
-    api 'com.shuyu:gsyVideoPlayer-x64:7.1.3'
-    api 'com.shuyu:gsyVideoPlayer-x86:7.1.3'
+//    api 'com.shuyu:gsyVideoPlayer-arm64:7.1.3'
+//    api 'com.shuyu:gsyVideoPlayer-x64:7.1.3'
+//    api 'com.shuyu:gsyVideoPlayer-x86:7.1.3'
     //https://github.com/JeremyLiao/LiveEventBus
     api 'com.jeremyliao:live-event-bus-x:1.5.7'
     //UI库,https://github.com/RuffianZhong/RWidgetHelper,需要及时检查使用最新版本
@@ -129,7 +129,7 @@ dependencies {
     api 'cn.yc:WebViewLib:1.4.0'
     //图片压缩https://github.com/nanchen2251/CompressHelper
     api 'com.github.nanchen2251:CompressHelper:1.0.5'
-    //https://github.com/xiaohaibin/XBanner
+    //轮播图，过时不再使用，https://github.com/xiaohaibin/XBanner
     api 'com.github.xiaohaibin:XBanner:androidx_v1.1.3'
     // 分隔线
     api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
@@ -164,4 +164,7 @@ dependencies {
 //    api 'com.github.Zhao-Yan-Yan:MultiStatePage:2.0.1'
     //闪光控件https://github.com/team-supercharge/ShimmerLayout
     api 'io.supercharge:shimmerlayout:2.1.0'
+    //轮播图https://github.com/zhpanvip/BannerViewPager
+    api 'com.github.zhpanvip:BannerViewPager:3.5.0'
+    
 }

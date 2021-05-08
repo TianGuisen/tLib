@@ -2,6 +2,8 @@ package a.tlib.utils.glide
 
 import com.bumptech.glide.request.RequestOptions
 import a.tlib.R
+import a.tlib.utils.glide.GlideOptions.bitmapTransform
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 /**
  * glide配置
@@ -30,6 +32,11 @@ val userCommonOptions = RequestOptions()
 fun roundedBannerOptions(radius: Int) = RequestOptions.bitmapTransform(CenterCropRoundCornerTransform(radius))
         .error(R.drawable.banner_null_img)
         .placeholder(R.drawable.banner_null_img)
+
+/**
+ * 直播的模糊图
+ */
+val blurOptions=bitmapTransform(BlurTransformation(25, 3))
 
 /**
  * 背景图

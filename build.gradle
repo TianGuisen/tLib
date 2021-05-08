@@ -149,7 +149,7 @@ dependencies {
     //本地数据存储mmkv
     api 'com.tencent:mmkv-static:1.2.7'
     //点击水波纹https://github.com/traex/RippleEffect
-    api 'com.github.traex.rippleeffect:library:1.3'
+//    api 'com.github.traex.rippleeffect:library:1.3'
     //测试拦截url信息显示https://github.com/ChuckerTeam/chucker
     debugApi "com.github.chuckerteam.chucker:library:3.4.0"
     releaseApi "com.github.chuckerteam.chucker:library-no-op:3.4.0"

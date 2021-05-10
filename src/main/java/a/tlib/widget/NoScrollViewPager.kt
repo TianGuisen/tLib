@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
 /**
  * 可以禁止滑动的viewpager
  */
-class NoScrollViewPager : ViewPager {
+open class NoScrollViewPager : ViewPager {
     /**
      * 默认禁止滑动，true为可以滑动
      */

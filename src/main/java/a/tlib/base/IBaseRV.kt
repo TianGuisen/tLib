@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.lb.baselib.retrofit.ResCode
 import com.lb.baselib.retrofit.ResWrapper
-import com.orhanobut.logger.YLog
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
@@ -28,8 +27,6 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
         rv.adapter = adapter
         Log.d("onCreateAdapter", adapter.javaClass.simpleName)//用于快速定位
         enableSRL(false)
-        srl?.setEnableLoadMore(false)
-        srl?.setEnableRefresh(false)
         srl?.setOnRefreshListener {
             page = 1
             lastId = ""
@@ -76,6 +73,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      * @itemLoadingLayoutId rv的item loading布局
      */
     fun showLoaing(itemLoadingLayoutId: Int = 0) {
+        this.itemLoadingLayoutId=itemLoadingLayoutId
         srl?.setEnableLoadMore(false)
         srl?.setEnableRefresh(false)
         enableSRL(false)

@@ -85,7 +85,7 @@ object AppUtil {
      * @return
      */
     @JvmStatic
-    fun getNetType(context: Context): Int {
+    fun getNetType(context: Context=LibApp.app): Int {
         //结果返回值
         var netType = 0
         //获取手机所有连接管理对象

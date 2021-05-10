@@ -12,4 +12,14 @@ class TEditLayout :TextFieldBoxes{
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        //解决获取焦点软键盘没有弹出的bug
+        (editText as TEditText).apply {
+            setOnFocusChangeListener { view, b ->
+                handKeyBoard(b)
+            }
+        }
+    }
 }

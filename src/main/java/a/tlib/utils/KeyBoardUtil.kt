@@ -65,4 +65,20 @@ object KeyBoardUtil {
                 .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm?.toggleSoftInput(0, 0)
     }
+
+    /**
+     * 判断软键盘是否弹出
+     */
+    @JvmStatic
+    fun isShowKeyboard( v: View): Boolean {
+        val imm = v.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        return if (imm.hideSoftInputFromWindow(v.windowToken, 0)) {
+            imm.showSoftInput(v, 0)
+            true
+            //软键盘已弹出
+        } else {
+            false
+            //软键盘未弹出
+        }
+    }
 }

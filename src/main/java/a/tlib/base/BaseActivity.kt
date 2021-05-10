@@ -3,6 +3,7 @@ package a.tlib.base
 import a.tlib.R
 import a.tlib.utils.StringUtils
 import a.tlib.utils.gson.GsonUtil
+import a.tlib.widget.TEditLayout
 import a.tlib.widget.TitleBar
 import android.content.Context
 import android.content.res.Configuration
@@ -21,8 +22,10 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
+import com.orhanobut.logger.YLog
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
+import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
 
 abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     val TAG = this.javaClass.simpleName
@@ -68,9 +71,9 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         when (style) {
             TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
                 val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
-                var navigationBarDarkIcon=false
-                if (navigationBarColor==R.color.translucent){
-                    navigationBarDarkIcon=true
+                var navigationBarDarkIcon = false
+                if (navigationBarColor == R.color.translucent) {
+                    navigationBarDarkIcon = true
                 }
                 ImmersionBar.with(this)
                         .statusBarColor(statusBarColor)//状态栏颜色
@@ -193,12 +196,21 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     private fun isShouldHideInput(v: View?, event: MotionEvent): Boolean {
         if (v != null && v is EditText) {
             val l = intArrayOf(0, 0)
-            v.getLocationInWindow(l)
+            //判断外层是TEditLayout就不隐藏键盘
+            if (v.parentForAccessibility.javaClass.name == "studio.carbonylgroup.textfieldboxes.ClipToBoundsView") { 
+                (v.parentForAccessibility as View).getLocationInWindow(l)
+            } else {
+                v.getLocationInWindow(l)
+            }
             val left = l[0]
             val top = l[1]
             val bottom = top + v.getHeight()
             val right = (left
                     + v.getWidth())
+            YLog.d(event.x > left)
+            YLog.d(event.x < right)
+            YLog.d(event.y > top)
+            YLog.d(event.y < bottom)
             return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
         }
         return false

@@ -16,7 +16,7 @@ object ReflectUtil {
      */
     @Throws(Exception::class)
     @JvmStatic
-    fun getProperty(owner: Any, fieldName: String?): Any {
+    fun getProperty(owner: Any, fieldName: String): Any {
         val ownerClass: Class<*> = owner.javaClass
         val field = ownerClass.getField(fieldName)
         return field[owner]
@@ -32,7 +32,7 @@ object ReflectUtil {
      */
     @JvmStatic
     @Throws(Exception::class)
-    fun getStaticProperty(className: String?, fieldName: String?): Any {
+    fun getStaticProperty(className: String, fieldName: String): Any {
         val ownerClass = Class.forName(className)
         val field = ownerClass.getField(fieldName)
         return field[ownerClass]
@@ -49,7 +49,7 @@ object ReflectUtil {
      */
     @JvmStatic
     @Throws(Exception::class)
-    fun invokeMethod(owner: Any, methodName: String?, args: Array<Any>): Any {
+    fun invokeMethod(owner: Any, methodName: String, args: Array<Any>): Any {
         val ownerClass: Class<*> = owner.javaClass
         val argsClass: Array<Class<*>?> = arrayOfNulls(args.size)
         var i = 0
@@ -73,7 +73,7 @@ object ReflectUtil {
      */
     @JvmStatic
     @Throws(Exception::class)
-    fun invokeStaticMethod(className: String?, methodName: String?,
+    fun invokeStaticMethod(className: String, methodName: String,
                            args: Array<Any>): Any {
         val ownerClass = Class.forName(className)
         val argsClass: Array<Class<*>?> = arrayOfNulls(args.size)
@@ -98,7 +98,7 @@ object ReflectUtil {
      */
     @JvmStatic
     @Throws(NoSuchMethodException::class, SecurityException::class, ClassNotFoundException::class, InstantiationException::class, IllegalAccessException::class, IllegalArgumentException::class, InvocationTargetException::class)
-    fun newInstance(className: String?, args: Array<Any?>?, argsType: Array<Class<*>?>): Any {
+    fun newInstance(className: String, args: Array<Any?>?, argsType: Array<Class<*>?>): Any {
         val newoneClass = Class.forName(className)
         return if (args == null) {
             newoneClass.newInstance()

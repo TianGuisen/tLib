@@ -13,11 +13,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.os.FileUtils
+import android.os.storage.StorageManager
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
@@ -25,6 +27,7 @@ import com.bumptech.glide.request.transition.Transition
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.*
+import java.lang.reflect.Method
 import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.ExecutionException
@@ -47,7 +50,7 @@ object FileUtil {
     @JvmField
     val fileType = app.getExternalFilesDir(null).toString() + "/youbo/"
 
-
+    private const val sBufferSize = 524288
     /**
      * 清理缓存
      */
@@ -307,6 +310,329 @@ object FileUtil {
     @JvmStatic
     fun getExtensionFull(pathOrName: String): String = getExtension(pathOrName, '.', true)
 
+    /**
+     * Uri to file.
+     *
+     * @param uri The uri.
+     * @return file
+     */
+    @JvmStatic
+    fun uri2File(uri: Uri?): File? {
+        if (uri == null) return null
+        val file: File? = uri2FileReal(uri)
+        return file ?: copyUri2Cache(uri)
+    }
+
+    /**
+     * Uri to file.
+     *
+     * @param uri The uri.
+     * @return file
+     */
+    @JvmStatic
+    private fun uri2FileReal(uri: Uri): File? {
+        Log.d("UriUtils", uri.toString())
+        val authority = uri.authority
+        val scheme = uri.scheme
+        val path = uri.path
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && path != null) {
+            val externals = arrayOf("/external/", "/external_path/")
+            var file: File? = null
+            for (external in externals) {
+                if (path.startsWith(external)) {
+                    file = File(Environment.getExternalStorageDirectory().absolutePath
+                            + path.replace(external, "/"))
+                    if (file.exists()) {
+                        Log.d("UriUtils", "$uri -> $external")
+                        return file
+                    }
+                }
+            }
+            file = null
+            if (path.startsWith("/files_path/")) {
+                file = File(LibApp.app.getFilesDir().getAbsolutePath()
+                        .toString() + path.replace("/files_path/", "/"))
+            } else if (path.startsWith("/cache_path/")) {
+                file = File(LibApp.app.getCacheDir().getAbsolutePath()
+                        .toString() + path.replace("/cache_path/", "/"))
+            } else if (path.startsWith("/external_files_path/")) {
+                file = File(LibApp.app.getExternalFilesDir(null)?.getAbsolutePath()
+                        .toString() + path.replace("/external_files_path/", "/"))
+            } else if (path.startsWith("/external_cache_path/")) {
+                file = File(LibApp.app.getExternalCacheDir()?.getAbsolutePath()
+                        .toString() + path.replace("/external_cache_path/", "/"))
+            }
+            if (file != null && file.exists()) {
+                Log.d("UriUtils", "$uri -> $path")
+                return file
+            }
+        }
+        return if (ContentResolver.SCHEME_FILE == scheme) {
+            if (path != null) return File(path)
+            Log.d("UriUtils", "$uri parse failed. -> 0")
+            null
+        } // end 0
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && DocumentsContract.isDocumentUri(LibApp.app, uri)) {
+            if ("com.android.externalstorage.documents" == authority) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).toTypedArray()
+                val type = split[0]
+                if ("primary".equals(type, ignoreCase = true)) {
+                    return File(Environment.getExternalStorageDirectory().toString() + "/" + split[1])
+                } else {
+                    // Below logic is how External Storage provider build URI for documents
+                    // http://stackoverflow.com/questions/28605278/android-5-sd-card-label
+                    val mStorageManager: StorageManager = LibApp.app.getSystemService(Context.STORAGE_SERVICE) as StorageManager
+                    try {
+                        val storageVolumeClazz = Class.forName("android.os.storage.StorageVolume")
+                        val getVolumeList: Method = mStorageManager.javaClass.getMethod("getVolumeList")
+                        val getUuid: Method = storageVolumeClazz.getMethod("getUuid")
+                        val getState: Method = storageVolumeClazz.getMethod("getState")
+                        val getPath: Method = storageVolumeClazz.getMethod("getPath")
+                        val isPrimary: Method = storageVolumeClazz.getMethod("isPrimary")
+                        val isEmulated: Method = storageVolumeClazz.getMethod("isEmulated")
+                        val result: Any = getVolumeList.invoke(mStorageManager)
+                        val length: Int = (result as Array<Any>).size
+                        for (i in 0 until length) {
+                            val storageVolumeElement: Any = (result as Array<Any>)[i]
+                            //String uuid = (String) getUuid.invoke(storageVolumeElement);
+                            val mounted = Environment.MEDIA_MOUNTED == getState.invoke(storageVolumeElement) || Environment.MEDIA_MOUNTED_READ_ONLY == getState.invoke(storageVolumeElement)
+
+                            //if the media is not mounted, we need not get the volume details
+                            if (!mounted) continue
+
+                            //Primary storage is already handled.
+                            if ((isPrimary.invoke(storageVolumeElement) as Boolean)
+                                    && (isEmulated.invoke(storageVolumeElement)) as Boolean) {
+                                continue
+                            }
+                            val uuid = getUuid.invoke(storageVolumeElement) as String
+                            if (uuid != null && uuid == type) {
+                                return File(getPath.invoke(storageVolumeElement).toString() + "/" + split[1])
+                            }
+                        }
+                    } catch (ex: java.lang.Exception) {
+                        Log.d("UriUtils", "$uri parse failed. $ex -> 1_0")
+                    }
+                }
+                Log.d("UriUtils", "$uri parse failed. -> 1_0")
+                null
+            } // end 1_0
+            else if ("com.android.providers.downloads.documents" == authority) {
+                var id = DocumentsContract.getDocumentId(uri)
+                if (TextUtils.isEmpty(id)) {
+                    Log.d("UriUtils", "$uri parse failed(id is null). -> 1_1")
+                    return null
+                }
+                if (id.startsWith("raw:")) {
+                    return File(id.substring(4))
+                } else if (id.startsWith("msf:")) {
+                    id = id.split(":".toRegex()).toTypedArray()[1]
+                }
+                var availableId: Long = 0
+                availableId = try {
+                    id.toLong()
+                } catch (e: java.lang.Exception) {
+                    return null
+                }
+                val contentUriPrefixesToTry = arrayOf(
+                        "content://downloads/public_downloads",
+                        "content://downloads/all_downloads",
+                        "content://downloads/my_downloads"
+                )
+                for (contentUriPrefix in contentUriPrefixesToTry) {
+                    val contentUri = ContentUris.withAppendedId(Uri.parse(contentUriPrefix), availableId)
+                    try {
+                        val file: File? = getFileFromUri(contentUri, "1_1")
+                        if (file != null) {
+                            return file
+                        }
+                    } catch (ignore: java.lang.Exception) {
+                    }
+                }
+                Log.d("UriUtils", "$uri parse failed. -> 1_1")
+                null
+            } // end 1_1
+            else if ("com.android.providers.media.documents" == authority) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).toTypedArray()
+                val type = split[0]
+                val contentUri: Uri
+                contentUri = if ("image" == type) {
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                } else if ("video" == type) {
+                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                } else if ("audio" == type) {
+                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                } else {
+                    Log.d("UriUtils", "$uri parse failed. -> 1_2")
+                    return null
+                }
+                val selection = "_id=?"
+                val selectionArgs = arrayOf(split[1])
+                getFileFromUri(contentUri, "1_2", selection, selectionArgs)
+            } // end 1_2
+            else if (ContentResolver.SCHEME_CONTENT == scheme) {
+                getFileFromUri(uri, "1_3")
+            } // end 1_3
+            else {
+                Log.d("UriUtils", "$uri parse failed. -> 1_4")
+                null
+            } // end 1_4
+        } // end 1
+        else if (ContentResolver.SCHEME_CONTENT == scheme) {
+            getFileFromUri(uri, "2")
+        } // end 2
+        else {
+            Log.d("UriUtils", "$uri parse failed. -> 3")
+            null
+        } // end 3
+    }
+    @JvmStatic
+    private fun getFileFromUri(uri: Uri, code: String, selection: String? = null, selectionArgs: Array<String>? = null ): File? {
+        if ("com.google.android.apps.photos.content" == uri.authority) {
+            if (!TextUtils.isEmpty(uri.lastPathSegment)) {
+                return File(uri.lastPathSegment)
+            }
+        } else if ("com.tencent.mtt.fileprovider" == uri.authority) {
+            val path = uri.path
+            if (!TextUtils.isEmpty(path)) {
+                val fileDir = Environment.getExternalStorageDirectory()
+                return File(fileDir, path!!.substring("/QQBrowser".length, path.length))
+            }
+        } else if ("com.huawei.hidisk.fileprovider" == uri.authority) {
+            val path = uri.path
+            if (!TextUtils.isEmpty(path)) {
+                return File(path!!.replace("/root", ""))
+            }
+        }
+        val cursor: Cursor ?= LibApp.app.getContentResolver().query(
+                uri, arrayOf("_data"), selection, selectionArgs, null)
+        if (cursor == null) {
+            Log.d("UriUtils", "$uri parse failed(cursor is null). -> $code")
+            return null
+        }
+        return try {
+            if (cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex("_data")
+                if (columnIndex > -1) {
+                    File(cursor.getString(columnIndex))
+                } else {
+                    Log.d("UriUtils", "$uri parse failed(columnIndex: $columnIndex is wrong). -> $code")
+                    null
+                }
+            } else {
+                Log.d("UriUtils", "$uri parse failed(moveToFirst return false). -> $code")
+                null
+            }
+        } catch (e: java.lang.Exception) {
+            Log.d("UriUtils", "$uri parse failed. -> $code")
+            null
+        } finally {
+            cursor.close()
+        }
+    }
+    @JvmStatic
+    private fun copyUri2Cache(uri: Uri): File? {
+        Log.d("UriUtils", "copyUri2Cache() called")
+        var `is`: InputStream? = null
+        return try {
+            `is` = LibApp.app.getContentResolver().openInputStream(uri)
+            val file = File(LibApp.app.getCacheDir(), "" + System.currentTimeMillis())
+            writeFileFromIS(file, `is`)
+            file
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+            null
+        } finally {
+            if (`is` != null) {
+                try {
+                    `is`.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 写入文件
+     *
+     * @param file     The file.
+     * @param is       The input stream.
+     * @param append   True to append, false otherwise.
+     * @param listener The progress update listener.
+     * @return `true`: success<br></br>`false`: fail
+     */
+    @JvmStatic
+    fun writeFileFromIS(file: File, `is`: InputStream?, append: Boolean=false, listener: ((Double)->Unit)?=null): Boolean {
+        if (`is` == null || !createOrExistsFile(file)) {
+            Log.e("FileIOUtils", "create file <$file> failed.")
+            return false
+        }
+        var os: OutputStream? = null
+        return try {
+            os = BufferedOutputStream(FileOutputStream(file, append), sBufferSize)
+            if (listener == null) {
+                val data = ByteArray(sBufferSize)
+                var len: Int
+                while (`is`.read(data).also { len = it } != -1) {
+                    os.write(data, 0, len)
+                }
+            } else {
+                val totalSize = `is`.available().toDouble()
+                var curSize = 0
+                listener.invoke(0.0)
+                val data = ByteArray(sBufferSize)
+                var len: Int
+                while (`is`.read(data).also { len = it } != -1) {
+                    os.write(data, 0, len)
+                    curSize += len
+                    listener.invoke(curSize / totalSize)
+                }
+            }
+            true
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        } finally {
+            try {
+                `is`.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            try {
+                os?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    /**
+     * 创建一个文件，如果已经存在则什么也不做
+     */
+    @JvmStatic
+    fun createOrExistsFile(file: File?): Boolean {
+        if (file == null) return false
+        if (file.exists()) return file.isFile
+        return if (!createOrExistsDir(file.parentFile)) false else try {
+            file.createNewFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * 创建一个不存在的目录，如果已经存在则什么也不做。
+     */
+    @JvmStatic
+    fun createOrExistsDir(file: File?): Boolean {
+        return file != null && if (file.exists()) file.isDirectory else file.mkdirs()
+    }
     /**
      * 通过Uri获取文件名
      */

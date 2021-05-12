@@ -38,7 +38,7 @@ object KeyBoardUtil {
      */
     @JvmStatic
     fun hideSoftKeyboard(act: Activity) {
-        try { // hide keybord anyway
+        try {
             val v = act.window.currentFocus
             if (v != null) {
                 val imm = act.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

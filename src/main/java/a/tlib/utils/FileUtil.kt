@@ -51,6 +51,7 @@ object FileUtil {
     /**
      * 清理缓存
      */
+    @JvmStatic
     fun clearCache() {
         GlobalScope.launch {
             Glide.getPhotoCacheDir(app)
@@ -68,12 +69,14 @@ object FileUtil {
         }
     }
 
+    @JvmStatic
     fun scanImage(activity: Context, file: String) {  // 扫描图片文件
         val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE) //ACTION_MEDIA_SCANNER_SCAN_DIR
         scanIntent.setData(Uri.fromFile(File(file)))
         activity.sendBroadcast(scanIntent)
     }
 
+    @JvmStatic
     fun formetFileSize(fileS: Long): String {
         val df = DecimalFormat("#.0")
         var fileSizeString = ""
@@ -98,6 +101,7 @@ object FileUtil {
      * @param file File实例
      * @return long
      */
+    @JvmStatic
     fun getFolderSize(file: File): Long {
         var size: Long = 0
         try {
@@ -121,6 +125,7 @@ object FileUtil {
      * @return
      * @throws Exception
      */
+    @JvmStatic
     @Throws(java.lang.Exception::class)
     fun getTotalCacheSize(context: Context): Long {
         var cacheSize = getFolderSize(context.cacheDir)
@@ -130,6 +135,7 @@ object FileUtil {
         return cacheSize
     }
 
+    @JvmStatic
     fun deleteFiles(root: File) {
         val files = root.listFiles()
         if (files != null) {
@@ -144,6 +150,7 @@ object FileUtil {
             }
         }
     }
+
 
     //保存网络图片到相册
     @JvmStatic
@@ -460,4 +467,24 @@ object FileUtil {
         }
         return null
     }
+
+    /**
+     * 通知系统扫描文件
+     */
+    @JvmStatic
+    fun notifySystemToScan(filePath: String) {
+        notifySystemToScan(File(filePath))
+    }
+
+    /**
+     * 通知系统扫描文件
+     */
+    @JvmStatic
+    fun notifySystemToScan(file: File) {
+        if (!file.exists()) return
+        val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
+        intent.data = Uri.parse("file://" + file.absolutePath)
+        LibApp.app.sendBroadcast(intent)
+    }
+
 }

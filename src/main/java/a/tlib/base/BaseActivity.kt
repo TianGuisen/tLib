@@ -1,9 +1,10 @@
 package a.tlib.base
 
 import a.tlib.R
+import a.tlib.utils.AppUtil
 import a.tlib.utils.StringUtils
+import a.tlib.utils.getcolor
 import a.tlib.utils.gson.GsonUtil
-import a.tlib.widget.TEditLayout
 import a.tlib.widget.TitleBar
 import android.content.Context
 import android.content.res.Configuration
@@ -25,7 +26,6 @@ import com.gyf.immersionbar.ImmersionBar
 import com.orhanobut.logger.YLog
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
-import studio.carbonylgroup.textfieldboxes.TextFieldBoxes
 
 abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     val TAG = this.javaClass.simpleName
@@ -71,15 +71,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         when (style) {
             TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
                 val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
-                var navigationBarDarkIcon = false
-                if (navigationBarColor == R.color.translucent) {
-                    navigationBarDarkIcon = true
-                }
                 ImmersionBar.with(this)
                         .statusBarColor(statusBarColor)//状态栏颜色
                         .navigationBarColor(navigationBarColor)//导航栏颜色
                         .statusBarDarkFont(false)//状态栏图标浅色
-                        .navigationBarDarkIcon(navigationBarDarkIcon)//导航栏图标浅色
+                        .autoNavigationBarDarkModeEnable(true,0.2f)
+//                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))//导航栏图标浅色
                         .init()
             }
             TitleBar.BLACK_STYLE -> {//透明状态栏，白色导航栏
@@ -88,7 +85,8 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
                         .statusBarColor(statusBarColor)
                         .navigationBarColor(navigationBarColor)
                         .statusBarDarkFont(true)
-                        .navigationBarDarkIcon(true)
+                        .autoNavigationBarDarkModeEnable(true,0.2f)
+//                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))
                         .init()
             }
         }

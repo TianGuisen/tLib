@@ -3,6 +3,7 @@ package a.tlib.widget.dialog.baseDialog
 import a.tlib.R
 import a.tlib.utils.AppUtil
 import a.tlib.utils.AutoSizeUtil
+import a.tlib.utils.KeyBoardUtil
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.Configuration
@@ -411,7 +412,7 @@ abstract class BaseLDialog<T : BaseLDialog<T>> : DialogFragment(), CustomAdapt {
     }
 
     override fun onDestroyView() {
-        AppUtil.hideSoftKeyBoard(act)
+        KeyBoardUtil.hideSoftKeyboard(act)
         super.onDestroyView()
     }
 

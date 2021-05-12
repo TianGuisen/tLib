@@ -12,6 +12,7 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
@@ -22,7 +23,7 @@ import android.telephony.TelephonyManager
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import com.orhanobut.logger.YLog
+import androidx.annotation.ColorInt
 
 
 object AppUtil {
@@ -284,5 +285,10 @@ object AppUtil {
             }
         }
         return false
+    }
+
+    @JvmStatic
+    fun isLightColor(@ColorInt color: Int): Boolean {
+        return 0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color) >= 127.5
     }
 }

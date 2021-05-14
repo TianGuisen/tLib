@@ -6,7 +6,6 @@ import a.tlib.widget.TRecyclerView
 import a.tlib.widget.dialog.baseDialog.BaseLDialog
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -24,6 +23,7 @@ abstract class BaseRVDia<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHo
     override var page = 1//有的接口用的page
     override var lastId: String = ""//有的接口用的lastId
     override var enableloadMore: Boolean = true
+    override var enableloadRefresh: Boolean = true
     override var itemLoadingLayoutId: Int = 0
 
     override fun initView(view: View) {

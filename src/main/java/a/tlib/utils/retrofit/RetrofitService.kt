@@ -101,7 +101,8 @@ object RetrofitService {
 
 class RetrofitParams {
     val interceptors = mutableListOf<Interceptor>()
-    var baseUrl = ""
+    //必须要随便写个url，否则微信接口会失败
+    var baseUrl = "https://www.baidu.com/"
     lateinit var converterFactory: Converter.Factory
 }
 

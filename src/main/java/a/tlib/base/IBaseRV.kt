@@ -21,6 +21,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     var srl: SmartRefreshLayout?
     var lv: LoadView?
     var enableloadMore: Boolean
+    var enableloadRefresh: Boolean
     var itemLoadingLayoutId: Int
 
     fun initRVView() {
@@ -60,7 +61,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
 
     fun showContent() {
         srl?.setEnableLoadMore(enableloadMore)
-        srl?.setEnableRefresh(true)
+        srl?.setEnableRefresh(enableloadRefresh)
         lv?.showContent()
         if (itemLoadingLayoutId != 0) {
             rv.hideShimmerAdapter()
@@ -119,6 +120,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      */
     fun setEnableRefresh(b: Boolean) {
         srl?.setEnableRefresh(b)
+        enableloadRefresh=b
     }
 
     /**

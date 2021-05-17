@@ -15,12 +15,12 @@ class LoadingDia : BaseLDialog<LoadingDia>() {
     }
 
     init {
-        setWidthPt(450f)
-        setHeightPt(350f)
+        setWidthDp(150f)
+        setHeightDp(125f)
     }
 
     override val layoutId = R.layout.dia_loading
-  private  var showTest = "加载中..."
+    private var showTest = "加载中..."
     override fun initView(view: View) {
         loading_view.setDelay(80)
         loading_view.setLoadingText(showTest)

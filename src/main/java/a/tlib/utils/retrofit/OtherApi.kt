@@ -15,7 +15,7 @@ import retrofit2.http.*
  */
 val otherApi: OtherApi by lazy {
     val retrofitParams = RetrofitParams()
-//    retrofitParams.interceptors.add(RetrofitService.paramInterceptor)
+    retrofitParams.interceptors.add(RetrofitService.paramInterceptor)
     retrofitParams.interceptors.add(RetrofitService.chuckerInterceptor)
     retrofitParams.interceptors.add(RetrofitService.loggerInterceptor)
     retrofitParams.converterFactory = RetrofitService.gsonConverterFactory

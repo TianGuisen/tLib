@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.view.View
 import android.widget.*
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -164,4 +165,13 @@ fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? 
         }
         requestBuilder.into(this)
     }
+}
+
+fun ViewPager.setPageSelectLis(function: (Int) -> Unit){
+    addOnPageChangeListener(object :ViewPager.SimpleOnPageChangeListener(){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            function(position)
+        }
+    })
 }

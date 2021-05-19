@@ -38,7 +38,7 @@ interface IObserver<T> {
         }
         context?.let {
             if (it is FragmentActivity) {
-                ProgressDiaUtil.show(it .supportFragmentManager)
+                ProgressDiaUtil.show(it.supportFragmentManager)
             } else if (context is Fragment) {
                 ProgressDiaUtil.show((it as Fragment).childFragmentManager)
             } else {
@@ -47,38 +47,38 @@ interface IObserver<T> {
         }
     }
 
-fun finishHandle() {
-    if (repeat != 0) {
-        ApiTagManager.instance.remove(tag)
-    }
-    context?.let {
-        ProgressDiaUtil.dismiss()
-    }
-}
-
-fun showErrorToast(t: ResWrapper<T>) {
-    if (showToast) {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            ToastUtil.normal(t.message)
+    fun finishHandle() {
+        if (repeat != 0) {
+            ApiTagManager.instance.remove(tag)
+        }
+        context?.let {
+            ProgressDiaUtil.dismiss()
         }
     }
-}
 
-fun isSuccess(t: ResWrapper<T>): Boolean {
-    return t.code == ResCode.RESPONSE_SUCCESS2 || t.code == ResCode.RESPONSE_SUCCESS
-}
-
-/**
- * 检查登录
- */
-fun checkLogin(t: ResWrapper<T>): Boolean {
-    if (t.code == ResCode.TOKEN_OVERDUE) {
-        if (jumpLogin) {
-            //跳转到登陆界面
-            LiveEventBus.get(ResCode.TOKEN_OVERDUE.toString()).post(null)
+    fun showErrorToast(t: ResWrapper<T>) {
+        if (showToast) {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                ToastUtil.normal(t.message)
+            }
         }
-        return false
     }
-    return true
-}
+
+    fun isSuccess(t: ResWrapper<T>): Boolean {
+        return t.code == ResCode.RESPONSE_SUCCESS2 || t.code == ResCode.RESPONSE_SUCCESS
+    }
+
+    /**
+     * 检查登录
+     */
+    fun checkLogin(t: ResWrapper<T>): Boolean {
+        if (t.code == ResCode.TOKEN_OVERDUE) {
+            if (jumpLogin) {
+                //跳转到登陆界面
+                LiveEventBus.get(ResCode.TOKEN_OVERDUE.toString()).post(null)
+            }
+            return false
+        }
+        return true
+    }
 }

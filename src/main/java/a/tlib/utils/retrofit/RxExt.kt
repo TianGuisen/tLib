@@ -23,7 +23,7 @@ fun <T> Single<ResWrapper<T>>.normalSub(
         srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
         showToast: Boolean = true,//默认显示错误toast
         jumpLogin: Boolean = false,//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
-        tag: String? = null,//请求标记,传入url
+        tag: String? = null,//请求标记,配合repeat
         repeat: Int = 0
 ) {
     val ob = object : NormalObserver<T>(context, lv, srl, showToast, jumpLogin, tag, repeat) {
@@ -54,7 +54,7 @@ fun <T> SingleSubscribeProxy<ResWrapper<T>>.normalSub(
         srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
         showToast: Boolean = true,//默认显示错误toast
         jumpLogin: Boolean = false,//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
-        tag: String? = null,//请求标记,传入url
+        tag: String? = null,//请求标记,配合repeat
         repeat: Int = 0
 ) {
     val ob = object : NormalObserver<T>(context, lv, srl, showToast, jumpLogin, tag, repeat) {

@@ -176,26 +176,25 @@ fun Float.limitMinMax(mix: Double? = null, max: Double? = null): Float {
 /**
  * 对字符加星号处理：除前面几位和后面几位外，其他的字符以星号代替
  *
- * @param content  传入的字符串
  * @param frontNum 保留前面字符的位数
  * @param endNum   保留后面字符的位数
  */
-fun String.getStarStr(content: String, frontNum: Int, endNum: Int): String {
+fun String.getStarStr(frontNum: Int, endNum: Int): String {
 
-    if (frontNum >= content.length || frontNum < 0) {
-        return content
+    if (frontNum >= this.length || frontNum < 0) {
+        return this
     }
-    if (endNum >= content.length || endNum < 0) {
-        return content
+    if (endNum >= this.length || endNum < 0) {
+        return this
     }
-    if (frontNum + endNum >= content.length) {
-        return content
+    if (frontNum + endNum >= this.length) {
+        return this
     }
     var starStr = ""
-    for (i in 0 until content.length - frontNum - endNum) {
+    for (i in 0 until this.length - frontNum - endNum) {
         starStr = "$starStr*"
     }
-    return (content.substring(0, frontNum) + starStr + content.substring(content.length - endNum, content.length))
+    return (this.substring(0, frontNum) + starStr + this.substring(this.length - endNum, this.length))
 }
 
 /**

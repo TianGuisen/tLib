@@ -150,14 +150,15 @@ object AppUtil {
     }
 
     /**
-     * 拨打电话,需要权限
+     * 拨打电话,需要动态申请权限
+     * Manifest.permission.CALL_PHONE
      */
     @JvmStatic
-    fun callPhone(num: String) {
+    fun callPhone(act:Activity,num: String) {
         val intent = Intent(Intent.ACTION_CALL)
         val data = Uri.parse("tel:${num}")
         intent.data = data
-        LibApp.app.startActivity(intent)
+       act.startActivity(intent)
     }
 
     /**

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/ll_empty_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:tag="empty">
+
+        <ImageView
+            android:id="@+id/iv_empty_record"
+            android:layout_width="576pt"
+            android:layout_height="576pt"
+            android:src="@drawable/ic_empty_record" />
+
+        <TextView
+            android:id="@+id/tv_empty_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="暂无记录"
+            android:textSize="35pt"
+            android:textColor="@color/c_999"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

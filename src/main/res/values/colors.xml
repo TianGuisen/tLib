@@ -248,4 +248,7 @@
     <color name="c_00b">#00B578</color>
     <color name="c_D0">#D0D0D0</color>
     <color name="c_ff3e">#FF3E4A</color>
+    <color name="c_f49">#F49957</color>
+    <color name="c_ff7">#FF7B5F</color>
+    <color name="c_f35">#F35FFF</color>
 </resources>

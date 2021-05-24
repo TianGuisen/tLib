@@ -94,4 +94,9 @@
         <item>#FFFFFF</item>
         <item>#F5F6F6</item>
     </array>
+
+    <array name="fa8_ea4">
+        <item>#FA8A6F</item>
+        <item>#EA4936</item>
+    </array>
 </resources>

@@ -36,17 +36,11 @@ class LoadView : FrameLayout {
     }
 
     var mEmptyView: View? = null
-        private set
     var mErrorView: View? = null
-        private set
     var mLoadingView: View? = null
-        private set
     var mNoNetworkView: View? = null
-        private set
     var mContentView: View? = null
-        private set
     var mLoginView: View? = null
-        private set
     var mEmptyViewResId: Int = 0
     var mErrorViewResId: Int = 0
     var mLoadingViewResId: Int = 0
@@ -183,7 +177,10 @@ class LoadView : FrameLayout {
     @JvmOverloads
     fun showEmpty(layoutId: Int = mEmptyViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
 
-        showEmpty(if (null == mEmptyView) inflateView(layoutId) else mEmptyView, layoutParams)
+        if (mEmptyView == null) {
+            mEmptyView = inflateView(layoutId)
+        }
+        showEmpty(mEmptyView, layoutParams)
     }
 
     /**
@@ -196,15 +193,12 @@ class LoadView : FrameLayout {
         checkNull(view, "Empty view is null.")
         checkNull(layoutParams, "Layout params is null.")
         viewStatus = STATUS_EMPTY
-        if (null == mEmptyView) {
-            mEmptyView = view
-            val emptyRetryView = mEmptyView!!.findViewById<View>(R.id.empty)
-            if (null != mOnRetryClickListener && null != emptyRetryView) {
-                emptyRetryView.setOnClickListener(mOnRetryClickListener)
-            }
-            mOtherIds.add(mEmptyView!!.id)
-            addView(mEmptyView, 0, layoutParams)
+        val emptyRetryView = mEmptyView!!.findViewById<View>(R.id.empty)
+        if (null != mOnRetryClickListener && null != emptyRetryView) {
+            emptyRetryView.setOnClickListener(mOnRetryClickListener)
         }
+        mOtherIds.add(mEmptyView!!.id)
+        addView(mEmptyView, 0, layoutParams)
         mEmptyView?.findViewById<TextView>(R.id.tv_empty)?.setText(mEmptyText)
         if (mEmptyIcon != 0) {
             mEmptyView?.findViewById<ImageView>(R.id.iv_icon)?.setImageDrawable(resources.getDrawable(mEmptyIcon))

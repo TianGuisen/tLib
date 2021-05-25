@@ -36,11 +36,17 @@ class LoadView : FrameLayout {
     }
 
     var mEmptyView: View? = null
+        private set
     var mErrorView: View? = null
+        private set
     var mLoadingView: View? = null
+        private set
     var mNoNetworkView: View? = null
+        private set
     var mContentView: View? = null
+        private set
     var mLoginView: View? = null
+        private set
     var mEmptyViewResId: Int = 0
     var mErrorViewResId: Int = 0
     var mLoadingViewResId: Int = 0

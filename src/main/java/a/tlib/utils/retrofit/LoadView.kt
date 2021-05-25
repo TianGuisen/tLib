@@ -18,7 +18,8 @@ import java.util.*
 /**
  * 一个方便在多种状态切换的view
  *  loadView的子布局必须要有id
- *  例如:empty
+ *  例如:ll
+ *  要为哪个设置点击事件就把哪个id设置为:empty,error
  */
 class LoadView : FrameLayout {
 
@@ -36,11 +37,18 @@ class LoadView : FrameLayout {
     }
 
     var mEmptyView: View? = null
+    private set
     var mErrorView: View? = null
+        private set
     var mLoadingView: View? = null
+        private set
     var mNoNetworkView: View? = null
+        private set
     var mContentView: View? = null
+        private set
     var mLoginView: View? = null
+        private set
+
     var mEmptyViewResId: Int = 0
     var mErrorViewResId: Int = 0
     var mLoadingViewResId: Int = 0
@@ -177,10 +185,7 @@ class LoadView : FrameLayout {
     @JvmOverloads
     fun showEmpty(layoutId: Int = mEmptyViewResId, layoutParams: ViewGroup.LayoutParams = DEFAULT_LAYOUT_PARAMS) {
 
-        if (mEmptyView == null) {
-            mEmptyView = inflateView(layoutId)
-        }
-        showEmpty(mEmptyView, layoutParams)
+        showEmpty(if (null == mEmptyView) inflateView(layoutId) else mEmptyView, layoutParams)
     }
 
     /**
@@ -193,12 +198,15 @@ class LoadView : FrameLayout {
         checkNull(view, "Empty view is null.")
         checkNull(layoutParams, "Layout params is null.")
         viewStatus = STATUS_EMPTY
-        val emptyRetryView = mEmptyView!!.findViewById<View>(R.id.empty)
-        if (null != mOnRetryClickListener && null != emptyRetryView) {
-            emptyRetryView.setOnClickListener(mOnRetryClickListener)
+        if (null == mEmptyView) {
+            mEmptyView = view
+            val emptyRetryView = mEmptyView!!.findViewById<View>(R.id.empty)
+            if (null != mOnRetryClickListener && null != emptyRetryView) {
+                emptyRetryView.setOnClickListener(mOnRetryClickListener)
+            }
+            mOtherIds.add(mEmptyView!!.id)
+            addView(mEmptyView, 0, layoutParams)
         }
-        mOtherIds.add(mEmptyView!!.id)
-        addView(mEmptyView, 0, layoutParams)
         mEmptyView?.findViewById<TextView>(R.id.tv_empty)?.setText(mEmptyText)
         if (mEmptyIcon != 0) {
             mEmptyView?.findViewById<ImageView>(R.id.iv_icon)?.setImageDrawable(resources.getDrawable(mEmptyIcon))

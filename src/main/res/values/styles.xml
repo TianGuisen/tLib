@@ -117,4 +117,10 @@
         <item name="android:windowBackground">@color/white</item>
         <!--        <item name="android:listDivider">@drawable/ugckit_shape_list_divider</item>-->
     </style>
+
+    <style name="EditText_Phone_Style" parent="EditText_Base_Style">
+        <item name="android:textCursorDrawable">@drawable/edit_cursor_color</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">11</item>
+    </style>
 </resources>

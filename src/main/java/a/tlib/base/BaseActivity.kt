@@ -28,12 +28,25 @@ import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
 
 abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
+    companion object {
+        /**
+         * startActForResult时候默认code
+         */
+        const val REQUEST_CODE = 10
+
+        /**
+         * startActForResult时候putExtra默认的key
+         */
+        const val EXTRA_KEY = "extra_key"
+    }
+
     val TAG = this.javaClass.simpleName
     var gson = GsonUtil.gson
     var strUtils = StringUtils()
     abstract val layoutId: Int
     var titleBar: TitleBar? = null
     lateinit var act: BaseActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         act = this
@@ -75,7 +88,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
                         .statusBarColor(statusBarColor)//状态栏颜色
                         .navigationBarColor(navigationBarColor)//导航栏颜色
                         .statusBarDarkFont(false)//状态栏图标浅色
-                        .autoNavigationBarDarkModeEnable(true,0.2f)
+                        .autoNavigationBarDarkModeEnable(true, 0.2f)
 //                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))//导航栏图标浅色
                         .init()
             }
@@ -85,7 +98,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
                         .statusBarColor(statusBarColor)
                         .navigationBarColor(navigationBarColor)
                         .statusBarDarkFont(true)
-                        .autoNavigationBarDarkModeEnable(true,0.2f)
+                        .autoNavigationBarDarkModeEnable(true, 0.2f)
 //                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))
                         .init()
             }
@@ -195,7 +208,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         if (v != null && v is EditText) {
             val l = intArrayOf(0, 0)
             //判断外层是TEditLayout就不隐藏键盘
-            if (v.parentForAccessibility.javaClass.name == "studio.carbonylgroup.textfieldboxes.ClipToBoundsView") { 
+            if (v.parentForAccessibility.javaClass.name == "studio.carbonylgroup.textfieldboxes.ClipToBoundsView") {
                 (v.parentForAccessibility as View).getLocationInWindow(l)
             } else {
                 v.getLocationInWindow(l)

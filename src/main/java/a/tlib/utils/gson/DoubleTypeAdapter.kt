@@ -7,6 +7,10 @@ import com.google.gson.stream.JsonWriter
 
 /**
  * @author 田桂森 2020/2/28
+ * null-0.0
+ * boolean-0.0
+ * string.toDouble
+ * exception-0.0
  */
 class DoubleTypeAdapter : TypeAdapter<Double?>() {
     override fun write(out: JsonWriter, value: Double?) {

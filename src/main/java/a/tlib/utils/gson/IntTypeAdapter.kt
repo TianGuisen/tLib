@@ -7,6 +7,11 @@ import com.google.gson.stream.JsonWriter
 
 /**
  * @author 田桂森 2020/2/28
+ * null-0
+ * true-1
+ * false-0
+ * string.toInt
+ * exception-0
  */
 class IntTypeAdapter : TypeAdapter<Int?>() {
     override fun write(out: JsonWriter, value: Int?) {

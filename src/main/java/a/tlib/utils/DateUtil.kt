@@ -18,12 +18,41 @@ object DateUtil {
     val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
     /**
+     * long时间转Calendar
+     */
+    fun millisToCalendar(time: Long): Calendar {
+        var date = Calendar.getInstance()
+        date.timeInMillis = time
+        return date
+    }
+
+    /**
+     * 日期格式转化
+     * 1转换成01
+     */
+    @JvmStatic
+    fun parseDate2Bit(date: Int): String {
+        return if (date < 10) "0$date" else date.toString()
+    }
+
+    /**
+     * 获取某年某月有多少天
+     */
+    @JvmStatic
+    fun getDayOfMontn(year: Int, month: Int): Int {
+        var calendar = Calendar.getInstance()
+        calendar.set(year, month, 0)
+        return calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    /**
      * 当前年份
      */
     @JvmStatic
     fun getCurrentYear(): Int {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
+
     /**
      * 当前月
      */
@@ -31,6 +60,7 @@ object DateUtil {
     fun getCurrentMonth(): Int {
         return Calendar.getInstance().get(Calendar.MONTH) + 1
     }
+
     /**
      * 当前天
      */
@@ -38,11 +68,19 @@ object DateUtil {
     fun getCurrentDay(): Int {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     }
+
+    /**
+     * 当前小时
+     */
+    @JvmStatic
+    fun getCurrentHour(): Int {
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+    }
     /**
      * 获取当前日期
      */
     @JvmStatic
-    fun getCurrentTime(formatterStr: String): String {
+    fun getCurrentTime(formatterStr: String=DEFAULT_DATE_TIME_FORMAT): String {
         return SimpleDateFormat(formatterStr).format(Date(System.currentTimeMillis()))
     }
 
@@ -52,7 +90,7 @@ object DateUtil {
      * @return yyyy-MM-dd HH:mm:ss
      */
     @JvmStatic
-    fun dateSimpleFormat(date: Date, formatStr: String): String {
+    fun dateSimpleFormat(date: Date, formatStr: String = DEFAULT_DATE_TIME_FORMAT): String {
         return SimpleDateFormat(formatStr).format(date)
     }
 
@@ -62,7 +100,7 @@ object DateUtil {
      * @return yyyy-MM-dd HH:mm:ss
      */
     @JvmStatic
-    fun dateSimpleFormat(date: Long, formatStr: String): String {
+    fun dateSimpleFormat(date: Long, formatStr: String = DEFAULT_DATE_TIME_FORMAT): String {
         var date = date
         if (date < 10000000000) {
             date = date * 1000
@@ -74,6 +112,7 @@ object DateUtil {
      * 秒转时间
      * second时间
      * 后面为对应时间的单位文字，比如天/时/分，比如-，比如/
+     * XXX秒->10天10时1秒
      */
     @JvmStatic
     fun secondToTime(second: Long, dayUnitStr: String? = null, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
@@ -101,104 +140,13 @@ object DateUtil {
     }
 
     /**
-     * 将long时间转成yyyy-MM-dd HH:mm:ss字符串<br></br>
-     *
-     * @param timeInMillis 时间long值
-     * @return yyyy-MM-dd HH:mm:ss
+     * 时间字符串转为Long时间戳，毫秒
      */
     @JvmStatic
-    fun getDateTimeFromMillis(timeInMillis: Long): String {
-        return dateSimpleFormat(timeInMillis, "yyyy-MM-dd HH:mm:ss")
-    }
-
-    /**
-     * 时间字符串转为Long时间戳
-     */
-    @JvmStatic
-    fun dateStr2Long(dateStr:String,formatStr: String): Long {
+    fun dateStr2Long(dateStr: String, formatStr: String): Long {
         //Date或者String转化为时间戳
         val format = SimpleDateFormat(formatStr)
         val date = format.parse(dateStr)
         return date.time
-    }
-    /**
-     * 获得mm:ss的时间
-     *
-     * @param date
-     * @return
-     */
-    @JvmStatic
-    fun getTimeMSFormat(date: Date): String {
-        return dateSimpleFormat(date, "mm:ss")
-    }
-
-    
-    
-    @JvmStatic
-    fun parseLiveFinishTime(time: Long): String {
-        var timestr = ""
-        var second = time % 60
-        var min = (time % (60 * 60)) / 60
-        var hour = (time % (60 * 60 * 24)) / (60 * 60)
-        if (hour >= 10) {
-            timestr += "${hour}:"
-        } else {
-            timestr += "0${hour}:"
-        }
-        if (min >= 10) {
-            timestr += "${min}:"
-        } else {
-            timestr += "0${min}:"
-        }
-        if (second >= 10) {
-            timestr += "${second}"
-        } else {
-            timestr += "0${second}"
-        }
-        return timestr
-    }
-    @JvmStatic
-    fun pareLivetime(dateStr: String): Long {
-        var yearstr = Calendar.getInstance().get(Calendar.YEAR).toString()
-        var date = SimpleDateFormat("yyyy年MM月dd日 HH时mm分").parse(yearstr + "年" + dateStr)
-        if ((date.time + 864000000) < System.currentTimeMillis()) {  // 翻年的算法处理
-            date = SimpleDateFormat("yyyy年MM月dd日 HH时mm分").parse((Calendar.getInstance().get(Calendar.YEAR) + 1).toString() + "年" + dateStr)
-        }
-        return date.time / 1000
-    }
-
-
-    /**
-     * 根据制定的单位获取特定的日期
-     */
-    @JvmStatic
-    fun getUnitTime(time: Long, unit: String): Int {
-        var value = 0
-        var second = time / 1000
-        //天
-        var day = second / (3600 * 24)
-        second = second - (day * 3600 * 24)
-        //小时
-        var hour = second / 3600
-        second = second - hour * 3600
-        //分钟
-        var minute = second / 60
-        //秒
-        second = second - minute * 60
-        when (unit) {
-            "DAY" -> {
-                value = day.toInt()
-            }
-            "HOUR" -> {
-                value = hour.toInt()
-            }
-            "MINUTE" -> {
-                value = minute.toInt()
-            }
-            "SECOND" -> {
-                value = second.toInt()
-            }
-        }
-        return value
     }
 }

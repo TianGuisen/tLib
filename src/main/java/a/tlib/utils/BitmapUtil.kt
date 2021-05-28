@@ -62,6 +62,7 @@ object BitmapUtil {
      * @param namePrefix  保存文件的前缀名，文件最终名称格式为：前缀名+自动生成的唯一数字字符+.png
      * @param notifyMedia 是否更新到媒体库
      */
+    @Deprecated("废弃,使用ImageUtils")
     fun saveBitmapToDir(act: Activity, dirPath: String,
                         namePrefix: String, bitmap: Bitmap,
                         notifyMedia: Boolean, onSuccess: ((File?) -> Unit)? = null) {

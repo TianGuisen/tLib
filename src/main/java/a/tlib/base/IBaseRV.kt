@@ -162,6 +162,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
                 page++
                 lastId = list.last().getLastId()
                 showContent()
+                srl?.setNoMoreData(false)
             }
             adapter.setList(list)
             srl?.finishRefresh(true)

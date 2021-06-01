@@ -65,14 +65,14 @@ interface IObserver<T> {
     }
 
     fun isSuccess(t: ResWrapper<T>): Boolean {
-        return t.code == ResCode.RESPONSE_SUCCESS2 || t.code == ResCode.RESPONSE_SUCCESS
+        return t.code == ResCode.RESPONSE_SUCCESS2 || t.code == ResCode.RESPONSE_SUCCESS || t.code == ResCode.RESPONSE_SUCCESS3
     }
 
     /**
      * 检查登录
      */
     fun checkLogin(t: ResWrapper<T>): Boolean {
-        if (t.code == ResCode.TOKEN_OVERDUE) {
+        if (t.code == ResCode.TOKEN_OVERDUE||t.code == ResCode.TOKEN_OVERDUE2) {
             if (jumpLogin) {
                 //跳转到登陆界面
                 LiveEventBus.get(ResCode.TOKEN_OVERDUE.toString()).post(null)

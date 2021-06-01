@@ -6,12 +6,17 @@ object ResCode {
      * 重新登录
      */
     const val TOKEN_OVERDUE = 4040
+    const val TOKEN_OVERDUE2 = 401
+
     //失败
     const val RESPONSE_ERROR = -1
     const val RESPONSE_ERROR2 = 1003
+    const val RESPONSE_ERROR3 = 422
+
     //成功
     const val RESPONSE_SUCCESS = 1
     const val RESPONSE_SUCCESS2 = 1001
+    const val RESPONSE_SUCCESS3 = 200
 }
 
 enum class ApiErrorType(val code: Int, val message: String) {

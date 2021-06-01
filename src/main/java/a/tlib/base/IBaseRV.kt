@@ -192,7 +192,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      *失败处理
      */
     fun loadFailure(it: ResWrapper<*>?) {
-        if (it != null && it.code == ResCode.TOKEN_OVERDUE) {
+        if (it != null && (it.code == ResCode.TOKEN_OVERDUE||it.code == ResCode.TOKEN_OVERDUE2)) {
             showLogin()
         } else {
             showError()

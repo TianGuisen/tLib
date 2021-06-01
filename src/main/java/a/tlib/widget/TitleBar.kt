@@ -4,7 +4,6 @@ import a.tlib.LibApp
 import a.tlib.R
 import a.tlib.utils.getcolor
 import a.tlib.utils.isNotNullEmpty
-import a.tlib.utils.show
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -31,17 +30,13 @@ open class TitleBar : RFrameLayout {
         const val BLACK_STYLE = 1
     }
 
-
     lateinit var view: TitleBar
-    lateinit var tv_title: TextView
-    lateinit var fl_back: FrameLayout
-    lateinit var iv_back: ImageView
-    lateinit var iv_right: ImageView
-    lateinit var fl_right: FrameLayout
-    lateinit var tv_right: RTextView
-    lateinit var view_line: View
-
-    constructor(context: Context) : super(context, null) {}
+    val tv_title by lazy { view.findViewById<TextView>(R.id.tv_title) }
+    val fl_back by lazy { view.findViewById<FrameLayout>(R.id.fl_back) }
+    val iv_back by lazy { view.findViewById<ImageView>(R.id.iv_back) }
+    val iv_right by lazy { view.findViewById<ImageView>(R.id.iv_right) }
+    val fl_right by lazy { view.findViewById<FrameLayout>(R.id.fl_right) }
+    val tv_right by lazy { view.findViewById<RTextView>(R.id.tv_right) }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
@@ -52,13 +47,6 @@ open class TitleBar : RFrameLayout {
         if (LibApp.appSign == 0) {
             view.helper.setBackgroundColorNormal(getcolor(R.color.black))
         }
-        tv_title = view.findViewById(R.id.tv_title)
-        fl_back = view.findViewById(R.id.fl_back)
-        iv_back = view.findViewById(R.id.iv_back)
-        iv_right = view.findViewById(R.id.iv_right)
-        fl_right = view.findViewById(R.id.fl_right)
-        tv_right = view.findViewById(R.id.tv_right)
-        view_line = view.findViewById(R.id.view_line)
     }
 
     fun setTitle(string: String?, style: Int = BLACK_STYLE): TextView {
@@ -123,10 +111,6 @@ open class TitleBar : RFrameLayout {
         tv_title.setTextColor(getcolor(R.color.color_ecc498))
         iv_back.setImageResource(R.drawable.img_titlebar_back_white_live)
         view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
-    }
-
-    fun showLine() {
-        view_line.show()
     }
 
     /**

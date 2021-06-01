@@ -72,7 +72,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 //        }
 //    }
 
-    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE, statusBarColor: Int = R.color.transparent,
+    fun setTitle(title: String?, style: Int = TitleBar.defaultStype, statusBarColor: Int = R.color.transparent,
                  navigationBarColor: Int = -1): TextView? {
         ImmersionBar.setTitleBar(this, titleBar)
         val statusBarView = findViewById<View>(setStatusBarView())

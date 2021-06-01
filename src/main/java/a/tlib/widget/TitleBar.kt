@@ -18,7 +18,6 @@ import com.ruffian.library.widget.RView
 open class TitleBar : RFrameLayout {
 
     companion object {
-
         /**
          * 白字和图标
          */
@@ -28,6 +27,12 @@ open class TitleBar : RFrameLayout {
          * 黑字和图标
          */
         const val BLACK_STYLE = 1
+
+        /**
+         * 默认的风格
+         */
+        @JvmStatic
+        var defaultStype = WHITE_STYLE
     }
 
     lateinit var view: TitleBar
@@ -49,7 +54,7 @@ open class TitleBar : RFrameLayout {
         }
     }
 
-    fun setTitle(string: String?, style: Int = BLACK_STYLE): TextView {
+    fun setTitle(string: String?, style: Int = TitleBar.defaultStype): TextView {
         if (string.isNotNullEmpty()) {
             tv_title.text = string
         }

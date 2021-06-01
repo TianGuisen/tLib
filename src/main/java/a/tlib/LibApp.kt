@@ -4,6 +4,7 @@ import a.tlib.utils.ActStackManager
 import a.tlib.utils.AppUtil
 import a.tlib.utils.CrashCollectHandler
 import a.tlib.utils.ToastUtil
+import a.tlib.widget.TitleBar
 import android.app.Application
 import android.content.Context
 import android.os.Build
@@ -37,7 +38,8 @@ object LibApp {
      * 1是新有播
      */
     @JvmStatic
-    var appSign=0
+    var appSign = 0
+
     @JvmStatic
     fun init(appContext: Application): LibApp {
         appContext.apply {
@@ -56,6 +58,14 @@ object LibApp {
             }
         }
         return this
+    }
+
+    /**
+     * 设置默认标题风格
+     */
+    @JvmStatic
+    fun setDefaultTitleStyle(style:Int) {
+        TitleBar.defaultStype=style
     }
 
     /**
@@ -164,7 +174,7 @@ object LibApp {
     private fun fixWebView() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = AppUtil.getProcessName(app)
-            if ("com.youbo.video" != processName&&"com.haibaoshow.youbo" != processName) { //判断不等于默认进程名称
+            if ("com.youbo.video" != processName && "com.haibaoshow.youbo" != processName) { //判断不等于默认进程名称
                 processName?.let { WebView.setDataDirectorySuffix(it) }
             }
         }

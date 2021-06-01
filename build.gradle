@@ -167,6 +167,6 @@ dependencies {
     //轮播图https://github.com/zhpanvip/BannerViewPager
     api 'com.github.zhpanvip:BannerViewPager:3.5.0'
     //EditText.https://github.com/HITGIF/TextFieldBoxes/blob/master/README_CN.md
-    compile 'com.github.HITGIF:TextFieldBoxes:1.4.5'
+//    compile 'com.github.HITGIF:TextFieldBoxes:1.4.5'
     
 }

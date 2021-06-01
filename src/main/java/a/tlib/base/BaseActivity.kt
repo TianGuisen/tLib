@@ -41,7 +41,6 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     val TAG = this.javaClass.simpleName
-    var gson = GsonUtil.gson
     var strUtils = StringUtils()
     abstract val layoutId: Int
     var titleBar: TitleBar? = null

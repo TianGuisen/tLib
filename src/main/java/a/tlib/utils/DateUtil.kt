@@ -18,8 +18,25 @@ object DateUtil {
     val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
     /**
+     * 获取当前时间戳秒数
+     */
+    @JvmStatic
+    fun getCurrentSecond(): Long {
+        return getCurrentMillisecond() / 1000
+    }
+
+    /**
+     * 获取当前时间戳毫秒数
+     */
+    @JvmStatic
+    fun getCurrentMillisecond(): Long {
+        return System.currentTimeMillis()
+    }
+
+    /**
      * long时间转Calendar
      */
+    @JvmStatic
     fun millisToCalendar(time: Long): Calendar {
         var date = Calendar.getInstance()
         date.timeInMillis = time
@@ -76,11 +93,12 @@ object DateUtil {
     fun getCurrentHour(): Int {
         return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     }
+
     /**
      * 获取当前日期
      */
     @JvmStatic
-    fun getCurrentTime(formatterStr: String=DEFAULT_DATE_TIME_FORMAT): String {
+    fun getCurrentTime(formatterStr: String = DEFAULT_DATE_TIME_FORMAT): String {
         return SimpleDateFormat(formatterStr).format(Date(System.currentTimeMillis()))
     }
 

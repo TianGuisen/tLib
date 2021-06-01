@@ -38,9 +38,9 @@ interface IObserver<T> {
         }
         context?.let {
             if (it is FragmentActivity) {
-                ProgressDiaUtil.show(it.supportFragmentManager)
+                ProgressDiaUtil.show(it)
             } else if (context is Fragment) {
-                ProgressDiaUtil.show((it as Fragment).childFragmentManager)
+                ProgressDiaUtil.show(context as Fragment)
             } else {
                 ProgressDiaUtil.show(it)
             }

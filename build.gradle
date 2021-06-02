@@ -40,8 +40,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-// For Kotlin projects add also this line
-    kotlinOptions.jvmTarget = "1.8"
+    
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    
     repositories {
         flatDir {
             dirs 'libs'
@@ -55,47 +58,53 @@ dependencies {
     testApi 'junit:junit:4.12'
     androidTestApi 'androidx.test.ext:junit:1.1.1' //测试
     androidTestApi 'androidx.test.espresso:espresso-core:3.2.0' //测试
+    //官方基础库
+    api 'com.google.android.material:material:1.1.0'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
     // 数据请求
     api 'io.reactivex.rxjava2:rxandroid:2.1.1'
     api 'io.reactivex.rxjava2:rxjava:2.2.8'
     api 'com.squareup.retrofit2:retrofit:2.7.1'
     api 'com.squareup.retrofit2:converter-gson:2.7.1'
     api 'com.squareup.okhttp3:okhttp:4.3.1'
+    // 网络请求绑定生命周期AutoDispose
+    api 'com.uber.autodispose:autodispose:0.7.0'
+    api 'com.uber.autodispose:autodispose-android:0.7.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
 //    api 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'//不使用官方的，使用自定义的com.youbo.utils.retrofit.rxjava2Adapter;
 //    api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-//     权限问题
+//     权限
     api 'com.hjq:xxpermissions:8.6'
-    api 'com.mylhyl:acp:1.2.0'
-//    https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+//    api 'com.mylhyl:acp:1.2.0'
+//  adapter  https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6'
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //kotlin
     api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0'
+    //card
     api 'androidx.cardview:cardview:1.0.0'
-    api 'com.github.anzaizai:EasySwipeMenuLayout:1.1.4'//侧滑删除
-    api "me.jessyan:autosize:1.2.1"  //屏幕适配
-    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //屏幕适配https://github.com/JessYanCoding/AndroidAutoSize
+    api "me.jessyan:autosize:1.2.1"
     api 'androidx.legacy:legacy-support-v4:1.0.0'
-//    api 'androidx.recyclerview:recyclerview:1.2.0'
+    //gson
     api 'com.google.code.gson:gson:2.8.5'
+    //播放器
     api 'com.shuyu:gsyVideoPlayer-java:7.1.3'
-//    api 'com.shuyu:gsyVideoPlayer-armv5:7.1.3'
     api 'com.shuyu:gsyVideoPlayer-armv7a:7.1.3'
-//    api 'com.shuyu:gsyVideoPlayer-arm64:7.1.3'
-//    api 'com.shuyu:gsyVideoPlayer-x64:7.1.3'
-//    api 'com.shuyu:gsyVideoPlayer-x86:7.1.3'
-    //https://github.com/JeremyLiao/LiveEventBus
+    //bus事件https://github.com/JeremyLiao/LiveEventBus
     api 'com.jeremyliao:live-event-bus-x:1.5.7'
     //UI库,https://github.com/RuffianZhong/RWidgetHelper,需要及时检查使用最新版本
     api 'com.ruffian.library:RWidgetHelper-AndroidX:0.0.9'
-    api 'com.google.android.material:material:1.1.0'
 //    api 'com.tencent.bugly:crashreport_upgrade:1.4.2'
 //    api 'com.tencent.bugly:nativecrashreport:3.7.1'
-    //glide图片
+    //glide图片加载
     api "com.github.bumptech.glide:glide:4.11.0"
     api 'jp.wasabeef:glide-transformations:3.3.0'
+    //glide使用okhttp3下载图片，AppGlide
+    api "com.github.bumptech.glide:okhttp3-integration:4.0.0-RC1"
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
     //刷新https://github.com/scwang90/SmartRefreshLayout
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'  //1.0.5及以前版本的老用户升级需谨慎，API改动过大
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  //没有使用特殊Header，可以不加这行
@@ -108,18 +117,10 @@ dependencies {
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
     //弹窗https://github.com/razerdp/BasePopup
     api 'com.github.razerdp:BasePopup_Candy:2.2.13.210105.1'
-    //switch开关https://github.com/bitvale/Switcher
-    api 'com.bitvale:switcher:1.1.0'
-    //时间，城市选择器https://github.com/Bigkoo/Android-PickerView
-    api 'com.contrarywind:Android-PickerView:4.1.9'
-    // AutoDispose
-    api 'com.uber.autodispose:autodispose:0.7.0'
-    api 'com.uber.autodispose:autodispose-android:0.7.0'
-    api 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
-    //https://github.com/yuanzaiyuanfang/FlycoTabLayout
+
+    //tab页卡https://github.com/yuanzaiyuanfang/FlycoTabLayout
     api 'com.github.yuanzaiyuanfang:FlycoTabLayout:3.0.3'
-//    //动画库
-    api 'com.airbnb.android:lottie:3.0.7'
+
     //缓存https://www.jianshu.com/p/53cd3fc0209c
     api 'com.jakewharton:disklrucache:2.0.2'
     api 'com.github.vipulasri:timelineview:1.1.5'
@@ -140,10 +141,6 @@ dependencies {
 //    api 'com.huawei.hms:scanplus:1.1.3.301'
     //扫码https://github.com/bingoogolapple/BGAQRCode-Android
     api 'cn.bingoogolapple:bga-qrcode-zxing:1.3.7'
-
-    //glide使用okhttp3下载图片，AppGlide
-    api "com.github.bumptech.glide:okhttp3-integration:4.0.0-RC1"
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
     //过渡动画https://github.com/yellowcath/YcShareElement/blob/master/README_CN.md
     api 'com.github.yellowcath:YcShareElement:1.3.2.x'
     //本地数据存储mmkv
@@ -153,20 +150,22 @@ dependencies {
     //测试拦截url信息显示https://github.com/ChuckerTeam/chucker
     debugApi "com.github.chuckerteam.chucker:library:3.4.0"
     releaseApi "com.github.chuckerteam.chucker:library-no-op:3.4.0"
-    //recyclerView动画https://github.com/wasabeef/recyclerview-animators
-//    api 'jp.wasabeef:recyclerview-animators:4.0.2'
     //阿里layout,https://github.com/alibaba/vlayout
-    api 'com.alibaba.android:vlayout:1.2.8@aar'
+//    api 'com.alibaba.android:vlayout:1.2.8@aar'
     //recyclerView的加载中动画https://github.com/sharish/ShimmerRecyclerView
     // https://www.jianshu.com/p/9d27a1563a48
     api 'com.github.sharish:ShimmerRecyclerView:v1.3'
-    //各种loading效果https://github.com/Zhao-Yan-Yan/MultiStatePage
-//    api 'com.github.Zhao-Yan-Yan:MultiStatePage:2.0.1'
     //闪光控件https://github.com/team-supercharge/ShimmerLayout
     api 'io.supercharge:shimmerlayout:2.1.0'
     //轮播图https://github.com/zhpanvip/BannerViewPager
     api 'com.github.zhpanvip:BannerViewPager:3.5.0'
-    //EditText.https://github.com/HITGIF/TextFieldBoxes/blob/master/README_CN.md
-//    compile 'com.github.HITGIF:TextFieldBoxes:1.4.5'
-    
+    //switch开关https://github.com/bitvale/Switcher
+    api 'com.bitvale:switcher:1.1.0'
+    //时间，城市选择器https://github.com/Bigkoo/Android-PickerView
+    api 'com.contrarywind:Android-PickerView:4.1.9'
+    //lottie图标动画库
+    api 'com.airbnb.android:lottie:3.0.7'
+    //navigation
+    api 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    api 'androidx.navigation:navigation-ui-ktx:2.3.3'
 }

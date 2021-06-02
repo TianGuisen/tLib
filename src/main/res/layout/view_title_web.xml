@@ -17,7 +17,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_gravity="center"
             android:src="@drawable/ic_youbo_goods_retrun" />
     </com.ruffian.library.widget.RFrameLayout>
 
@@ -25,7 +25,7 @@
         android:id="@+id/fl_close"
         style="@style/ripple_none"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/fl_back"
         android:padding="3dp">

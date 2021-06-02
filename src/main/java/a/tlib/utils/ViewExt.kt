@@ -1,7 +1,9 @@
 package a.tlib.utils
 
+import a.tlib.utils.abs.TTextWatcher
 import android.content.Context
 import android.graphics.Paint
+import android.text.Editable
 import android.view.View
 import android.widget.*
 import androidx.viewpager.widget.ViewPager
@@ -42,6 +44,17 @@ fun EditText.lastSelection() {
 }
 
 /**
+ * 添加文字改变后的监听
+ */
+fun EditText.afterTextChanged(function: (String) -> Unit) {
+    addTextChangedListener(object : TTextWatcher() {
+        override fun afterTextChanged(s: Editable) {
+            function(s.toString())
+        }
+    })
+}
+
+/**
  * textview添加中划线
  */
 fun TextView.addStrike() {
@@ -63,11 +76,17 @@ fun TextView.isNotEmpty(): Boolean {
 }
 
 val TextView.string get() = this.text.toString()
+
 /**
  * 动态设置View的padding，pt
  */
 fun View.setPaddingPT(left: Int, top: Int, right: Int, bottom: Int) {
-    setPadding(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+    setPadding(
+        AutoSizeUtil.pt2px(left.toFloat()),
+        AutoSizeUtil.pt2px(top.toFloat()),
+        AutoSizeUtil.pt2px(right.toFloat()),
+        AutoSizeUtil.pt2px(bottom.toFloat())
+    )
 }
 
 /**
@@ -83,13 +102,33 @@ fun View.setMarginPT(horizontal: Int, vertical: Int) {
 fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
     val params = layoutParams
     if (params is LinearLayout.LayoutParams) {
-        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+        params.setMargins(
+            AutoSizeUtil.pt2px(left.toFloat()),
+            AutoSizeUtil.pt2px(top.toFloat()),
+            AutoSizeUtil.pt2px(right.toFloat()),
+            AutoSizeUtil.pt2px(bottom.toFloat())
+        )
     } else if (params is RelativeLayout.LayoutParams) {
-        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+        params.setMargins(
+            AutoSizeUtil.pt2px(left.toFloat()),
+            AutoSizeUtil.pt2px(top.toFloat()),
+            AutoSizeUtil.pt2px(right.toFloat()),
+            AutoSizeUtil.pt2px(bottom.toFloat())
+        )
     } else if (params is FrameLayout.LayoutParams) {
-        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+        params.setMargins(
+            AutoSizeUtil.pt2px(left.toFloat()),
+            AutoSizeUtil.pt2px(top.toFloat()),
+            AutoSizeUtil.pt2px(right.toFloat()),
+            AutoSizeUtil.pt2px(bottom.toFloat())
+        )
     } else if (params is SmartRefreshLayout.LayoutParams) {
-        params.setMargins(AutoSizeUtil.pt2px(left.toFloat()), AutoSizeUtil.pt2px(top.toFloat()), AutoSizeUtil.pt2px(right.toFloat()), AutoSizeUtil.pt2px(bottom.toFloat()))
+        params.setMargins(
+            AutoSizeUtil.pt2px(left.toFloat()),
+            AutoSizeUtil.pt2px(top.toFloat()),
+            AutoSizeUtil.pt2px(right.toFloat()),
+            AutoSizeUtil.pt2px(bottom.toFloat())
+        )
     }
     layoutParams = params
 }
@@ -102,14 +141,15 @@ fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
 fun View.setWidthHeight(width: Int, height: Int) {
     val params = layoutParams
     if (params is LinearLayout.LayoutParams || params is RelativeLayout.LayoutParams ||
-            params is FrameLayout.LayoutParams || params is SmartRefreshLayout.LayoutParams) {
+        params is FrameLayout.LayoutParams || params is SmartRefreshLayout.LayoutParams
+    ) {
         if (width < 0) {
-            params.width =width
+            params.width = width
         } else {
             params.width = AutoSizeUtil.pt2px(width.toFloat())
         }
         if (height < 0) {
-            params.height =height
+            params.height = height
         } else {
             params.height = AutoSizeUtil.pt2px(height.toFloat())
         }
@@ -167,8 +207,8 @@ fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? 
     }
 }
 
-fun ViewPager.setPageSelectLis(function: (Int) -> Unit){
-    addOnPageChangeListener(object :ViewPager.SimpleOnPageChangeListener(){
+fun ViewPager.setPageSelectLis(function: (Int) -> Unit) {
+    addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             function(position)

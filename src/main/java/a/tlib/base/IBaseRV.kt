@@ -73,7 +73,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      * 如果传入了itemLoadingLayoutId，那么将不使用LoadView的loading动画
      * @itemLoadingLayoutId rv的item loading布局
      */
-    fun showLoaing(itemLoadingLayoutId: Int = 0) {
+    fun showLoading(itemLoadingLayoutId: Int = 0) {
         this.itemLoadingLayoutId=itemLoadingLayoutId
         srl?.setEnableLoadMore(false)
         srl?.setEnableRefresh(false)

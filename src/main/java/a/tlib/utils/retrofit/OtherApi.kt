@@ -1,12 +1,9 @@
 package a.tlib.utils.retrofit
 
 import a.tlib.bean.WXBean
-import com.lb.baselib.retrofit.RetrofitParams
-import com.lb.baselib.retrofit.RetrofitService
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.ResponseBody
-import retrofit2.Retrofit
 import retrofit2.http.*
 
 /**

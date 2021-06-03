@@ -1,4 +1,4 @@
-package com.lb.baselib.retrofit
+package a.tlib.utils.retrofit
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner

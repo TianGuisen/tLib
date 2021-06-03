@@ -2,7 +2,9 @@ package com.lb.baselib.retrofit
 
 import Interceptors
 import a.tlib.utils.ToastUtil
+import a.tlib.utils.retrofit.ApiErrorType
 import a.tlib.utils.retrofit.LoadView
+import a.tlib.utils.retrofit.ResWrapper
 import android.content.Context
 import android.os.Looper
 import com.orhanobut.logger.YLog2

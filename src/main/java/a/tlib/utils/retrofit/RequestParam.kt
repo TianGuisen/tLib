@@ -1,4 +1,4 @@
-package com.lb.baselib.retrofit
+package a.tlib.utils.retrofit
 
 import a.tlib.utils.gson.GsonUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

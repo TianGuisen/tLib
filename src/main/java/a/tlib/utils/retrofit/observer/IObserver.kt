@@ -1,8 +1,7 @@
 package com.lb.baselib.retrofit
 
 import a.tlib.utils.ToastUtil
-import a.tlib.utils.retrofit.LoadView
-import a.tlib.utils.retrofit.ProgressDiaUtil
+import a.tlib.utils.retrofit.*
 import android.content.Context
 import android.os.Looper
 import androidx.fragment.app.Fragment

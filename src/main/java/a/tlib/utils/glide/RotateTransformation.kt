@@ -10,6 +10,7 @@ import java.security.MessageDigest
 
 /**
  * @author 田桂森 2021/3/25 0025
+ * 图片旋转
  */
 class RotateTransformation(rotateRotationAngle: Float) : BitmapTransformation() {
     private var rotateRotationAngle = 0f

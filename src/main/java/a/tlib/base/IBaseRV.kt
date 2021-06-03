@@ -6,8 +6,8 @@ import a.tlib.widget.TRecyclerView
 import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.lb.baselib.retrofit.ResCode
-import com.lb.baselib.retrofit.ResWrapper
+import a.tlib.utils.retrofit.ResCode
+import a.tlib.utils.retrofit.ResWrapper
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**

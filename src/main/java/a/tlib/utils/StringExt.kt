@@ -266,7 +266,18 @@ fun CharSequence.zoomSmallFirst(): SpannableString {
     }
     return spannableString
 }
-
+/**
+ * 缩放中间start-end位置的字
+ * @param value
+ */
+fun String.zoomStartEnd(start: Int, end: Int, size: Float = 1.5f): SpannableString {
+    var spannableString = SpannableString(this)
+    if (isNotEmpty()) {
+        if (start >= 0 && spannableString.length > end)
+            spannableString.setSpan(RelativeSizeSpan(size), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+    return spannableString
+}
 /**
  * 缩放小数点前的字，默认放大1.5倍
  * @param value

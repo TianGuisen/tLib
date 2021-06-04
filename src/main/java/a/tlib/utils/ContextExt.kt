@@ -45,7 +45,7 @@ fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>) {
 }
 
 inline fun <reified T : Activity> Fragment.startAct(vararg params: Pair<String, Any?>, enableAnimation: Boolean = false) =
-        this.startActivity(createIntent(this.activity!!, T::class.java, params))
+        this.startActivity(createIntent(this.requireActivity(), T::class.java, params))
 
 inline fun <reified T : Activity> Activity.startActForResult(requestCode: Int, vararg params: Pair<String, Any?>, enableAnimation: Boolean = true) =
         internalStartActivityForResult(this, T::class.java, requestCode, params, enableAnimation)

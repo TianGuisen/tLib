@@ -165,7 +165,4 @@ dependencies {
     api 'com.contrarywind:Android-PickerView:4.1.9'
     //lottie图标动画库
     api 'com.airbnb.android:lottie:3.0.7'
-    //navigation
-    api 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    api 'androidx.navigation:navigation-ui-ktx:2.3.3'
 }

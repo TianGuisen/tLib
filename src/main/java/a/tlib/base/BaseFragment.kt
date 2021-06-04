@@ -23,8 +23,6 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
     val TAG = this.javaClass.simpleName
     lateinit var mRootView: View
     lateinit var act: AppCompatActivity
-    var gson = GsonUtil.gson//后期去除，使用GsonUtil
-    var strUtils = StringUtils()//后期要去除
     abstract var layoutId: Int   // 布局文件
     var titleBar: TitleBar? = null//标题栏
     var statusBarView: View? = null//状态填充兰

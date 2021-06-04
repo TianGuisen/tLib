@@ -1,4 +1,4 @@
-package com.lb.baselib.retrofit
+package a.tlib.utils.retrofit
 
 
 data class ResWrapper<out T>(val code: Int = -1, val message: String? = null, val data: T?) {

@@ -44,7 +44,6 @@ open class TRecyclerView : ShimmerRecyclerView {
         val arr = context.obtainStyledAttributes(attrs, R.styleable.TRecyclerView)
         if (arr != null) {//有手机出现null
             mMaxHeight = arr.getLayoutDimension(R.styleable.TRecyclerView_maxHeight, mMaxHeight)
-            mMaxHeight = arr.getLayoutDimension(R.styleable.TRecyclerView_maxHeight, mMaxHeight)
         }
         arr?.recycle()
     }

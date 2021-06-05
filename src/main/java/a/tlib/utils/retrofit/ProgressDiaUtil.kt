@@ -2,7 +2,6 @@ package a.tlib.utils.retrofit
 
 import a.tlib.R
 import a.tlib.widget.loading.LoadingDia
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
@@ -28,8 +27,10 @@ object ProgressDiaUtil {
     @JvmStatic
     fun show(fragmentManager: FragmentManager?, tip: String = "加载中...") {
         try {
-            progressDia.setTest(tip)
-            progressDia.show(fragmentManager)
+            if (!progressDia.isAdded() && !progressDia.isVisible() && !progressDia.isRemoving()) {
+                progressDia.setTest(tip)
+                progressDia.show(fragmentManager)
+            }
         } catch (e: Exception) {
             YLog.d(e.toString())
         }
@@ -38,8 +39,10 @@ object ProgressDiaUtil {
     @JvmStatic
     fun show(act: FragmentActivity?, tip: String = "加载中...") {
         try {
-            progressDia.setTest(tip)
-            progressDia.show(act)
+            if (!progressDia.isAdded() && !progressDia.isVisible() && !progressDia.isRemoving()) {
+                progressDia.setTest(tip)
+                progressDia.show(act)
+            }
         } catch (e: Exception) {
             YLog.d(e.toString())
         }
@@ -48,8 +51,10 @@ object ProgressDiaUtil {
     @JvmStatic
     fun show(fra: Fragment?, tip: String = "加载中...") {
         try {
-            progressDia.setTest(tip)
-            progressDia.show(fra)
+            if (!progressDia.isAdded() && !progressDia.isVisible() && !progressDia.isRemoving()) {
+                progressDia.setTest(tip)
+                progressDia.show(fra)
+            }
         } catch (e: Exception) {
             YLog.d(e.toString())
         }

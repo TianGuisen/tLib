@@ -3,9 +3,34 @@
     android:id="@+id/view_status"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<!--临时id，防止lib中id报错-->
     <FrameLayout
         android:id="@+id/fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    
+    <View
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/iv_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/not_net"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/tv_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import a.tlib.utils.ActStackManager
 import a.tlib.utils.AppUtil
 import a.tlib.utils.CrashCollectHandler
 import a.tlib.utils.ToastUtil
+import a.tlib.utils.retrofit.LoadView
 import a.tlib.utils.retrofit.RetrofitService
 import a.tlib.widget.TitleBar
 import android.app.Application
@@ -36,6 +37,7 @@ object LibApp {
      * APP标记，用于标记不同的app
      * 0是旧有播
      * 1是新有播
+     * 2是有宝
      */
     @JvmStatic
     var appSign = 0
@@ -75,6 +77,19 @@ object LibApp {
     fun addHeaderMap(vararg params: Pair<String, String>): LibApp {
         RetrofitService.headerMap = mutableMapOf()
         RetrofitService.headerMap!!.putAll(params)
+        return this
+    }
+
+    /**
+     * 设置LoadView的默认布局
+     */
+    @JvmStatic
+    fun setDefaultLoadViewLayoutId(emptyLayoutId:Int,errorLayoutId:Int,loadingLayoutId:Int,noNetworkLayoutId :Int,loginLayoutId:Int): LibApp {
+        LoadView.defaultEmptyLayoutId=emptyLayoutId
+        LoadView.defaultErrorLayoutId=errorLayoutId
+        LoadView.defaultLoadingLayoutId=loadingLayoutId
+        LoadView.defaultNoNetworkLayoutId=noNetworkLayoutId
+        LoadView.defaultLoginLayoutId=loginLayoutId
         return this
     }
 

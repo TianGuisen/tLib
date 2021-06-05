@@ -25,18 +25,34 @@ class LoadView : FrameLayout {
 
     companion object {
         private val DEFAULT_LAYOUT_PARAMS = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        val STATUS_CONTENT = 0//内容
-        val STATUS_LOADING = 1//加载
-        val STATUS_EMPTY = 2//空内容
-        val STATUS_ERROR = 3//错误
-        val STATUS_NO_NETWORK = 4///无网络
-        val STATUS_LOGIN = 5///登录
+        const val STATUS_CONTENT = 0//内容
+        const val STATUS_LOADING = 1//加载
+        const val STATUS_EMPTY = 2//空内容
+        const val STATUS_ERROR = 3//错误
+        const val STATUS_NO_NETWORK = 4///无网络
+        const val STATUS_LOGIN = 5///登录
 
-        private val NULL_RESOURCE_ID = -1
+        private const val NULL_RESOURCE_ID = -1
+
+        //默认的布局，需要在app中初始化
+        @JvmField
+        var defaultEmptyLayoutId = 0
+
+        @JvmField
+        var defaultErrorLayoutId = 0
+
+        @JvmField
+        var defaultLoadingLayoutId = 0
+
+        @JvmField
+        var defaultNoNetworkLayoutId = 0
+
+        @JvmField
+        var defaultLoginLayoutId = 0
     }
 
     var mEmptyView: View? = null
-    private set
+        private set
     var mErrorView: View? = null
         private set
     var mLoadingView: View? = null
@@ -60,6 +76,7 @@ class LoadView : FrameLayout {
 
     var enableErrorView = true//默认开启错误视图
 
+
     /**
      * 获取当前状态
      */
@@ -74,12 +91,12 @@ class LoadView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val a = context!!.obtainStyledAttributes(attrs, R.styleable.LoadView, defStyleAttr, 0)
-        mEmptyViewResId = a.getResourceId(R.styleable.LoadView_emptyView, R.layout.layout_empty_view)
-        mErrorViewResId = a.getResourceId(R.styleable.LoadView_errorView, R.layout.layout_error)
-        mLoadingViewResId = a.getResourceId(R.styleable.LoadView_loadingView, R.layout.layout_loding)
-        mNoNetworkViewResId = a.getResourceId(R.styleable.LoadView_noNetworkView, R.layout.layout_no_network)
+        mEmptyViewResId = a.getResourceId(R.styleable.LoadView_emptyView, defaultEmptyLayoutId)
+        mErrorViewResId = a.getResourceId(R.styleable.LoadView_errorView, defaultErrorLayoutId)
+        mLoadingViewResId = a.getResourceId(R.styleable.LoadView_loadingView, defaultLoadingLayoutId)
+        mNoNetworkViewResId = a.getResourceId(R.styleable.LoadView_noNetworkView, defaultNoNetworkLayoutId)
         mContentViewResId = a.getResourceId(R.styleable.LoadView_contentView, NULL_RESOURCE_ID)
-        mLoginViewResId = R.layout.layout_login
+        mLoginViewResId = defaultLoginLayoutId
         a.recycle()
         mInflater = LayoutInflater.from(getContext())
     }

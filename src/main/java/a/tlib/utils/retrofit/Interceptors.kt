@@ -32,20 +32,24 @@ object Interceptors {
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
-                    .addHeader("Content-Type", "application/json; charset=utf-8")
-                    .addHeader("Platform", "Android_ALL")
-                    .addHeader("Version", AppUtil.getVersionName())
-                    .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
-                    .addHeader("Device", AppUtil.deviceId)
-                    .method(originalRequest.method, originalRequest.body)
-            //统一将token 传入
-            if (token.isNotEmpty()) {  
-                requestBuilder.addHeader("token", token)
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .addHeader("Platform", "Android_ALL")
+                .addHeader("Version", AppUtil.getVersionName())
+                .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
+                .addHeader("Device", AppUtil.deviceId)
+                .method(originalRequest.method, originalRequest.body)
+            if (token.isNotEmpty()) {
+                //搞不懂为什么有宝的token  key要不一样
+                if (LibApp.appSign == 2) {
+                    requestBuilder.addHeader("x-api-key", token)
+                } else {
+                    requestBuilder.addHeader("token", token)
+                }
             }
             //添加自定义的其他请求头
             if (headerMap.isNotNullEmply()) {
                 headerMap!!.forEach {
-                    requestBuilder.addHeader(it.key,it.value)
+                    requestBuilder.addHeader(it.key, it.value)
                 }
             }
             val request = requestBuilder.build()
@@ -75,10 +79,12 @@ object Interceptors {
                 val body: RequestBody? = orgRequest.body
                 val buffer = Buffer()
                 body?.writeTo(buffer)
-                var requestString = StringBuffer("code=" + response?.code +
-                        "|method=" + orgRequest.method +
-                        "|url=" + Uri.decode(orgRequest.url.toString()) +
-                        "\nheaders:" + orgRequest.headers.toMultimap())
+                var requestString = StringBuffer(
+                    "code=" + response?.code +
+                            "|method=" + orgRequest.method +
+                            "|url=" + Uri.decode(orgRequest.url.toString()) +
+                            "\nheaders:" + orgRequest.headers.toMultimap()
+                )
                 if (body != null) {
                     if (body is FormBody) {
                         if (body.size != 0) {
@@ -142,7 +148,8 @@ object Interceptors {
         val builder = FormBody.Builder()
         val stringMap = Hashtable<String, String>()
         for (i in 0 until (requestBody as FormBody).size) {
-            stringMap[URLDecoder.decode(requestBody.encodedName(i).toString(), "utf-8")] = URLDecoder.decode(requestBody.encodedValue(i).toString(), "utf-8")
+            stringMap[URLDecoder.decode(requestBody.encodedName(i).toString(), "utf-8")] =
+                URLDecoder.decode(requestBody.encodedValue(i).toString(), "utf-8")
         }
         for ((k, v) in MD5Util.setMD5(stringMap)) {
             builder.add(k, v)

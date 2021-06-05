@@ -15,12 +15,16 @@ import java.text.DecimalFormat
 /**
  *  不为null且不是“”
  */
-fun CharSequence?.isNotNullEmpty(): Boolean = !this.isNullOrEmpty()
+inline fun CharSequence?.isNotNullEmpty(): Boolean = !this.isNullOrEmpty()
+/**
+ *  不为“”
+ */
+inline fun <T> CharSequence.isNotEmpty(function: (String) -> T)=  (length > 0).yes { function(this.toString()) }
 
 /**
  *  不为null且不是“”
  */
-inline fun <T> CharSequence?.isNotNullEmpty(function: () -> T) = isNullOrEmpty().no(function)
+inline fun <T> CharSequence?.isNotNullEmpty(function: (String) -> T) = isNullOrEmpty().no { function(this!!.toString()) }
 
 /**
  *  是null或者“”
@@ -35,7 +39,7 @@ fun CharSequence?.isNotNullBlank(): Boolean = !this.isNullOrBlank()
 /**
  *  不为null且不是“”和“     ”
  */
-inline fun <T> CharSequence?.isNotNullBlank(function: () -> T) = isNullOrBlank().yes(function)
+inline fun <T> CharSequence?.isNotNullBlank(function: (String) -> T) = isNullOrBlank().no{function(this!!.toString())}
 
 /**
  *  是null或者“”或者“     ”
@@ -259,10 +263,10 @@ fun String.decimals1(): String {
  * 缩小第一位的字
  * @param value
  */
-fun CharSequence.zoomSmallFirst(): SpannableString {
+fun CharSequence.zoomSmallFirst(size: Float = 0.7f): SpannableString {
     var spannableString = SpannableString(this)
     if (isNotEmpty()) {
-        spannableString.setSpan(RelativeSizeSpan(0.7f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(RelativeSizeSpan(size), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
     return spannableString
 }

@@ -71,7 +71,7 @@ class LoadView : FrameLayout {
     var mContentViewResId: Int = 0
     var mLoginViewResId: Int = 0
 
-    var mEmptyIcon: Int = R.drawable.order_black
+    var mEmptyIcon: Int = 0
     var mEmptyText: String = "还没有数据哦~"
 
     var enableErrorView = true//默认开启错误视图

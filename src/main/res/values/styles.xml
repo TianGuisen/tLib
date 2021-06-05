@@ -89,13 +89,6 @@
         <item name="android:background">@color/divide</item>
     </style>
 
-    <!--界面右侧下一步小图标-->
-    <style name="Next_Gray_Style">
-        <item name="android:layout_width">13dp</item>
-        <item name="android:layout_height">13dp</item>
-        <item name="android:src">@drawable/next_grey</item>
-        <item name="android:layout_marginLeft">4dp</item>
-    </style>
     <!--edittext样式-->
     <style name="EditText_Base_Style">
         <item name="android:textCursorDrawable">@drawable/edit_cursor_color</item>
@@ -118,9 +111,5 @@
         <!--        <item name="android:listDivider">@drawable/ugckit_shape_list_divider</item>-->
     </style>
 
-    <style name="EditText_Phone_Style" parent="EditText_Base_Style">
-        <item name="android:textCursorDrawable">@drawable/edit_cursor_color</item>
-        <item name="android:inputType">number</item>
-        <item name="android:maxLength">11</item>
-    </style>
+
 </resources>

@@ -95,6 +95,15 @@ object DateUtil {
     }
 
     /**
+     * 当前分钟
+     */
+    @JvmStatic
+    fun getCurrentMinute(): Int {
+        return Calendar.getInstance().get(Calendar.MINUTE)
+    }
+
+
+    /**
      * 获取当前日期
      */
     @JvmStatic
@@ -161,7 +170,7 @@ object DateUtil {
      * 时间字符串转为Long时间戳，毫秒
      */
     @JvmStatic
-    fun dateStr2Long(dateStr: String, formatStr: String): Long {
+    fun dateStr2Long(dateStr: String, formatStr: String = DEFAULT_DATE_TIME_FORMAT): Long {
         //Date或者String转化为时间戳
         val format = SimpleDateFormat(formatStr)
         val date = format.parse(dateStr)

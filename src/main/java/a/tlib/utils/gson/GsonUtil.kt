@@ -44,7 +44,19 @@ object GsonUtil {
         }
         return list
     }
-
+    /**
+     * 转成list
+     * 解决泛型在编译期类型被擦除导致报错
+     */
+    @JvmStatic
+    fun <T> toMutableList(json: String, cls: Class<T>): MutableList<T> {
+        val list = mutableListOf<T>()
+        val array = JsonParser().parse(json).getAsJsonArray()
+        for (elem in array) {
+            list.add(gson.fromJson<T>(elem, cls))
+        }
+        return list
+    }
     /**
      * 转成list中有map的
      *

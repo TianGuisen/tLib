@@ -15,6 +15,18 @@ import java.io.File
 class RequestMultipartBody {
     companion object {
         fun create() = RequestMultipartBody()
+        
+        fun putSingleImg(name: String, fileName: String, file: File): MultipartBody.Part {
+            val imageBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+            val file = MultipartBody.Part.createFormData(name, fileName, imageBody)
+            return file
+        }
+
+        fun putSingleVideo(name: String, fileName: String, file: File): MultipartBody.Part {
+            val videoBody: RequestBody = RequestBody.create("video/*".toMediaTypeOrNull(), file)
+            val file = MultipartBody.Part.createFormData(name, fileName, videoBody)
+            return file
+        }
     }
 
     private val parts = mutableListOf<MultipartBody.Part>()

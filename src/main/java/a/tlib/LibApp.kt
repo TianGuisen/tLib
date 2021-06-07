@@ -2,7 +2,6 @@ package a.tlib
 
 import a.tlib.utils.ActStackManager
 import a.tlib.utils.AppUtil
-import a.tlib.utils.CrashCollectHandler
 import a.tlib.utils.ToastUtil
 import a.tlib.utils.retrofit.LoadView
 import a.tlib.utils.retrofit.RetrofitService
@@ -54,7 +53,7 @@ object LibApp {
             initRefresh()
             hidePAPIDialog()///解决9.0问题弹窗
             initX5()
-            if (BuildConfig.IS_DEBUG) CrashCollectHandler().init()//debug时候错误捕获禁止重启
+//            if (BuildConfig.IS_DEBUG) CrashCollectHandler().init()//debug时候错误捕获禁止重启
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
             }

@@ -15,4 +15,7 @@
     <color name="rect">#aae84e40</color>
     <color name="color_f9">#ff999999</color>
     <color name="divide">#eeeeee</color>
+    <color name="color_store_bg">#F4F4F4</color>
+    <color name="color_979797">#979797</color>
+    <color name="color_e">#eeeeee</color>
 </resources>

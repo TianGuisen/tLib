@@ -44,7 +44,7 @@ fun showNormalToast(
     }
 }
 /**
- * 显示默认的toast
+ * 显示成功的toast
  */
 fun showSuccessToast(
     message: String?,

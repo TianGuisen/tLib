@@ -19,7 +19,7 @@ import android.widget.Toast
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-
+@Deprecated("使用ToastExt")
 object ToastUtil {
     private lateinit var appContext: Context
     fun init(context: Context) {

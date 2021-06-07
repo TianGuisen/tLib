@@ -45,21 +45,18 @@ object ToastUtil {
 
     private var currentToast: Toast? = null
 
-//*******************************************普通 使用ApplicationContext 方法*********************
-    /**
-     * Toast 替代方法 ：立即显示无需等待
-     */
-    private var mToast: Toast? = null
-
+    @Deprecated("使用ToastExt")
     @JvmStatic
     fun normal(message: String?) {
         normal(appContext, message, Toast.LENGTH_SHORT, null, false)?.show()
     }
 
+    @Deprecated("使用ToastExt")
     fun normal(message: String?, icon: Drawable) {
         normal(appContext, message, Toast.LENGTH_SHORT, icon, true)?.show()
     }
 
+    @Deprecated("使用ToastExt")
     fun normal(message: String?, duration: Int) {
         normal(appContext, message, duration, null, false)?.show()
     }
@@ -81,9 +78,19 @@ object ToastUtil {
     }
 
     fun warning(message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(appContext, message, getDrawable(appContext, R.drawable.ic_error_outline_white_48dp), DEFAULT_TEXT_COLOR, WARNING_COLOR, duration, withIcon, true)
+        return custom(
+            appContext,
+            message,
+            getDrawable(appContext, R.drawable.ic_error_outline_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            WARNING_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
+    @Deprecated("使用ToastExt")
     fun info(message: String?) {
         info(appContext, message, Toast.LENGTH_SHORT, true)?.show()
     }
@@ -93,9 +100,19 @@ object ToastUtil {
     }
 
     fun info(message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(appContext, message, getDrawable(appContext, R.drawable.ic_info_outline_white_48dp), DEFAULT_TEXT_COLOR, INFO_COLOR, duration, withIcon, true)
+        return custom(
+            appContext,
+            message,
+            getDrawable(appContext, R.drawable.ic_info_outline_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            INFO_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
+    @Deprecated("使用ToastExt")
     fun success(message: String?) {
         success(appContext, message, Toast.LENGTH_SHORT, true)?.show()
     }
@@ -105,22 +122,41 @@ object ToastUtil {
     }
 
     fun success(message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(appContext, message, getDrawable(appContext, R.drawable.ic_check_white_48dp), DEFAULT_TEXT_COLOR, SUCCESS_COLOR, duration, withIcon, true)
+        return custom(
+            appContext,
+            message,
+            getDrawable(appContext, R.drawable.ic_check_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            SUCCESS_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
+    @Deprecated("使用ToastExt")
     fun error(message: String?) {
         error(appContext, message, Toast.LENGTH_SHORT, true)?.show()
     }
 //===========================================使用ApplicationContext 方法=========================
 
-//*******************************************常规方法********************************************
-
+    //*******************************************常规方法********************************************
+    @Deprecated("使用ToastExt")
     fun error(message: String?, duration: Int) {
         error(appContext, message, duration, true)?.show()
     }
 
     fun error(message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(appContext, message, getDrawable(appContext, R.drawable.ic_clear_white_48dp), DEFAULT_TEXT_COLOR, ERROR_COLOR, duration, withIcon, true)
+        return custom(
+            appContext,
+            message,
+            getDrawable(appContext, R.drawable.ic_clear_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            ERROR_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
     @CheckResult
@@ -160,7 +196,16 @@ object ToastUtil {
 
     @CheckResult
     fun warning(context: Context, message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(context, message, getDrawable(context, R.drawable.ic_error_outline_white_48dp), DEFAULT_TEXT_COLOR, WARNING_COLOR, duration, withIcon, true)
+        return custom(
+            context,
+            message,
+            getDrawable(context, R.drawable.ic_error_outline_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            WARNING_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
     @CheckResult
@@ -175,7 +220,16 @@ object ToastUtil {
 
     @CheckResult
     fun info(context: Context, message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(context, message, getDrawable(context, R.drawable.ic_info_outline_white_48dp), DEFAULT_TEXT_COLOR, INFO_COLOR, duration, withIcon, true)
+        return custom(
+            context,
+            message,
+            getDrawable(context, R.drawable.ic_info_outline_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            INFO_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
     @CheckResult
@@ -190,7 +244,16 @@ object ToastUtil {
 
     @CheckResult
     fun success(context: Context, message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(context, message, getDrawable(context, R.drawable.ic_check_white_48dp), DEFAULT_TEXT_COLOR, SUCCESS_COLOR, duration, withIcon, true)
+        return custom(
+            context,
+            message,
+            getDrawable(context, R.drawable.ic_check_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            SUCCESS_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
     @CheckResult
@@ -207,7 +270,16 @@ object ToastUtil {
 
     @CheckResult
     fun error(context: Context, message: String?, duration: Int, withIcon: Boolean): Toast? {
-        return custom(context, message, getDrawable(context, R.drawable.ic_clear_white_48dp), DEFAULT_TEXT_COLOR, ERROR_COLOR, duration, withIcon, true)
+        return custom(
+            context,
+            message,
+            getDrawable(context, R.drawable.ic_clear_white_48dp),
+            DEFAULT_TEXT_COLOR,
+            ERROR_COLOR,
+            duration,
+            withIcon,
+            true
+        )
     }
 
     @CheckResult
@@ -218,12 +290,30 @@ object ToastUtil {
 //*******************************************内需方法********************************************
 
     @CheckResult
-    fun custom(context: Context, message: String?, @DrawableRes iconRes: Int, @ColorInt textColor: Int, @ColorInt tintColor: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast? {
+    fun custom(
+        context: Context,
+        message: String?,
+        @DrawableRes iconRes: Int,
+        @ColorInt textColor: Int,
+        @ColorInt tintColor: Int,
+        duration: Int,
+        withIcon: Boolean,
+        shouldTint: Boolean
+    ): Toast? {
         return custom(context, message, getDrawable(context, iconRes), textColor, tintColor, duration, withIcon, shouldTint)
     }
 
     @CheckResult
-    fun custom(context: Context, message: String?, icon: Drawable?, @ColorInt textColor: Int, @ColorInt tintColor: Int, duration: Int, withIcon: Boolean, shouldTint: Boolean): Toast? {
+    fun custom(
+        context: Context,
+        message: String?,
+        icon: Drawable?,
+        @ColorInt textColor: Int,
+        @ColorInt tintColor: Int,
+        duration: Int,
+        withIcon: Boolean,
+        shouldTint: Boolean
+    ): Toast? {
         if (message.isNullOrEmpty()) {
             return null
         }

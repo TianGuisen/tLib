@@ -31,12 +31,12 @@ private val WARNING_COLOR = Color.parseColor("#FFA900")
  * 显示默认的toast
  */
 fun showNormalToast(
-    message: String?,
+    message: Any?,
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, null,
+        LibApp.app, message.toString(), null,
         DEFAULT_TEXT_COLOR, duration, false
     )?.apply {
         setGravity(gravity, 0, 0)
@@ -47,12 +47,12 @@ fun showNormalToast(
  * 显示成功的toast
  */
 fun showSuccessToast(
-    message: String?,
+    message: Any?,
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, getDrawable(R.drawable.ic_check_white_48dp),
+        LibApp.app, message.toString(), getDrawable(R.drawable.ic_check_white_48dp),
         DEFAULT_TEXT_COLOR, SUCCESS_COLOR, duration, true, true
     )?.apply {
         setGravity(gravity, 0, 0)
@@ -63,12 +63,12 @@ fun showSuccessToast(
  * 显示错误的toast
  */
 fun showErrorToast(
-    message: String?,
+    message: Any?,
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, getDrawable(R.drawable.ic_clear_white_48dp),
+        LibApp.app, message.toString(), getDrawable(R.drawable.ic_clear_white_48dp),
         DEFAULT_TEXT_COLOR, ERROR_COLOR, duration, true, true
     )?.apply {
         setGravity(gravity, 0, 0)
@@ -79,12 +79,12 @@ fun showErrorToast(
  * 显示信息的toast
  */
 fun showInfoToast(
-    message: String?,
+    message: Any?,
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, getDrawable(R.drawable.ic_info_outline_white_48dp),
+        LibApp.app, message.toString(), getDrawable(R.drawable.ic_info_outline_white_48dp),
         DEFAULT_TEXT_COLOR, INFO_COLOR, duration, true, true
     )?.apply {
         setGravity(gravity, 0, 0)
@@ -95,12 +95,12 @@ fun showInfoToast(
  * 显示警告的toast
  */
 fun showWarningToast(
-    message: String?,
+    message: Any?,
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, getDrawable(R.drawable.ic_error_outline_white_48dp),
+        LibApp.app, message.toString(), getDrawable(R.drawable.ic_error_outline_white_48dp),
         DEFAULT_TEXT_COLOR, WARNING_COLOR, duration, true, true
     )?.apply {
         setGravity(gravity, 0, 0)
@@ -112,7 +112,7 @@ fun showWarningToast(
  * 显示自定义的toast
  */
 fun showToast(
-    message: String?,
+    message: Any?,
     @DrawableRes iconRes: Int, 
     @ColorInt textColor: Int,
     @ColorInt tintColor: Int, 
@@ -122,7 +122,7 @@ fun showToast(
     gravity: Int = Gravity.BOTTOM
 ) {
     ToastUtil.custom(
-        LibApp.app, message, iconRes,
+        LibApp.app, message.toString(), iconRes,
         textColor, tintColor, duration, withIcon, shouldTint
     )?.apply {
         setGravity(gravity, 0, 0)

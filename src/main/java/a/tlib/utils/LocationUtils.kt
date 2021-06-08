@@ -16,7 +16,6 @@ import android.util.Log
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
-import com.jeremyliao.liveeventbus.utils.AppUtils
 import java.io.IOException
 import java.util.*
 
@@ -62,7 +61,7 @@ object LocationUtils {
     @SuppressLint("MissingPermission")
     fun getLastKnownLocation(): Location? {
         //获取地理位置管理器
-        val mLocationManager = AppUtils.getApplicationContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val mLocationManager = LibApp.app.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val providers = mLocationManager.getProviders(true)
         var location: Location? = null
         for (provider in providers) {

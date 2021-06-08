@@ -19,13 +19,11 @@ android {
         debug {
             buildConfigField "boolean", "IS_DEBUG", "true"
             buildConfigField "boolean", "IS_RELEASE", "false"
-            buildConfigField "String", "LOGIN_CODE", "\"85966157\""
         }
         release {
             debuggable false
             buildConfigField "boolean", "IS_DEBUG", "false"
             buildConfigField "boolean", "IS_RELEASE", "true"
-            buildConfigField "String", "LOGIN_CODE", "\"\""
         }
     }
 

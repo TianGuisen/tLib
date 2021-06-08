@@ -5,8 +5,8 @@ import a.tlib.utils.encrypt.MD5Util.TimeDifference
 import a.tlib.utils.isNotNullEmply
 import a.tlib.utils.sp
 import android.net.Uri
-import com.orhanobut.logger.Printer
-import com.orhanobut.logger.YLog2
+import a.tlib.logger.Printer
+import a.tlib.logger.YLog2
 import okhttp3.*
 import okio.Buffer
 import org.json.JSONArray

@@ -10,7 +10,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
-import com.orhanobut.logger.*
+import a.tlib.logger.*
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator

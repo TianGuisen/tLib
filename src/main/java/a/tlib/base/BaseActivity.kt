@@ -23,7 +23,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
-import com.orhanobut.logger.YLog
+import a.tlib.logger.YLog
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeCompat
 

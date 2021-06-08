@@ -7,7 +7,7 @@ import a.tlib.utils.retrofit.LoadView
 import a.tlib.utils.retrofit.ResWrapper
 import android.content.Context
 import android.os.Looper
-import com.orhanobut.logger.YLog2
+import a.tlib.logger.YLog2
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable

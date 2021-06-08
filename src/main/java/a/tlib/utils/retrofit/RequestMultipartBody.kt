@@ -1,6 +1,6 @@
 package a.tlib.utils.retrofit
 
-import com.orhanobut.logger.YLog
+import a.tlib.logger.YLog
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody

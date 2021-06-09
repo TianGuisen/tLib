@@ -18,7 +18,7 @@ import java.util.*
  * 一个方便在多种状态切换的view
  *  loadView的子布局必须要有id
  *  例如:ll
- *  要为哪个设置点击事件就把哪个id设置为:empty,error
+ *  要为哪个设置点击事件就把哪个id设置为:empty,error,tv_login,not_net
  */
 class LoadView : FrameLayout {
 

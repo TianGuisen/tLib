@@ -27,7 +27,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ImmersionBar.getNavigationBarHeight
-import com.orhanobut.logger.YLog
+import a.tlib.logger.YLog
 import me.jessyan.autosize.internal.CustomAdapt
 
 

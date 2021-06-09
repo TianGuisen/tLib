@@ -131,6 +131,19 @@ object ActStackManager : Application.ActivityLifecycleCallbacks {
     }
 
     /**
+     * 销毁除当前Activity的其他activity
+     */
+    @JvmStatic
+    fun finishOtherActivity(activity: Class<out Activity>?) {
+        while (!stack.isEmpty()) {
+            var act = stack.pop()
+            if (activity != act.javaClass) {
+                act.finish()
+            }
+        }
+    }
+
+    /**
      * 通过class找到activity
      */
     @JvmStatic

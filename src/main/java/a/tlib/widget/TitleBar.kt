@@ -105,7 +105,7 @@ open class TitleBar : RFrameLayout {
     fun setTransparentStyle2() {
         tv_title.setTextColor(getcolor(R.color.c_111))
         iv_back.setImageResource(R.drawable.img_titlebar_back)
-        view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
+        view.helper.setBackgroundColorNormal(getcolor(R.color.transparent))
     }
 
     /**
@@ -115,7 +115,7 @@ open class TitleBar : RFrameLayout {
     fun setTransparentStyle() {
         tv_title.setTextColor(getcolor(R.color.color_ecc498))
         iv_back.setImageResource(R.drawable.img_titlebar_back_white_live)
-        view.helper.setBackgroundColorNormal(getcolor(R.color.translucent))
+        view.helper.setBackgroundColorNormal(getcolor(R.color.transparent))
     }
 
     /**

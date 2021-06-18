@@ -17,6 +17,7 @@ android {
     }
     buildTypes {
         debug {
+            //判断是否测试环境，不使用默认的BuildConfig.DEBUG,在未知情况会不准确。
             buildConfigField "boolean", "IS_DEBUG", "true"
             buildConfigField "boolean", "IS_RELEASE", "false"
         }

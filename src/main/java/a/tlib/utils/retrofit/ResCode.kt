@@ -1,10 +1,11 @@
 package a.tlib.utils.retrofit
 
+/**
+ * 和后台约定的业务错误
+ * 为什么一个状态会有多个常量？因为后台太骚了
+ */
 object ResCode {
-    //和后台约定的业务错误
-    /**
-     * 重新登录
-     */
+    //重新登录
     const val TOKEN_OVERDUE = 4040
     const val TOKEN_OVERDUE2 = 401
 

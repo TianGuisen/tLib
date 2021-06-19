@@ -94,7 +94,7 @@ object Interceptors {
                             }
                             requestString.delete(requestString.length - 1, requestString.length)
                         }
-                    } else if (body is MultipartBody) {
+                    } else if (body is MultipartBody) {//是图片文件之类，只打印名字等简单信息
                         requestString.append("\nbody:")
                         body.parts.forEach {
                             requestString.append(it.headers)

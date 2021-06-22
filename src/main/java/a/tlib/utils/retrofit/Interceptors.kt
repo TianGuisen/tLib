@@ -1,12 +1,11 @@
-import a.tlib.LibApp
+
+import a.tlib.logger.Printer
+import a.tlib.logger.YLog2
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
-import a.tlib.utils.isNotNullEmply
 import a.tlib.utils.sp
 import android.net.Uri
-import a.tlib.logger.Printer
-import a.tlib.logger.YLog2
 import okhttp3.*
 import okio.Buffer
 import org.json.JSONArray

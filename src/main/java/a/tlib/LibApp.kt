@@ -1,16 +1,15 @@
 package a.tlib
 
+import a.tlib.logger.*
 import a.tlib.utils.ActStackManager
 import a.tlib.utils.AppUtil
 import a.tlib.utils.ToastUtil
 import a.tlib.utils.retrofit.LoadView
-import a.tlib.utils.retrofit.RetrofitService
 import a.tlib.widget.TitleBar
 import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
-import a.tlib.logger.*
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator
@@ -67,16 +66,6 @@ object LibApp {
     @JvmStatic
     fun setDefaultTitleStyle(style:Int) {
         TitleBar.defaultStype=style
-    }
-
-    /**
-     * 添加其他请求头
-     */
-    @JvmStatic
-    fun addHeaderMap(vararg params: Pair<String, String>): LibApp {
-        RetrofitService.headerMap = mutableMapOf()
-        RetrofitService.headerMap!!.putAll(params)
-        return this
     }
 
     /**

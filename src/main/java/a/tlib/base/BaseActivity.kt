@@ -41,6 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     val TAG = this.javaClass.simpleName
+    @Deprecated("废弃")
     var strUtils = StringUtils()
     abstract val layoutId: Int
     var titleBar: TitleBar? = null

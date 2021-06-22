@@ -13,6 +13,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
  * 列表页面继承这个，集合bean需要实现IRVListBean
  */
 abstract class BaseRVFra<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> : BaseFragment(), IBaseRV<T, B> {
+    /**
+     * 这是最常用的布局，通常需要重写布局
+     */
     override var layoutId = R.layout.fra_common_list
     abstract override var adapter: B
     override lateinit var rv: TRecyclerView

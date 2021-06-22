@@ -19,9 +19,22 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
     var adapter: B
     var rv: TRecyclerView
     var srl: SmartRefreshLayout?
+
     var lv: LoadView?
-    var enableloadMore: Boolean
+
+    /**
+     *刷新，不直接设置，通过方法设置
+     */
     var enableloadRefresh: Boolean
+
+    /**
+     *加载更多，不直接设置，通过方法设置
+     */
+    var enableloadMore: Boolean
+
+    /**
+     * 这是ShimmerRecyclerView的闪光控件item布局，与loadView，2选1
+     */
     var itemLoadingLayoutId: Int
 
     fun initRVView() {
@@ -74,7 +87,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      * @itemLoadingLayoutId rv的item loading布局
      */
     fun showLoading(itemLoadingLayoutId: Int = 0) {
-        this.itemLoadingLayoutId=itemLoadingLayoutId
+        this.itemLoadingLayoutId = itemLoadingLayoutId
         srl?.setEnableLoadMore(false)
         srl?.setEnableRefresh(false)
         enableSRL(false)
@@ -120,7 +133,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      */
     fun setEnableRefresh(b: Boolean) {
         srl?.setEnableRefresh(b)
-        enableloadRefresh=b
+        enableloadRefresh = b
     }
 
     /**
@@ -193,7 +206,7 @@ interface IBaseRV<T : IRVListBean, B : BaseQuickAdapter<T, out BaseViewHolder>> 
      *失败处理
      */
     fun loadFailure(it: ResWrapper<*>?) {
-        if (it != null && (it.code == ResCode.TOKEN_OVERDUE||it.code == ResCode.TOKEN_OVERDUE2)) {
+        if (it != null && (it.code == ResCode.TOKEN_OVERDUE || it.code == ResCode.TOKEN_OVERDUE2)) {
             showLogin()
         } else {
             showError()

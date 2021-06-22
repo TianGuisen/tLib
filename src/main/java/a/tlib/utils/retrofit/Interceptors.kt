@@ -25,38 +25,33 @@ object Interceptors {
     var token = sp.getString("sid", "")!!
 
     /**
-     * 参数拦截器
-     * @headerMap  给参数拦截器中添加自定义的请求头
+     * 参数拦截器，如果有其他额外单独的请球头，就继承他，重写addHeaders方法
+     *
      */
-    open class ParamInterceptor(val headerMap: MutableMap<String, String>? = null) : Interceptor {
+    open class BaseParamInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
-                .addHeader("Content-Type", "application/json; charset=utf-8")
-                .addHeader("Platform", "Android_ALL")
-                .addHeader("Version", AppUtil.getVersionName())
-                .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
-                .addHeader("Device", AppUtil.deviceId)
-                .method(originalRequest.method, originalRequest.body)
+                    .addHeader("Content-Type", "application/json; charset=utf-8")
+                    .addHeader("Platform", "Android_ALL")
+                    .addHeader("Version", AppUtil.getVersionName())
+                    .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
+                    .addHeader("Device", AppUtil.deviceId)
+                    .method(originalRequest.method, originalRequest.body)
             if (token.isNotEmpty()) {
-                //搞不懂为什么有宝的token  key要不一样
-                if (LibApp.appSign == 2) {
-                    requestBuilder.addHeader("x-api-key", token)
-                } else {
-                    requestBuilder.addHeader("token", token)
-                }
+                requestBuilder.addHeader("token", token)
             }
-            //添加自定义的其他请求头
-            if (headerMap.isNotNullEmply()) {
-                headerMap!!.forEach {
-                    requestBuilder.addHeader(it.key, it.value)
-                }
-            }
+            //添加子类其他的请求头
+            addHeaders(requestBuilder)
             val request = requestBuilder.build()
             if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
                 return chain.proceed(request.newBuilder().url(request.url.toString()).post(sortMap(request.body!!).build()).build())
             }
             return chain.proceed(request)
+        }
+
+        open fun addHeaders(requestBuilder: Request.Builder) {
+
         }
     }
 
@@ -80,10 +75,10 @@ object Interceptors {
                 val buffer = Buffer()
                 body?.writeTo(buffer)
                 var requestString = StringBuffer(
-                    "code=" + response?.code +
-                            "|method=" + orgRequest.method +
-                            "|url=" + Uri.decode(orgRequest.url.toString()) +
-                            "\nheaders:" + orgRequest.headers.toMultimap()
+                        "code=" + response?.code +
+                                "|method=" + orgRequest.method +
+                                "|url=" + Uri.decode(orgRequest.url.toString()) +
+                                "\nheaders:" + orgRequest.headers.toMultimap()
                 )
                 if (body != null) {
                     if (body is FormBody) {
@@ -149,7 +144,7 @@ object Interceptors {
         val stringMap = Hashtable<String, String>()
         for (i in 0 until (requestBody as FormBody).size) {
             stringMap[URLDecoder.decode(requestBody.encodedName(i).toString(), "utf-8")] =
-                URLDecoder.decode(requestBody.encodedValue(i).toString(), "utf-8")
+                    URLDecoder.decode(requestBody.encodedValue(i).toString(), "utf-8")
         }
         for ((k, v) in MD5Util.setMD5(stringMap)) {
             builder.add(k, v)

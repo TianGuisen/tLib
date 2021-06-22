@@ -25,8 +25,8 @@ object RetrofitService {
     @JvmField
     var headerMap: MutableMap<String, String>? = null
 
-    val paramInterceptor by lazy {
-        Interceptors.ParamInterceptor(headerMap)
+    val baseParamInterceptor by lazy {
+        Interceptors.BaseParamInterceptor()
     }
 
     val loggerInterceptor by lazy {

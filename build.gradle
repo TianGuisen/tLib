@@ -165,5 +165,5 @@ dependencies {
     //lottie图标动画库
     api 'com.airbnb.android:lottie:3.0.7'
     //activity之间共享viewmodel,https://github.com/FarshadTahmasbi/Vita
-    api 'com.androidisland.arch:vita:v1.0.0'
+    api 'com.androidisland.arch:vita:1.0.0'
 }

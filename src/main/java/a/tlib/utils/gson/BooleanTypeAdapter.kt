@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonWriter
 
 /**
  * @author 田桂森 2020/2/28
+ * 0是false，其他是true
  */
 class BooleanTypeAdapter : TypeAdapter<Boolean?>() {
     override fun write(out: JsonWriter, value: Boolean?) {
@@ -30,11 +31,11 @@ class BooleanTypeAdapter : TypeAdapter<Boolean?>() {
             }
             if (json.peek() == JsonToken.NUMBER) {
                 val b = json.nextInt()
-                return b == 1
+                return b !=0
             }
             if (json.peek() == JsonToken.STRING) {
                 val str = json.nextString()
-                return str == "1"
+                return str !="0"
             } else {
                 value = json.nextBoolean()
                 return  value

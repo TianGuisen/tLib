@@ -138,8 +138,8 @@ object DateUtil {
     /**
      * 秒转时间
      * second时间
-     * 后面为对应时间的单位文字，比如天/时/分，比如-，比如/
-     * XXX秒->10天10时1秒
+     * 后面为对应时间的单位文字，比如天/时/分，比如-，比如:
+     * XXX秒->10天10时1分1秒或者1分1秒
      */
     @JvmStatic
     fun secondToTime(second: Long, dayUnitStr: String? = null, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
@@ -161,6 +161,39 @@ object DateUtil {
         }
         second = second - minute * 60
         if (second > 0) {
+            str = str + second.toString() + secondUnitStr
+        }
+        return str
+    }
+
+    /**
+     * 秒转时间，不足1小时和1分钟的，补0
+     * second时间
+     * 后面为对应时间的单位文字，比如时/分/秒，比如-，比如:
+     * XXX秒->00:01:01
+     */
+    @JvmStatic
+    fun secondToTime2(second: Long, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
+        var str = ""
+        var second = second
+        val hour = second / (60 * 60)
+        if (hour < 10) {
+            str = str + "0" + hour.toString() + hourUnitStr
+        } else {
+            str = str + hour.toString() + hourUnitStr
+        }
+        second = second - hour * 60 * 60
+        val minute = second / 60
+        if (minute < 10) {
+            str = str + "0" + minute.toString() + minuteUnitStr
+        } else {
+            str = str + minute.toString() + minuteUnitStr
+        }
+        second = second - minute * 60
+
+        if (second < 10) {
+            str = str + "0" + second.toString() + secondUnitStr
+        } else {
             str = str + second.toString() + secondUnitStr
         }
         return str

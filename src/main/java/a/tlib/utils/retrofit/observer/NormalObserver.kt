@@ -1,6 +1,7 @@
 package com.lb.baselib.retrofit
 
 import Interceptors
+import a.tlib.logger.YLog
 import a.tlib.utils.ToastUtil
 import a.tlib.utils.retrofit.ApiErrorType
 import a.tlib.utils.retrofit.LoadView
@@ -27,7 +28,7 @@ abstract class NormalObserver<T> : SingleObserver<ResWrapper<T>>, IObserver<T> {
     override var jumpLogin: Boolean = false
     override var repeat = 0
     var srl: SmartRefreshLayout? = null
-    
+
     /**
      *@loading 是否显示loading
      *@showToast 是否显示错误toast
@@ -38,7 +39,7 @@ abstract class NormalObserver<T> : SingleObserver<ResWrapper<T>>, IObserver<T> {
      *        2:关闭先入队的请求,场景很少:频繁调用接口并只以最后一次的数据为准,出现这种情况通常设计不合理
      */
     constructor(context: Context? = null, lv: LoadView? = null, srl: SmartRefreshLayout? = null, showToast: Boolean = true,
-                jumpLogin:Boolean=false,tag: String? = null, repeat: Int = 0) {
+                jumpLogin: Boolean = false, tag: String? = null, repeat: Int = 0) {
         this.tag = tag
         this.context = context
         this.srl = srl
@@ -70,7 +71,7 @@ abstract class NormalObserver<T> : SingleObserver<ResWrapper<T>>, IObserver<T> {
                 is SocketTimeoutException -> ApiErrorType.CONNECTION_TIMEOUT
                 else -> {
                     e.message?.let {
-                    YLog2.t(Interceptors.LOGGER_NET_TAG).e(it,e)
+                        YLog2.t(Interceptors.LOGGER_NET_TAG).e(it, e)
                     }
                     null
                 }
@@ -92,21 +93,29 @@ abstract class NormalObserver<T> : SingleObserver<ResWrapper<T>>, IObserver<T> {
     }
 
     override fun onSuccess(t: ResWrapper<T>) {
-        if (!checkLogin(t)) {
-            onFailure(t)
-            lv?.showLogin()
-        } else if (isSuccess(t)) {
-            srl?.finishRefresh(true)
-            lv?.showContent()
-            onSucces(t)
-        } else {
-            showErrorToast(t)
-            srl?.finishRefresh(false)
-            lv?.showError()
-            onFailure(t)
+        try {//主要捕获在onSucces()的回调里出现异常
+            if (!checkLogin(t)) {
+                onFailure(t)
+                lv?.showLogin()
+            } else if (isSuccess(t)) {
+                srl?.finishRefresh(true)
+                lv?.showContent()
+                onSucces(t)
+            } else {
+                showErrorToast(t)
+                srl?.finishRefresh(false)
+                lv?.showError()
+                onFailure(t)
+            }
+        } catch (e: Exception) {
+            e.message?.let {
+                YLog2.t(Interceptors.LOGGER_NET_TAG).e(it, e)
+            }
+        } finally {
+            srl?.finishLoadMore(true)
+            finishHandle()
+            onFinish()
         }
-        srl?.finishLoadMore(true)
-        finishHandle()
-        onFinish()
+
     }
 }

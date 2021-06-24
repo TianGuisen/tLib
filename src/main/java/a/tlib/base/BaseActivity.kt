@@ -41,6 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     val TAG = this.javaClass.simpleName
+
     @Deprecated("废弃")
     var strUtils = StringUtils()
     abstract val layoutId: Int
@@ -72,22 +73,22 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
             TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
                 val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
                 ImmersionBar.with(this)
-                    .statusBarColor(statusBarColor)//状态栏颜色
-                    .navigationBarColor(navigationBarColor)//导航栏颜色
-                    .statusBarDarkFont(false)//状态栏图标浅色
-                    .autoNavigationBarDarkModeEnable(true, 0.2f)
+                        .statusBarColor(statusBarColor)//状态栏颜色
+                        .navigationBarColor(navigationBarColor)//导航栏颜色
+                        .statusBarDarkFont(false)//状态栏图标浅色
+                        .autoNavigationBarDarkModeEnable(true, 0.2f)
 //                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))//导航栏图标浅色
-                    .init()
+                        .init()
             }
             TitleBar.BLACK_STYLE -> {//透明状态栏，白色导航栏
                 val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.white
                 ImmersionBar.with(this)
-                    .statusBarColor(statusBarColor)
-                    .navigationBarColor(navigationBarColor)
-                    .statusBarDarkFont(true)
-                    .autoNavigationBarDarkModeEnable(true, 0.2f)
+                        .statusBarColor(statusBarColor)
+                        .navigationBarColor(navigationBarColor)
+                        .statusBarDarkFont(true)
+                        .autoNavigationBarDarkModeEnable(true, 0.2f)
 //                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))
-                    .init()
+                        .init()
             }
         }
         return tv_title
@@ -131,10 +132,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     override fun getResources(): Resources {
         if (Looper.getMainLooper().thread == Thread.currentThread()) {//解决某些手机某些情况下竖屏适配失败的问题
             AutoSizeCompat.autoConvertDensity(
-                super.getResources(),
-                1080f,
-                super.getResources()
-                    .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+                    super.getResources(),
+                    1080f,
+                    super.getResources()
+                            .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
             )
         }
         val resources = super.getResources()
@@ -149,10 +150,10 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     override fun onConfigurationChanged(newConfig: Configuration) {//解决横屏无法适配的问题
         super.onConfigurationChanged(newConfig)
         AutoSize.autoConvertDensity(
-            this,
-            1080f,
-            super.getResources()
-                .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
+                this,
+                1080f,
+                super.getResources()
+                        .getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
         )
     }
 
@@ -194,8 +195,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
             val left = l[0]
             val top = l[1]
             val bottom = top + v.getHeight()
-            val right = (left
-                    + v.getWidth())
+            val right = (left + v.getWidth())
             return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
         }
         return false
@@ -212,8 +212,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
      */
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
         if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 25) {
-            overrideConfiguration!!.uiMode =
-                overrideConfiguration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()
+            overrideConfiguration!!.uiMode = overrideConfiguration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }

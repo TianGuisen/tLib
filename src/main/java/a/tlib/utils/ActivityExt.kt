@@ -9,12 +9,6 @@ import com.androidisland.vita.vita
 /**
  * @author 田桂森 2021/5/29 0029
  */
-/**
- * 获取viewModel
- */
-inline fun <reified T:ViewModel> AppCompatActivity.getVM(){
-    vita.with(VitaOwner.Multiple(this)).getViewModel<T>()
-}
 
 fun Activity.getBooleanExtra(key: String, default: Boolean = false): Boolean {
     return intent.getBooleanExtra(key, default)

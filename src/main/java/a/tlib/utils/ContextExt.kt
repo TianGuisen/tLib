@@ -14,6 +14,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import com.androidisland.vita.VitaOwner
+import com.androidisland.vita.vita
 import com.hw.ycshareelement.YcShareElement
 import com.hw.ycshareelement.transition.ShareElementInfo
 import java.util.*
@@ -23,6 +26,13 @@ import java.util.*
  * enableAnimation默认开启动画，某些场景会有bug要关闭
  */
 
+/**
+ * 获取viewModel
+ */
+inline fun <reified T : ViewModel> androidx.lifecycle.LifecycleOwner.getVM() {
+    vita.with(VitaOwner.Multiple(this)).getViewModel<T>()
+}
+
 inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>) =
         this.startActivity(createIntent(this, T::class.java, params))
 
@@ -30,13 +40,12 @@ inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, A
  * 带动画跳转
  * android:transitionName="simple_img"
  */
-inline fun <reified T : Activity> Activity.startAct(view: View, cover: String, vararg params: Pair<String, Any?>){
+inline fun <reified T : Activity> Activity.startAct(view: View, cover: String, vararg params: Pair<String, Any?>) {
     val optionsBundle = YcShareElement.buildOptionsBundle(this) {
         arrayOf<ShareElementInfo<*>>(ShareElementInfo(view, ShareElementInfo4(cover, AppUtil.getScreenWidth(), AppUtil.getScreenHeight())))
     }
-    this.startActivity(createIntent(this, T::class.java, params),optionsBundle)
+    this.startActivity(createIntent(this, T::class.java, params), optionsBundle)
 }
-        
 
 
 fun Context.startAct(intent: Intent, vararg params: Pair<String, Any?>) {

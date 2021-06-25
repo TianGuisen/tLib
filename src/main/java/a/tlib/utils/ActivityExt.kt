@@ -1,16 +1,28 @@
 package a.tlib.utils
 
 import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import com.androidisland.vita.VitaOwner
+import com.androidisland.vita.vita
 
 /**
  * @author 田桂森 2021/5/29 0029
  */
+/**
+ * 获取viewModel
+ */
+inline fun <reified T:ViewModel> AppCompatActivity.getVM(){
+    vita.with(VitaOwner.Multiple(this)).getViewModel<T>()
+}
 
 fun Activity.getBooleanExtra(key: String, default: Boolean = false): Boolean {
     return intent.getBooleanExtra(key, default)
 }
 
-
+/**
+ * null会转为默认值""
+ */
 fun Activity.getStringExtra(key: String, default: String = ""): String {
     intent.getStringExtra(key).let {
         return if (it == null) default else it
@@ -42,3 +54,4 @@ fun <T> Activity.getListExtra(key: String): MutableList<T>? {
     }
     return mutableListOf()
 }
+

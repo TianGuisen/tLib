@@ -10,6 +10,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
+import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator
@@ -20,6 +21,7 @@ import com.tencent.smtt.sdk.QbSdk
 import io.reactivex.plugins.RxJavaPlugins
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
+
 
 /**
  * @author 田桂森 2020/8/14 0014
@@ -56,6 +58,8 @@ object LibApp {
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
             }
+            //测试包时候崩溃弹出错误页面
+            CaocConfig.Builder.create().enabled(BuildConfig.IS_DEBUG).apply()
         }
         return this
     }

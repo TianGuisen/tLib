@@ -166,4 +166,6 @@ dependencies {
     api 'com.airbnb.android:lottie:3.0.7'
     //activity之间共享viewmodel,https://github.com/FarshadTahmasbi/Vita
     api 'com.androidisland.arch:vita:1.0.0'
+    //捕获到异常后跳转到错误日志界面,https://github.com/Ereza/CustomActivityOnCrash
+    api 'cat.ereza:customactivityoncrash:2.3.0'
 }

@@ -1,83 +1,69 @@
 package a.tlib.utils.retrofit
 
-import io.reactivex.disposables.Disposable
+import okhttp3.Interceptor
 
 /**
- * 网络请求tag管理...好像意义不大...
- * 相同tag的请求只会存在一个
+ * 网络请求tag管理
+ * 如果设置了@Headers(ApiTagManager.REPEAT_CLOSE_AFTER)
+            @Headers(ApiTagManager.REPEAT_CLOSE_BEFORE)
+ * 那么相同tag的请求只会存在一个
  */
-class ApiTagManager private constructor() {
-
-    private val maps = mutableMapOf<String, Disposable>()
-
-    companion object {
-        val instance = ApiTagManager()
-    }
-
+object ApiTagManager {
+    /**
+     * 关闭后入队的请求,比较常用:比如按钮的防重复时间是500,但是点击按钮后后台处理时间长达1000,在后500时间内按钮是可点击的但是请求是无意义的
+     */
+    const val REPEAT_CLOSE_AFTER = "repeat:close_after"
 
     /**
-     * 后入队的会被关闭
+     * 关闭先入队的请求,场景很少:频繁调用接口并只采用最后一次请求的数据
      */
-    fun add1(tag: String?, observer: Disposable) {
-        if (tag == null) {
-            throw IllegalArgumentException("tag不能为null")
-        }
-        maps.keys.forEach {
+    const val REPEAT_CLOSE_BEFORE = "repeat:close_before"
+
+    const val REPEAT_KEY = "repeat"
+
+    const val REPEAT_VALUE_CLOSE_AFTER = "close_after"
+    const val REPEAT_VALUE_CLOSE_BEFORE = "close_before"
+
+    @JvmStatic
+     val chainMap = mutableMapOf<String, Interceptor.Chain>()
+
+    @JvmStatic
+    fun add1(tag: String, chain: Interceptor.Chain) {
+        chainMap.keys.forEach {
             if (tag == it) {
-                observer.dispose()
+                chain.call().cancel()
                 return
             }
         }
-        maps.put(tag, observer)
+        chainMap.put(tag, chain)
     }
 
-    /**
-     * 先入队的会被关闭
-     */
-    fun add2(tag: String?, observer: Disposable) {
+    @JvmStatic
+    fun add2(tag: String, chain: Interceptor.Chain) {
         if (tag == null) {
             throw IllegalArgumentException("tag不能为null")
         }
-        cancel(tag)
-        maps.put(tag, observer)
-    }
-
-    fun remove(tag: String?) {
-        if (tag == null) {
+        if (chainMap.isEmpty()) {
             return
         }
-        if (!maps.isEmpty()) {
-            maps.remove(tag)
-        }
-    }
-
-    fun removeAll() {
-        if (!maps.isEmpty()) {
-            maps.clear()
-        }
-    }
-
-    fun cancel(tag: String) {
-        if (maps.isEmpty()) {
-            return
-        }
-        val m1 = maps.get(tag)
+        val m1 = chainMap.get(tag)
         if (m1 == null) {
             return
         }
-        if (!m1.isDisposed()) {
-            m1.dispose()
-            maps.remove(tag)
+        if (!chain.call().isCanceled()) {
+            chain.call().cancel()
+            chainMap.remove(tag)
         }
+        chainMap.put(tag, chain)
     }
-
-    fun cancelAll() {
-        if (maps.isEmpty()) {
+    
+    @JvmStatic
+    fun remove2(tag: String?) {
+        if (tag == null) {
             return
         }
-        val tags = maps.keys
-        for (tag in tags) {
-            cancel(tag)
+        if (!chainMap.isEmpty()) {
+            chainMap.remove(tag)
         }
     }
 }

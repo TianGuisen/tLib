@@ -1,4 +1,4 @@
-package a.tlib.utils.retrofit
+package a.tlib.utils
 
 import a.tlib.R
 import a.tlib.widget.loading.LoadingDia

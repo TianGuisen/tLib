@@ -1,9 +1,10 @@
-
 import a.tlib.logger.Printer
+import a.tlib.logger.YLog
 import a.tlib.logger.YLog2
 import a.tlib.utils.AppUtil
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
+import a.tlib.utils.retrofit.ApiTagManager
 import a.tlib.utils.sp
 import android.net.Uri
 import okhttp3.*
@@ -30,12 +31,26 @@ object Interceptors {
     open class BaseParamInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
+            //获取全部请求头，处理重复请求
+            val headers = originalRequest.headers
+            when (headers.get(ApiTagManager.REPEAT_KEY)) {
+                ApiTagManager.REPEAT_VALUE_CLOSE_AFTER -> {
+                    ApiTagManager.add1(originalRequest.url.toString(), chain)
+                }
+                ApiTagManager.REPEAT_VALUE_CLOSE_BEFORE -> {
+                    ApiTagManager.add2(originalRequest.url.toString(), chain)
+                }
+            }
+
+//            取消请求
+//            chain.call().cancel()
             val requestBuilder = originalRequest.newBuilder()
                     .addHeader("Content-Type", "application/json; charset=utf-8")
                     .addHeader("Platform", "Android_ALL")
                     .addHeader("Version", AppUtil.getVersionName())
                     .addHeader("Timestamp", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
                     .addHeader("Device", AppUtil.deviceId)
+                    .removeHeader(ApiTagManager.REPEAT_KEY)
                     .method(originalRequest.method, originalRequest.body)
             if (token.isNotEmpty()) {
                 requestBuilder.addHeader("token", token)
@@ -46,7 +61,11 @@ object Interceptors {
             if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
                 return chain.proceed(request.newBuilder().url(request.url.toString()).post(sortMap(request.body!!).build()).build())
             }
-            return chain.proceed(request)
+
+            var response = chain.proceed(request)
+            //移除
+            ApiTagManager.remove2(originalRequest.url.toString())
+            return response
         }
 
         open fun addHeaders(requestBuilder: Request.Builder) {
@@ -66,7 +85,7 @@ object Interceptors {
                 response = chain.proceed(orgRequest)
             } catch (e: Exception) {
                 e.message?.let {
-                    YLog2.t(LOGGER_NET_TAG).e(it)
+                    YLog2.t(LOGGER_NET_TAG).e(orgRequest.url.toString() + it)
                 }
             } finally {
                 //finally中不论如何也会打印请求信息

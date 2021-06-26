@@ -1,5 +1,6 @@
 package com.lb.baselib.retrofit
 
+import a.tlib.utils.ProgressDiaUtil
 import a.tlib.utils.ToastUtil
 import a.tlib.utils.retrofit.*
 import android.content.Context
@@ -13,7 +14,6 @@ interface IObserver<T> {
     var lv: LoadView?
     var context: Context?
     var tag: String?
-    var repeat: Int
     var showToast: Boolean
     var jumpLogin: Boolean
     fun onSucces(t: ResWrapper<T>)
@@ -30,11 +30,6 @@ interface IObserver<T> {
     }
 
     fun startHandle(d: Disposable) {
-        if (repeat == 1) {
-            ApiTagManager.instance.add1(tag, d)
-        } else if (repeat == 2) {
-            ApiTagManager.instance.add2(tag, d)
-        }
         context?.let {
             if (it is FragmentActivity) {
                 ProgressDiaUtil.show(it)
@@ -47,9 +42,6 @@ interface IObserver<T> {
     }
 
     fun finishHandle() {
-        if (repeat != 0) {
-            ApiTagManager.instance.remove(tag)
-        }
         context?.let {
             ProgressDiaUtil.dismiss()
         }

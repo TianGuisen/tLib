@@ -53,7 +53,6 @@ object LibApp {
             initAutoSize()
             initRefresh()
             hidePAPIDialog()///解决9.0问题弹窗
-            initX5()
 //            if (BuildConfig.IS_DEBUG) CrashCollectHandler().init()//debug时候错误捕获禁止重启
             RxJavaPlugins.setErrorHandler {
                 //网络异常线上可能会崩溃，需要这个
@@ -85,20 +84,6 @@ object LibApp {
         return this
     }
 
-    @JvmStatic
-    private fun initX5() {
-        //腾讯x5
-        QbSdk.initX5Environment(app, object : QbSdk.PreInitCallback {
-            override fun onCoreInitFinished() {
-
-            }
-
-            override fun onViewInitFinished(p0: Boolean) {
-
-            }
-
-        })
-    }
 
     @JvmStatic
     private fun initLog() {

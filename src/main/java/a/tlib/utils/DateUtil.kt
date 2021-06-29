@@ -1,7 +1,9 @@
 package a.tlib.utils
 
+import android.util.ArrayMap
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
@@ -141,6 +143,7 @@ object DateUtil {
      * 后面为对应时间的单位文字，比如天/时/分，比如-，比如:
      * XXX秒->10天10时1分1秒或者1分1秒
      */
+    @Deprecated("使用secondToTimeMap")
     @JvmStatic
     fun secondToTime(second: Long, dayUnitStr: String? = null, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
         var str = ""
@@ -172,6 +175,7 @@ object DateUtil {
      * 后面为对应时间的单位文字，比如时/分/秒，比如-，比如:
      * XXX秒->00:01:01
      */
+    @Deprecated("使用secondToTimeMap")
     @JvmStatic
     fun secondToTime2(second: Long, hourUnitStr: String? = null, minuteUnitStr: String? = null, secondUnitStr: String = ""): String {
         var str = ""
@@ -197,6 +201,27 @@ object DateUtil {
             str = str + second.toString() + secondUnitStr
         }
         return str
+    }
+
+    /**
+     * 秒数转map
+     * day,hour,minute,second
+     */
+    @JvmStatic
+    fun secondToTimeMap(second: Long): HashMap<String, Long> {
+        val map = hashMapOf<String, Long>()
+        var second = second
+        val day = second / (24 * 60 * 60)
+        map.put("day", day)
+        second = second - day * 24 * 60 * 60
+        val hour = second / (60 * 60)
+        map.put("hour", hour)
+        second = second - hour * 60 * 60
+        val minute = second / 60
+        map.put("minute", minute)
+        second = second - minute * 60
+        map.put("second", second)
+        return map
     }
 
     /**

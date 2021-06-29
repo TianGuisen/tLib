@@ -15,8 +15,26 @@ fun View.gone(boolean: Boolean = true) {
     visibility = if (boolean) View.GONE else View.VISIBLE
 }
 
+/**
+ * 多个view一起gone
+ */
+fun goneView(vararg views: View, boolean: Boolean = true) {
+    views.forEach {
+        it.visibility = if (boolean) View.GONE else View.VISIBLE
+    }
+}
+
 fun View.show(boolean: Boolean = true) {
     visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+}
+
+/**
+ * 多个view一起show
+ */
+fun showView(vararg views: View, boolean: Boolean = true) {
+    views.forEach {
+        it.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+    }
 }
 
 /**
@@ -26,11 +44,39 @@ fun View.showGone(boolean: Boolean = true) {
     visibility = if (boolean) View.VISIBLE else View.GONE
 }
 
+/**
+ * true显示，false gone
+ */
+fun showGoneView(vararg views: View, boolean: Boolean = true) {
+    views.forEach {
+        it.visibility = if (boolean) View.VISIBLE else View.GONE
+    }
+}
+
+/**
+ * true INVISIBLE，false  显示
+ */
 fun View.hide(boolean: Boolean = true) {
     visibility = if (boolean) View.INVISIBLE else View.VISIBLE
 }
 
+/**
+ * 多个view一起hide
+ */
+fun hide(vararg views: View, boolean: Boolean = true) {
+    views.forEach {
+        it.visibility = if (boolean) View.INVISIBLE else View.VISIBLE
+    }
+}
+
+/**
+ * 是否是VISIBLE
+ */
 fun View.isShow() = visibility == View.VISIBLE
+
+/**
+ * 是否是INVISIBLE或GONE
+ */
 fun View.isHide() = visibility == View.INVISIBLE || visibility == View.GONE
 
 /**
@@ -82,10 +128,10 @@ val TextView.string get() = this.text.toString()
  */
 fun View.setPaddingPT(left: Int, top: Int, right: Int, bottom: Int) {
     setPadding(
-        AutoSizeUtil.pt2px(left.toFloat()),
-        AutoSizeUtil.pt2px(top.toFloat()),
-        AutoSizeUtil.pt2px(right.toFloat()),
-        AutoSizeUtil.pt2px(bottom.toFloat())
+            AutoSizeUtil.pt2px(left.toFloat()),
+            AutoSizeUtil.pt2px(top.toFloat()),
+            AutoSizeUtil.pt2px(right.toFloat()),
+            AutoSizeUtil.pt2px(bottom.toFloat())
     )
 }
 
@@ -103,31 +149,31 @@ fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
     val params = layoutParams
     if (params is LinearLayout.LayoutParams) {
         params.setMargins(
-            AutoSizeUtil.pt2px(left.toFloat()),
-            AutoSizeUtil.pt2px(top.toFloat()),
-            AutoSizeUtil.pt2px(right.toFloat()),
-            AutoSizeUtil.pt2px(bottom.toFloat())
+                AutoSizeUtil.pt2px(left.toFloat()),
+                AutoSizeUtil.pt2px(top.toFloat()),
+                AutoSizeUtil.pt2px(right.toFloat()),
+                AutoSizeUtil.pt2px(bottom.toFloat())
         )
     } else if (params is RelativeLayout.LayoutParams) {
         params.setMargins(
-            AutoSizeUtil.pt2px(left.toFloat()),
-            AutoSizeUtil.pt2px(top.toFloat()),
-            AutoSizeUtil.pt2px(right.toFloat()),
-            AutoSizeUtil.pt2px(bottom.toFloat())
+                AutoSizeUtil.pt2px(left.toFloat()),
+                AutoSizeUtil.pt2px(top.toFloat()),
+                AutoSizeUtil.pt2px(right.toFloat()),
+                AutoSizeUtil.pt2px(bottom.toFloat())
         )
     } else if (params is FrameLayout.LayoutParams) {
         params.setMargins(
-            AutoSizeUtil.pt2px(left.toFloat()),
-            AutoSizeUtil.pt2px(top.toFloat()),
-            AutoSizeUtil.pt2px(right.toFloat()),
-            AutoSizeUtil.pt2px(bottom.toFloat())
+                AutoSizeUtil.pt2px(left.toFloat()),
+                AutoSizeUtil.pt2px(top.toFloat()),
+                AutoSizeUtil.pt2px(right.toFloat()),
+                AutoSizeUtil.pt2px(bottom.toFloat())
         )
     } else if (params is SmartRefreshLayout.LayoutParams) {
         params.setMargins(
-            AutoSizeUtil.pt2px(left.toFloat()),
-            AutoSizeUtil.pt2px(top.toFloat()),
-            AutoSizeUtil.pt2px(right.toFloat()),
-            AutoSizeUtil.pt2px(bottom.toFloat())
+                AutoSizeUtil.pt2px(left.toFloat()),
+                AutoSizeUtil.pt2px(top.toFloat()),
+                AutoSizeUtil.pt2px(right.toFloat()),
+                AutoSizeUtil.pt2px(bottom.toFloat())
         )
     }
     layoutParams = params
@@ -141,7 +187,7 @@ fun View.setMarginPT(left: Int, top: Int, right: Int, bottom: Int) {
 fun View.setWidthHeight(width: Int, height: Int) {
     val params = layoutParams
     if (params is LinearLayout.LayoutParams || params is RelativeLayout.LayoutParams ||
-        params is FrameLayout.LayoutParams || params is SmartRefreshLayout.LayoutParams
+            params is FrameLayout.LayoutParams || params is SmartRefreshLayout.LayoutParams
     ) {
         if (width < 0) {
             params.width = width

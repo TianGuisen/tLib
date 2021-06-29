@@ -11,6 +11,7 @@ import android.content.Context
 import android.os.Build
 import android.webkit.WebView
 import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.androidisland.vita.startVita
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator
@@ -59,6 +60,7 @@ object LibApp {
             }
             //测试包时候崩溃弹出错误页面
             CaocConfig.Builder.create().enabled(BuildConfig.IS_DEBUG).apply()
+            startVita()//viewmodel
         }
         return this
     }

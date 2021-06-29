@@ -6,6 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 /**
  * @author 田桂森 2021/6/25 0025
  */
-class BaseVM(app: Application)  : AndroidViewModel(app) {
+open class BaseVM(app: Application)  : AndroidViewModel(app) {
     
 }

@@ -1,12 +1,12 @@
+import a.tlib.LibApp
 import a.tlib.logger.Printer
-import a.tlib.logger.YLog
 import a.tlib.logger.YLog2
-import a.tlib.utils.AppUtil
+import a.tlib.utils.*
 import a.tlib.utils.encrypt.MD5Util
 import a.tlib.utils.encrypt.MD5Util.TimeDifference
 import a.tlib.utils.retrofit.ApiTagManager
-import a.tlib.utils.sp
 import android.net.Uri
+import com.azhon.appupdate.utils.LogUtil
 import okhttp3.*
 import okio.Buffer
 import org.json.JSONArray
@@ -22,6 +22,11 @@ object Interceptors {
      * Logger网络请求日志的tag
      */
     const val LOGGER_NET_TAG = "retrofit"
+
+    /**
+     * 缓存的key
+     */
+    const val CACHE = "aCache"
     var token = sp.getString("sid", "")!!
 
     /**
@@ -35,13 +40,12 @@ object Interceptors {
             val headers = originalRequest.headers
             when (headers.get(ApiTagManager.REPEAT_KEY)) {
                 ApiTagManager.REPEAT_VALUE_CLOSE_AFTER -> {
-                    ApiTagManager.add1(originalRequest.url.toString(), chain)
+                    ApiTagManager.add1(Uri.decode(originalRequest.url.toString()), chain)
                 }
                 ApiTagManager.REPEAT_VALUE_CLOSE_BEFORE -> {
-                    ApiTagManager.add2(originalRequest.url.toString(), chain)
+                    ApiTagManager.add2(Uri.decode(originalRequest.url.toString()), chain)
                 }
             }
-
 //            取消请求
 //            chain.call().cancel()
             val requestBuilder = originalRequest.newBuilder()
@@ -64,7 +68,7 @@ object Interceptors {
 
             var response = chain.proceed(request)
             //移除
-            ApiTagManager.remove2(originalRequest.url.toString())
+            ApiTagManager.remove2(Uri.decode(originalRequest.url.toString()))
             return response
         }
 
@@ -125,7 +129,11 @@ object Interceptors {
             val charset2 = contentType2?.charset(Charset.forName("UTF-8"))
             //json日志使用鼠标中键进行选中
             //打印返回json
-            YLog2.t(LOGGER_NET_TAG).json2(buffer2.clone().readString(charset2!!))
+            val jsonString = buffer2.clone().readString(charset2!!)
+            YLog2.t(LOGGER_NET_TAG).json2(jsonString)
+//            orgRequest.headers.get(CACHE).isNotNullEmpty {
+//                ACache.get(LibApp.app).put(Uri.decode(orgRequest.url.toString()), jsonString, it.toint())
+//            }
             return response
         }
     }
@@ -156,7 +164,7 @@ object Interceptors {
         }
     }
 
-
+    @JvmStatic
     private fun sortMap(requestBody: RequestBody): FormBody.Builder {
         val builder = FormBody.Builder()
         val stringMap = Hashtable<String, String>()
@@ -169,5 +177,4 @@ object Interceptors {
         }
         return builder
     }
-
 }

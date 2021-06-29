@@ -29,8 +29,8 @@ import java.util.*
 /**
  * 获取viewModel
  */
-inline fun <reified T : ViewModel> androidx.lifecycle.LifecycleOwner.getVM() {
-    vita.with(VitaOwner.Multiple(this)).getViewModel<T>()
+inline fun <reified T : ViewModel> androidx.lifecycle.LifecycleOwner.getVM(): T {
+    return vita.with(VitaOwner.Multiple(this)).getViewModel<T>()
 }
 
 inline fun <reified T : Activity> Context.startAct(vararg params: Pair<String, Any?>) =

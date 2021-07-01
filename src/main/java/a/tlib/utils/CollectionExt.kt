@@ -6,11 +6,20 @@ package a.tlib.utils
 /**
  * list不是null且size>0
  */
-fun <T> Collection<T>?.isNotNullEmpty(): Boolean  = !this.isNullOrEmpty()
+fun <T> Collection<T>?.isNotNullEmpty(): Boolean = !this.isNullOrEmpty()
 
-public fun <T> List<T>.last(): T? {
+fun <T> List<T>.last(): T? {
     if (isEmpty()) return null
     return this[lastIndex]
 }
 
 fun <K, V> Map<K, V>?.isNotNullEmply(): Boolean = !this.isNullOrEmpty()
+
+/**
+ * null安全
+ */
+fun  <T> MutableCollection<T>?.addSafe(data:T?){
+    if (data!=null){
+        this?.add(data)
+    }
+}

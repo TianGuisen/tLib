@@ -36,8 +36,8 @@ class TCountDownTimer private constructor(totalTime: Long, interval: Long) : Cou
      * 正计时监听
      */
     var countLis: ((Long) -> Unit)? = null
-    var count=0L
-    
+    private var count = 0L
+
     override fun onTick(millisUntilFinished: Long) {
         count += millisUntilFinished
         countLis?.invoke(count)

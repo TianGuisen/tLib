@@ -16,10 +16,11 @@ import java.text.DecimalFormat
  *  不为null且不是“”
  */
 inline fun CharSequence?.isNotNullEmpty(): Boolean = !this.isNullOrEmpty()
+
 /**
  *  不为“”
  */
-inline fun <T> CharSequence.isNotEmpty(function: (String) -> T)=  (length > 0).yes { function(this.toString()) }
+inline fun <T> CharSequence.isNotEmpty(function: (String) -> T) = (length > 0).yes { function(this.toString()) }
 
 /**
  *  不为null且不是“”
@@ -39,7 +40,7 @@ fun CharSequence?.isNotNullBlank(): Boolean = !this.isNullOrBlank()
 /**
  *  不为null且不是“”和“     ”
  */
-inline fun <T> CharSequence?.isNotNullBlank(function: (String) -> T) = isNullOrBlank().no{function(this!!.toString())}
+inline fun <T> CharSequence?.isNotNullBlank(function: (String) -> T) = isNullOrBlank().no { function(this!!.toString()) }
 
 /**
  *  是null或者“”或者“     ”
@@ -141,6 +142,7 @@ fun String?.tolong(): Long {
         return toLong
     }
 }
+
 /**
  * 限制最大最小值
  */
@@ -270,6 +272,7 @@ fun CharSequence.zoomSmallFirst(size: Float = 0.7f): SpannableString {
     }
     return spannableString
 }
+
 /**
  * 缩放中间start-end位置的字
  * @param value
@@ -282,6 +285,7 @@ fun String.zoomStartEnd(start: Int, end: Int, size: Float = 1.5f): SpannableStri
     }
     return spannableString
 }
+
 /**
  * 缩放小数点前的字，默认放大1.5倍
  * @param value
@@ -383,4 +387,11 @@ fun CharSequence.getUrlValueByName(name: String): String {
         }
     }
     return result
+}
+
+/**
+ * 不够位数的在前面补0，保留num的长度位数字
+ */
+fun Any.fill0(num: Int): String {
+    return String.format("%0" + num + "d", Integer.parseInt(this.toString()) + 1)
 }

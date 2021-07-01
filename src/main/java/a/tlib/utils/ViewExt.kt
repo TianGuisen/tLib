@@ -1,11 +1,13 @@
 package a.tlib.utils
 
 import a.tlib.utils.abs.TTextWatcher
+import a.tlib.utils.glide.GlideUtil
 import android.content.Context
 import android.graphics.Paint
 import android.text.Editable
 import android.view.View
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -244,13 +246,13 @@ fun setSingClick(vararg views: View, function: (View) -> Unit) {
  * 加载图片
  */
 fun ImageView?.load(ctx: Context? = null, url: Any? = null, ro: RequestOptions? = null) {
-    if (ctx != null && this != null) {
-        val requestBuilder = Glide.with(ctx).load(url)
-        if (ro != null) {
-            requestBuilder.apply(ro)
-        }
-        requestBuilder.into(this)
-    }
+    GlideUtil.load(ctx,url,this,ro)
+}
+/**
+ * 加载图片
+ */
+fun ImageView?.load(ctx: Fragment? = null, url: Any? = null, ro: RequestOptions? = null) {
+    GlideUtil.load(ctx,url,this,ro)
 }
 
 fun ViewPager.setPageSelectLis(function: (Int) -> Unit) {

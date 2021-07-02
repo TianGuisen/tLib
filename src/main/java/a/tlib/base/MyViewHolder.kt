@@ -20,9 +20,25 @@ open class MyViewHolder(view: View) : BaseViewHolder(view) {
         }
     }
 
+    fun gone(vararg ids: Int, boolean: Boolean = true) {
+        ids.forEach {
+            getView<View>(it).let {
+                it.visibility = if (boolean) View.GONE else View.VISIBLE
+            }
+        }
+    }
+
     fun show(id: Int, boolean: Boolean = true) {
         getView<View>(id).let {
             it.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+        }
+    }
+
+    fun show(vararg ids: Int, boolean: Boolean = true) {
+        ids.forEach {
+            getView<View>(it).let {
+                it.visibility = if (boolean) View.VISIBLE else View.INVISIBLE
+            }
         }
     }
 
@@ -32,9 +48,25 @@ open class MyViewHolder(view: View) : BaseViewHolder(view) {
         }
     }
 
+    fun showGone(vararg ids: Int, boolean: Boolean = true) {
+        ids.forEach {
+            getView<View>(it).let {
+                it.visibility = if (boolean) View.VISIBLE else View.GONE
+            }
+        }
+    }
+
     fun hide(id: Int, boolean: Boolean = true) {
         getView<View>(id).let {
             it.visibility = if (boolean) View.INVISIBLE else View.VISIBLE
+        }
+    }
+
+    fun hide(vararg ids: Int, boolean: Boolean = true) {
+        ids.forEach {
+            getView<View>(it).let {
+                it.visibility = if (boolean) View.INVISIBLE else View.VISIBLE
+            }
         }
     }
 
@@ -59,6 +91,7 @@ open class MyViewHolder(view: View) : BaseViewHolder(view) {
             it.isSelected = select
         }
     }
+
     fun setTVSelect(id: Int, select: Boolean) {
         getView<RTextView>(id).let {
             it.isSelected = select

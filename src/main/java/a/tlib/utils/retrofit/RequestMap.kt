@@ -22,7 +22,7 @@ class RequestMap {
         return this
     }
 
-    fun get(key: String): Any? {
+     fun get(key: String): Any? {
         return map.get(key)
     }
 

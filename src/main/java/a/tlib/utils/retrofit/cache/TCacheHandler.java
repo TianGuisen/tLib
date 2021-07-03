@@ -49,13 +49,12 @@ public class TCacheHandler<T> implements InvocationHandler {
         try {
             //接口方法的返回类型应该都是Single，直接强转
             Single ob = (Single) method.invoke(api, args);
-            ob.doOnSuccess(o -> {
+            return ob.doOnSuccess(o -> {
                 //请求成功后缓存
                 if (cache != null) {
                     ACache.get(LibApp.app).put(getCacheKey(method, args), GsonUtil.toJson(o), cache.value());
                 }
             });
-            return ob;
         } catch (Exception e) {
             return method.invoke(api, args);
         }

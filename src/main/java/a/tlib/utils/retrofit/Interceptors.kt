@@ -32,18 +32,6 @@ object Interceptors {
     open class BaseParamInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
-            //获取全部请求头，处理重复请求
-            val headers = originalRequest.headers
-            when (headers.get(ApiTagManager.REPEAT_KEY)) {
-                ApiTagManager.REPEAT_VALUE_CLOSE_AFTER -> {
-                    ApiTagManager.add1(Uri.decode(originalRequest.url.toString()), chain)
-                }
-                ApiTagManager.REPEAT_VALUE_CLOSE_BEFORE -> {
-                    ApiTagManager.add2(Uri.decode(originalRequest.url.toString()), chain)
-                }
-            }
-//            取消请求
-//            chain.call().cancel()
             val requestBuilder = originalRequest.newBuilder()
                     .addHeader("Content-Type", "application/json; charset=utf-8")
                     .addHeader("Platform", "Android_ALL")
@@ -61,10 +49,7 @@ object Interceptors {
             if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
                 return chain.proceed(request.newBuilder().url(request.url.toString()).post(sortMap(request.body!!).build()).build())
             }
-
-            var response = chain.proceed(request)
-            //移除
-            ApiTagManager.remove2(Uri.decode(originalRequest.url.toString()))
+            val response = chain.proceed(request)
             return response
         }
 
@@ -81,6 +66,16 @@ object Interceptors {
             val orgRequest = chain.request()
             var response: Response? = null
             try {
+                //获取全部请求头，处理重复请求
+                val headers = orgRequest.headers
+                when (headers.get(ApiTagManager.REPEAT_KEY)) {
+                    ApiTagManager.REPEAT_VALUE_CLOSE_AFTER -> {
+                        ApiTagManager.add1(Uri.decode(orgRequest.url.toString()), chain)
+                    }
+                    ApiTagManager.REPEAT_VALUE_CLOSE_BEFORE -> {
+                        ApiTagManager.add2(Uri.decode(orgRequest.url.toString()), chain)
+                    }
+                }
                 // chain.proceed开始请求
                 response = chain.proceed(orgRequest)
             } catch (e: Exception) {
@@ -88,6 +83,8 @@ object Interceptors {
                     YLog2.t(LOGGER_NET_TAG).e(orgRequest.url.toString() + it)
                 }
             } finally {
+                //移除
+                ApiTagManager.remove2(Uri.decode(orgRequest.url.toString()))
                 //finally中不论如何也会打印请求信息
                 val body: RequestBody? = orgRequest.body
                 val buffer = Buffer()

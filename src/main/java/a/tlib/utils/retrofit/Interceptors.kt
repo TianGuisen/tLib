@@ -23,10 +23,6 @@ object Interceptors {
      */
     const val LOGGER_NET_TAG = "retrofit"
 
-    /**
-     * 缓存的key
-     */
-    const val CACHE = "aCache"
     var token = sp.getString("sid", "")!!
 
     /**
@@ -131,9 +127,6 @@ object Interceptors {
             //打印返回json
             val jsonString = buffer2.clone().readString(charset2!!)
             YLog2.t(LOGGER_NET_TAG).json2(jsonString)
-//            orgRequest.headers.get(CACHE).isNotNullEmpty {
-//                ACache.get(LibApp.app).put(Uri.decode(orgRequest.url.toString()), jsonString, it.toint())
-//            }
             return response
         }
     }

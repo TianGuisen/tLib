@@ -4,6 +4,7 @@ import Interceptors
 import a.tlib.BuildConfig
 import a.tlib.LibApp
 import a.tlib.utils.gson.GsonUtil.gson
+import a.tlib.utils.retrofit.cache.TCacheHandler
 import a.tlib.utils.retrofit.converter.FileConverterFactory
 import a.tlib.utils.retrofit.rxjava2Adapter.RxJava2CallAdapterFactory
 import com.chuckerteam.chucker.api.ChuckerCollector
@@ -14,6 +15,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Proxy
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
@@ -22,8 +24,6 @@ import javax.net.ssl.*
 
 
 object RetrofitService {
-    @JvmField
-    var headerMap: MutableMap<String, String>? = null
 
     val baseParamInterceptor by lazy {
         Interceptors.BaseParamInterceptor()
@@ -58,7 +58,7 @@ object RetrofitService {
             .alwaysReadResponseBody(true)
             .build()
 
-
+    @Deprecated("使用createRetrofitApi")
     @JvmStatic
     fun createRetrofit(params: RetrofitParams): Retrofit {
         val builder = OkHttpClient.Builder()
@@ -83,6 +83,34 @@ object RetrofitService {
         return retrofit
     }
 
+    /**
+     * 创建有缓存的api
+     */
+    @JvmStatic
+    fun <T> createRetrofitApi(params: RetrofitParams, clazz: Class<T>): T {
+        val builder = OkHttpClient.Builder()
+        for (interceptor in params.interceptors) {
+            builder.addInterceptor(interceptor)
+        }
+        if (BuildConfig.IS_DEBUG) {//debug包时解除https抓包限制
+            builder.sslSocketFactory(createSSLSocketFactory(), TrustAllCerts())
+                    .hostnameVerifier(TrustAllHostnameVerifier())
+        }
+        builder.retryOnConnectionFailure(true)
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+        val retrofit = Retrofit.Builder()
+                .baseUrl(params.baseUrl)
+                .addConverterFactory(fileConverterFactory)
+                .addConverterFactory(params.converterFactory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(builder.build())
+                .build()
+        val api = retrofit.create(clazz)
+        return Proxy.newProxyInstance(clazz.getClassLoader(), arrayOf<Class<*>>(clazz), TCacheHandler(retrofit, api)) as T
+    }
+
     // 屏蔽证书
     @JvmStatic
     private fun createSSLSocketFactory(): SSLSocketFactory {
@@ -101,6 +129,7 @@ object RetrofitService {
 
 class RetrofitParams {
     val interceptors = mutableListOf<Interceptor>()
+
     //必须要随便写个url，否则微信接口会失败
     var baseUrl = "https://www.baidu.com/"
     lateinit var converterFactory: Converter.Factory

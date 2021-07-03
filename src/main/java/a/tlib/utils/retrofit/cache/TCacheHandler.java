@@ -65,7 +65,7 @@ public class TCacheHandler<T> implements InvocationHandler {
         StringBuffer key = new StringBuffer(method.toGenericString());
         //拼接参数
         for (Object arg : args) {
-            key.append(arg.toString());
+            key.append(arg.toString()).append(",");
         }
         return key.toString();
     }

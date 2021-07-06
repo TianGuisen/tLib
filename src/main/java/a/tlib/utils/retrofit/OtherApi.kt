@@ -11,12 +11,7 @@ import retrofit2.http.*
  * 其他请求
  */
 val otherApi: OtherApi by lazy {
-    val retrofitParams = RetrofitParams()
-    retrofitParams.interceptors.add(RetrofitService.baseParamInterceptor)
-    retrofitParams.interceptors.add(RetrofitService.chuckerInterceptor)
-    retrofitParams.interceptors.add(RetrofitService.loggerInterceptor)
-    retrofitParams.converterFactory = RetrofitService.gsonConverterFactory
-    RetrofitService.createRetrofit(retrofitParams).create(OtherApi::class.java)
+    RetrofitService.createRetrofitApi(OtherApi::class.java)
 }
 
 interface OtherApi {

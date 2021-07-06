@@ -393,5 +393,5 @@ fun CharSequence.getUrlValueByName(name: String): String {
  * 不够位数的在前面补0，保留num的长度位数字
  */
 fun Any.fill0(num: Int): String {
-    return String.format("%0" + num + "d", Integer.parseInt(this.toString()) + 1)
+    return String.format("%0" + num + "d", this)
 }

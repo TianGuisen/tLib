@@ -24,7 +24,9 @@ import javax.net.ssl.*
 
 
 object RetrofitService {
-
+    //必须要随便写个url，否则微信接口会失败
+    @JvmField
+    var baseUrl = "https://www.baidu.com/"
     val baseParamInterceptor by lazy {
         Interceptors.BaseParamInterceptor()
     }
@@ -41,69 +43,39 @@ object RetrofitService {
         FileConverterFactory()
     }
     val chuckerInterceptor = ChuckerInterceptor.Builder(LibApp.app)
-            // The previously created Collector
             .collector(ChuckerCollector(
                     context = LibApp.app,
-                    // Toggles visibility of the push notification
                     showNotification = true,
-                    // Allows to customize the retention period of collected data
                     retentionPeriod = RetentionManager.Period.ONE_HOUR
             ))
             // 最大正文内容长度(以字节为单位)，在此之后，响应将被截断。
             .maxContentLength(250_000L)
-            // List of headers to replace with ** in the Chucker UI
-            // Read the whole response body even when the client does not consume the response completely.
-            // This is useful in case of parsing errors or when the response body
-            // is closed before being read like in Retrofit with Void and Unit types.
             .alwaysReadResponseBody(true)
             .build()
-
-    @Deprecated("使用createRetrofitApi")
-    @JvmStatic
-    fun createRetrofit(params: RetrofitParams): Retrofit {
-        val builder = OkHttpClient.Builder()
-        for (interceptor in params.interceptors) {
-            builder.addInterceptor(interceptor)
-        }
-        if (BuildConfig.IS_DEBUG) {//debug包时解除https抓包限制
-            builder.sslSocketFactory(createSSLSocketFactory(), TrustAllCerts())
-                    .hostnameVerifier(TrustAllHostnameVerifier())
-        }
-        builder.retryOnConnectionFailure(true)
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-        val retrofit = Retrofit.Builder()
-                .baseUrl(params.baseUrl)
-                .addConverterFactory(fileConverterFactory)
-                .addConverterFactory(params.converterFactory)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(builder.build())
-                .build()
-        return retrofit
-    }
 
     /**
      * 创建有缓存的api
      */
     @JvmStatic
-    fun <T> createRetrofitApi(params: RetrofitParams, clazz: Class<T>): T {
+    fun <T> createRetrofitApi(clazz: Class<T>, vararg interceptors: Interceptor): T {
         val builder = OkHttpClient.Builder()
-        for (interceptor in params.interceptors) {
+        for (interceptor in interceptors) {
             builder.addInterceptor(interceptor)
         }
+        builder.addInterceptor(chuckerInterceptor)//通知栏日志
+        builder.addInterceptor(loggerInterceptor)//日志打印
         if (BuildConfig.IS_DEBUG) {//debug包时解除https抓包限制
             builder.sslSocketFactory(createSSLSocketFactory(), TrustAllCerts())
                     .hostnameVerifier(TrustAllHostnameVerifier())
         }
         builder.retryOnConnectionFailure(true)
-                .connectTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
         val retrofit = Retrofit.Builder()
-                .baseUrl(params.baseUrl)
+                .baseUrl(baseUrl)
                 .addConverterFactory(fileConverterFactory)
-                .addConverterFactory(params.converterFactory)
+                .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(builder.build())
                 .build()
@@ -125,14 +97,6 @@ object RetrofitService {
         return ssfFactory!!
     }
 
-}
-
-class RetrofitParams {
-    val interceptors = mutableListOf<Interceptor>()
-
-    //必须要随便写个url，否则微信接口会失败
-    var baseUrl = "https://www.baidu.com/"
-    lateinit var converterFactory: Converter.Factory
 }
 
 private class TrustAllCerts : X509TrustManager {

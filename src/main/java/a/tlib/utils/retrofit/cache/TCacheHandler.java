@@ -45,8 +45,6 @@ public class TCacheHandler<T> implements InvocationHandler {
                 CacheCall call = new CacheCall(responseObj);
                 return callAdapter.adapt(call);
             }
-        }
-        try {
             //接口方法的返回类型应该都是Single，直接强转
             Single ob = (Single) method.invoke(api, args);
             return ob.doOnSuccess(o -> {
@@ -55,9 +53,8 @@ public class TCacheHandler<T> implements InvocationHandler {
                     ACache.get(LibApp.app).put(getCacheKey(method, args), GsonUtil.toJson(o), cache.value());
                 }
             });
-        } catch (Exception e) {
-            return method.invoke(api, args);
         }
+        return method.invoke(api, args);
     }
     
     

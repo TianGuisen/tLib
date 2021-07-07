@@ -49,3 +49,8 @@ fun <T> Observable<T>.bindMain(life: LifecycleOwner): ObservableSubscribeProxy<T
             .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(life, Lifecycle.Event.ON_DESTROY)))
 }
 
+
+fun <T> Single<T>.ioMain(): Single<T> {
+    return subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+}

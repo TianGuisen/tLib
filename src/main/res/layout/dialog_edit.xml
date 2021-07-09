@@ -18,7 +18,6 @@
         android:textSize="17dp" />
 
     <com.ruffian.library.widget.REditText
-        android:textCursorDrawable="@color/mainColor"
         android:id="@+id/ed_msg"
         android:layout_width="160dp"
         android:layout_height="wrap_content"

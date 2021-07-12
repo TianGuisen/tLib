@@ -12,7 +12,6 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Proxy
@@ -25,8 +24,7 @@ import javax.net.ssl.*
 
 object RetrofitService {
     //必须要随便写个url，否则微信接口会失败
-    @JvmField
-    var baseUrl = "https://www.baidu.com/"
+    const val BASE_URL = "https://www.baidu.com/"
     val baseParamInterceptor by lazy {
         Interceptors.BaseParamInterceptor()
     }
@@ -73,7 +71,7 @@ object RetrofitService {
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
         val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(fileConverterFactory)
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

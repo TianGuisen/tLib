@@ -14,14 +14,14 @@ import io.reactivex.Single
  * 普通请求
  */
 fun <T> Single<ResWrapper<T>>.normalSub(
-    onSuccess: ((ResWrapper<T>) -> Unit)? = null,
-    onFailure: ((ResWrapper<T>?) -> Unit)? = null,
-    onFinish: (() -> Unit)? = null,
-    context: Context? = null,//传入表示显示dialog
-    lv: LoadView? = null,//传入就显示loadView
-    srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
-    showToast: Boolean = true,//默认显示错误toast
-    jumpLogin: Boolean = false//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
+        onSuccess: ((ResWrapper<T>) -> Unit)? = null,
+        onFailure: ((ResWrapper<T>?) -> Unit)? = null,
+        onFinish: (() -> Unit)? = null,
+        context: Context? = null,//传入表示显示dialog
+        lv: LoadView? = null,//传入就显示loadView
+        srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
+        showToast: Boolean = true,//默认显示错误toast
+        jumpLogin: Boolean = false//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
 ) {
     val ob = object : NormalObserver<T>(context, lv, srl, showToast, jumpLogin) {
         override fun onSucces(t: ResWrapper<T>) {
@@ -43,14 +43,14 @@ fun <T> Single<ResWrapper<T>>.normalSub(
  * 普通请求
  */
 fun <T> SingleSubscribeProxy<ResWrapper<T>>.normalSub(
-    onSuccess: ((ResWrapper<T>) -> Unit)? = null,
-    onFailure: ((ResWrapper<T>?) -> Unit)? = null,
-    onFinish: (() -> Unit)? = null,
-    context: Context? = null,//传入表示显示dialog
-    lv: LoadView? = null,//传入就显示loadView
-    srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
-    showToast: Boolean = true,//默认显示错误toast
-    jumpLogin: Boolean = false//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
+        onSuccess: ((ResWrapper<T>) -> Unit)? = null,
+        onFailure: ((ResWrapper<T>?) -> Unit)? = null,
+        onFinish: (() -> Unit)? = null,
+        context: Context? = null,//传入表示显示dialog
+        lv: LoadView? = null,//传入就显示loadView
+        srl: SmartRefreshLayout? = null,//传入就自动在请求完成后隐藏加载动画
+        showToast: Boolean = true,//默认显示错误toast
+        jumpLogin: Boolean = false//code返回需要登录的时候，是否自动跳转到登录页面，通常列表接口不跳转，其他接口跳转
 ) {
     val ob = object : NormalObserver<T>(context, lv, srl, showToast, jumpLogin) {
         override fun onSucces(t: ResWrapper<T>) {

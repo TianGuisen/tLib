@@ -18,6 +18,7 @@ class LoadingDia : BaseLDialog<LoadingDia>() {
         setWidthDp(150f)
         setHeightDp(125f)
         setBackgroundLight()
+        setCancelableOutside()
     }
 
     override val layoutId = R.layout.dia_loading

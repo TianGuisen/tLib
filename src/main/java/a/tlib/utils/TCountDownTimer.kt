@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner
  * @author 田桂森 2021/6/29 0029
  * 通用的倒计时，在activity和fragment中使用，已经自动绑定生命周期，在页面销毁的时候关闭
  */
-class TCountDownTimer private constructor(totalTime: Long, interval: Long) : CountDownTimer(totalTime, interval), DefaultLifecycleObserver {
+class TCountDownTimer private constructor(var totalTime: Long, var interval: Long) : CountDownTimer(totalTime, interval), DefaultLifecycleObserver {
     companion object {
         /**
          * @totalTime 总时间长度，单位毫秒，默认无限时间
@@ -36,10 +36,10 @@ class TCountDownTimer private constructor(totalTime: Long, interval: Long) : Cou
      * 正计时监听
      */
     var countLis: ((Long) -> Unit)? = null
-    private var count = 0L
+    var count = 0L
 
     override fun onTick(millisUntilFinished: Long) {
-        count += millisUntilFinished
+        count += interval
         countLis?.invoke(count)
         countDownLis?.invoke(millisUntilFinished)
     }

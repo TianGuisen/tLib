@@ -20,7 +20,7 @@ object DateUtil {
     val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
     /**
-     * 获取当前时间戳秒数
+     * 获取系统当前时间戳秒数
      */
     @JvmStatic
     fun getCurrentSecond(): Long {
@@ -28,7 +28,7 @@ object DateUtil {
     }
 
     /**
-     * 获取当前时间戳毫秒数
+     * 获取系统当前时间戳毫秒数
      */
     @JvmStatic
     fun getCurrentMillisecond(): Long {

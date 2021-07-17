@@ -22,6 +22,7 @@ import android.telephony.TelephonyManager
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import com.gyf.immersionbar.ImmersionBar
 
 
 object AppUtil {
@@ -163,13 +164,8 @@ object AppUtil {
      * 获取状态栏高度
      */
     @JvmStatic
-    fun getStateBarHeight(): Int {
-        var result = 0
-        val resourceId: Int = LibApp.app.getResources().getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = LibApp.app.getResources().getDimensionPixelSize(resourceId)
-        }
-        return result
+    fun getStateBarHeight(act:Activity): Int {
+        return ImmersionBar.getStatusBarHeight(act)
     }
 
     /**

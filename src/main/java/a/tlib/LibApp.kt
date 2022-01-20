@@ -33,6 +33,8 @@ object LibApp {
      */
     const val LOGGER_TAG = "logtag"
     lateinit var app: Application
+    
+    
 
     @JvmStatic
     fun init(appContext: Application): LibApp {

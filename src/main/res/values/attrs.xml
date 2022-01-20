@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    公共的自定义属性-->
+    <attr name="t_text" format="string" />
+    <attr name="t_textColor" format="color" />
+    <attr name="t_textSize" format="dimension" />
+
+    <declare-styleable name="LoadView">
+        <attr name="loadingView" format="reference" />
+        <attr name="errorView" format="reference" />
+        <attr name="emptyView" format="reference" />
+        <attr name="noNetworkView" format="reference" />
+        <attr name="contentView" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TRecyclerView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RotateTextView">
+        <attr name="t_textColor" />
+        <attr name="t_text" />
+        <attr name="t_textSize" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="loadingText" format="string|reference" />
+        <attr name="loadingTextAppearance" format="reference" />
+        <attr name="delay" format="integer|reference" />
+    </declare-styleable>
+</resources>

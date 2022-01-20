@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="swiperefesh_color_one">#B87900</color>
+    <color name="swiperefesh_color_two">#a1734c</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="red">#cc000a</color>
+    <color name="white">#ffffff</color>
+    <color name="c_111">#111111</color>
+    <color name="color_ecc498">#ECC498</color>
+    <color name="color_9b">#9B9B9B</color>
+    <color name="color_FFA108">#FFA108</color>
+    <color name="triangle">#aa72d572</color>
+    <color name="circle">#aa738ffe</color>
+    <color name="rect">#aae84e40</color>
+    <color name="color_f9">#ff999999</color>
+    <color name="divide">#eeeeee</color>
+    <color name="color_store_bg">#F4F4F4</color>
+    <color name="color_979797">#979797</color>
+    <color name="color_e">#eeeeee</color>
+    <color name="shadow">#25808080</color>
+
+    <color name="dialog_bg">#f5f5f5</color>
+    <color name="c_404">#404A5C</color>
+    <color name="c_6a6a">#6A6A6F</color>
+    <color name="c_ae">#AEAEB8</color>
+    <color name="c_007">#007AFF</color>
+    <color name="c_00b">#00B578</color>
+    <color name="c_D0">#D0D0D0</color>
+    <color name="c_ff3e">#FF3E4A</color>
+    <color name="c_f49">#F49957</color>
+    <color name="c_ff7">#FF7B5F</color>
+    <color name="c_f35">#F35FFF</color>
+    <color name="c_424">#42444F</color>
+    <color name="c_bc">#bcbcbc</color>
+    <color name="c_eae">#EDEDED</color>
+    <color name="c_dab">#DAB174</color>
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="a.tlib.widget.dialog.commonDialog.MsgDialog">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="给您的粉丝取个名字吧~"
+        android:textColor="@color/black"
+        android:textSize="17dp" />
+
+    <com.ruffian.library.widget.REditText
+        android:id="@+id/ed_msg"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:hint="请输入1-3个汉字"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/color_979797"
+        android:textSize="15dp"
+        app:border_color_normal="@color/color_979797"
+        app:border_width_normal="1dp"
+        app:corner_radius="10dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="28dp"
+        android:background="@color/color_9b" />
+
+    <TextView
+        android:id="@+id/tv_singe"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/color_FFA108"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_double"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_9b" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_9b" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/color_FFA108" />
+    </LinearLayout>
+
+</LinearLayout>

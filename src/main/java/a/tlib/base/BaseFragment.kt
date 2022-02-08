@@ -14,8 +14,6 @@ import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.ImmersionFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
 import me.jessyan.autosize.internal.CustomAdapt
 
 
@@ -36,7 +34,7 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("onCreateFra", this.javaClass.simpleName)//用于快速定位页面对应的代码
-        act = activity!! as AppCompatActivity
+        act = requireActivity() as AppCompatActivity
         titleBar = view.findViewById(setTitleBar())
         statusBarView = view.findViewById<View>(setStatusBarView())
         titleBar?.setOnLeftImageListener {
@@ -69,8 +67,8 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
 //            .init()
     }
 
-    fun setTitle(title: String?, style: Int = TitleBar.WHITE_STYLE): TextView {
-        val tv_title = titleBar!!.setTitle(title, style)
+    fun setTitle(title: String?): TextView {
+        val tv_title = titleBar!!.setTitle(title)
         return tv_title
     }
 
@@ -159,5 +157,41 @@ abstract class BaseFragment : ImmersionFragment(), View.OnClickListener, CustomA
 
     override fun getSizeInDp(): Float {
         return 1080f
+    }
+
+
+    fun getStringExtra(key: String): String {
+        return arguments?.getString(key) ?: ""
+    }
+
+    fun getIntExtra(key: String, defaultValue: Int = 0): Int {
+        return arguments?.getInt(key, defaultValue) ?: defaultValue
+    }
+
+    fun getDoubleExtra(key: String, defaultValue: Double = 0.0): Double {
+        return arguments?.getDouble(key, defaultValue) ?: defaultValue
+    }
+
+    fun getLongExtra(key: String, defaultValue: Long = 0): Long {
+        return arguments?.getLong(key, defaultValue) ?: defaultValue
+    }
+
+
+    fun getBooleanExtra(key: String, defaultValue: Boolean = false): Boolean {
+        return arguments?.getBoolean(key, defaultValue) ?: defaultValue
+    }
+
+    fun <T> getSerializableExtra(key: String): T? {
+        arguments?.getSerializable(key)?.let {
+            return it as T
+        }
+        return null
+    }
+
+    fun <T> getListExtra(key: String): MutableList<T>? {
+        arguments?.getSerializable(key)?.let {
+            return it as MutableList<T>
+        }
+        return mutableListOf()
     }
 }

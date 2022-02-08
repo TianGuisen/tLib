@@ -28,11 +28,12 @@
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_youbo_goods_retrun" />
+                android:src="@drawable/tlib_back" />
         </com.ruffian.library.widget.RFrameLayout>
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
             android:layout_gravity="center"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            android:text="标题"
             android:textSize="17dp"
             android:textStyle="bold" />
 

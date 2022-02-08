@@ -7,6 +7,7 @@ import a.tlib.utils.DateUtil
 import a.tlib.utils.ToastUtil
 import a.tlib.utils.retrofit.LoadView
 import a.tlib.widget.TitleBar
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Build
@@ -59,14 +60,6 @@ object LibApp {
     }
 
     /**
-     * 设置默认标题风格
-     */
-    @JvmStatic
-    fun setDefaultTitleStyle(style: Int) {
-        TitleBar.defaultStype = style
-    }
-
-    /**
      * 设置LoadView的默认布局
      */
     @JvmStatic
@@ -114,7 +107,8 @@ object LibApp {
                 .setUseDeviceSize(true)
                 .unitsManager
                 .setSupportDP(false)
-                .setSupportSP(false).supportSubunits = Subunits.PT
+                .setSupportSP(false)
+//                .supportSubunits = Subunits.PT//以PT为单位
     }
 
     @JvmStatic
@@ -138,6 +132,7 @@ object LibApp {
     /**
      * 隐藏9.0启屏弹窗
      */
+    @SuppressLint("SoonBlockedPrivateApi")
     @JvmStatic
     private fun hidePAPIDialog() {
         try {

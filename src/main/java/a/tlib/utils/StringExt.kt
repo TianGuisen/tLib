@@ -293,7 +293,7 @@ fun CharSequence.zoomSmallFirst(size: Float = 0.7f): SpannableString {
 fun String.zoomStartEnd(start: Int, end: Int, size: Float = 1.5f): SpannableString {
     var spannableString = SpannableString(this)
     if (isNotEmpty()) {
-        if (start >= 0 && spannableString.length > end)
+        if (start >= 0 && spannableString.length >= end)
             spannableString.setSpan(RelativeSizeSpan(size), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
     return spannableString

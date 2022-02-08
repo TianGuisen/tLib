@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.gyf.immersionbar.ImmersionBar
 import a.tlib.logger.YLog
+import android.app.Activity
 import com.alibaba.android.arouter.launcher.ARouter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -67,35 +68,21 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         initView()
     }
 
-    fun setTitle(title: String?, style: Int = TitleBar.defaultStype, statusBarColor: Int = R.color.transparent, navigationBarColor: Int = -1): TextView? {
+    fun setTitle(title: String?, statusBarColor: Int = R.color.transparent, navigationBarColor: Int = -1): TextView? {
         ImmersionBar.setTitleBar(this, titleBar)
         val statusBarView = findViewById<View>(setStatusBarView())
         if (statusBarView != null) {
             ImmersionBar.setStatusBarView(this, statusBarView)
         }
-        val tv_title = titleBar?.setTitle(title, style)
-        when (style) {
-            TitleBar.WHITE_STYLE -> {//透明状态栏，黑色导航栏
-                val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
-                ImmersionBar.with(this)
-                        .statusBarColor(statusBarColor)//状态栏颜色
-                        .navigationBarColor(navigationBarColor)//导航栏颜色
-                        .statusBarDarkFont(false)//状态栏图标浅色
-                        .autoNavigationBarDarkModeEnable(true, 0.2f)
+        val tv_title = titleBar?.setTitle(title)
+        val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.black
+        ImmersionBar.with(this)
+                .statusBarColor(statusBarColor)//状态栏颜色
+                .navigationBarColor(navigationBarColor)//导航栏颜色
+                .statusBarDarkFont(false)//状态栏图标浅色
+                .autoNavigationBarDarkModeEnable(true, 0.2f)
 //                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))//导航栏图标浅色
-                        .init()
-            }
-            TitleBar.BLACK_STYLE -> {//透明状态栏，白色导航栏
-                val navigationBarColor = if (navigationBarColor > 0) navigationBarColor else R.color.white
-                ImmersionBar.with(this)
-                        .statusBarColor(statusBarColor)
-                        .navigationBarColor(navigationBarColor)
-                        .statusBarDarkFont(true)
-                        .autoNavigationBarDarkModeEnable(true, 0.2f)
-//                        .navigationBarDarkIcon(!AppUtil.isDarkColor(navigationBarColor))
-                        .init()
-            }
-        }
+                .init()
         return tv_title
     }
 
@@ -221,4 +208,42 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         }
         super.applyOverrideConfiguration(overrideConfiguration)
     }
+
+    fun getStringExtra(key: String, default: String = ""): String {
+        intent.getStringExtra(key).let {
+            return it ?: default
+        }
+    }
+
+    fun getIntExtra(key: String, default: Int = 0): Int {
+        return intent.getIntExtra(key, default)
+    }
+
+    fun getDoubleExtra(key: String, defaultValue: Double = 0.0): Double {
+        return intent.getDoubleExtra(key, defaultValue)
+    }
+
+    fun getLongExtra(key: String, defaultValue: Long = 0): Long {
+        return intent.getLongExtra(key, defaultValue)
+    }
+
+    fun getBooleanExtra(key: String, default: Boolean = false): Boolean {
+        return intent.getBooleanExtra(key, default)
+    }
+
+    fun <T> getSerializableExtra(key: String): T? {
+        intent.getSerializableExtra(key)?.let {
+            return it as T
+        }
+        return null
+    }
+
+    fun <T> getListExtra(key: String): MutableList<T>? {
+        intent.getSerializableExtra(key)?.let {
+            return it as MutableList<T>
+        }
+        return mutableListOf()
+    }
+
+
 }

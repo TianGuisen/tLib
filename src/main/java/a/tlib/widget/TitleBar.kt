@@ -9,7 +9,10 @@ import android.util.AttributeSet
  * @author 田桂森 2022/2/8 0008
  */
 class TitleBar : BaseTitleBar {
-    override var layoutId: Int= R.layout.view_title
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+
+    override fun layoutId(): Int {
+        return R.layout.view_title
+    }
 
 }

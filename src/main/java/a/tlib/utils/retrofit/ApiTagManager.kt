@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 /**
  * 网络请求tag管理
  * 如果设置了@Headers(ApiTagManager.REPEAT_CLOSE_AFTER)
-            @Headers(ApiTagManager.REPEAT_CLOSE_BEFORE)
+@Headers(ApiTagManager.REPEAT_CLOSE_BEFORE)
  * 那么相同tag的请求只会存在一个
  */
 object ApiTagManager {
@@ -21,14 +21,17 @@ object ApiTagManager {
 
     const val REPEAT_KEY = "repeat"
 
+
     const val REPEAT_VALUE_CLOSE_AFTER = "close_after"
+
+
     const val REPEAT_VALUE_CLOSE_BEFORE = "close_before"
 
     @JvmStatic
-     val chainMap = mutableMapOf<String, Interceptor.Chain>()
+    val chainMap = mutableMapOf<String, Interceptor.Chain>()
 
     @JvmStatic
-    fun add1(tag: String, chain: Interceptor.Chain) {
+    fun addAfterRepeat(tag: String, chain: Interceptor.Chain) {
         chainMap.keys.forEach {
             if (tag == it) {
                 chain.call().cancel()
@@ -39,7 +42,7 @@ object ApiTagManager {
     }
 
     @JvmStatic
-    fun add2(tag: String, chain: Interceptor.Chain) {
+    fun addBeforeRepeat(tag: String, chain: Interceptor.Chain) {
         if (tag == null) {
             throw IllegalArgumentException("tag不能为null")
         }
@@ -56,7 +59,7 @@ object ApiTagManager {
         }
         chainMap.put(tag, chain)
     }
-    
+
     @JvmStatic
     fun remove2(tag: String?) {
         if (tag == null) {

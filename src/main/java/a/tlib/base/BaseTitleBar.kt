@@ -20,7 +20,8 @@ import com.ruffian.library.widget.RView
  */
 abstract class BaseTitleBar : RFrameLayout {
 
-    abstract var layoutId:Int
+    abstract fun layoutId(): Int
+
 
     val tv_title by lazy { findViewById<TextView>(R.id.tv_title) }
     val fl_back by lazy { findViewById<FrameLayout>(R.id.fl_back) }
@@ -35,7 +36,7 @@ abstract class BaseTitleBar : RFrameLayout {
     }
 
     open fun init() {
-        RView.inflate(context, layoutId, this)
+        RView.inflate(context, layoutId(), this)
     }
 
     fun setTitle(string: String?): TextView {

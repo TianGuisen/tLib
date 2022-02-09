@@ -13,19 +13,13 @@ import com.ruffian.library.widget.RView
 
 class WebTitleBar : BaseTitleBar {
 
-    override var layoutId: Int = R.layout.view_title_web
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-//
-//    override fun init() {
-//        view = RView.inflate(context, R.layout.view_title_web, this) as TitleBar
-//        view.helper.setBackgroundColorNormal(getcolor(R.color.black))
-//        view.findViewById<RFrameLayout>(R.id.fl_close).setSingClick {
-//
-//        }
-//    }
-//
+    override fun layoutId(): Int {
+        return R.layout.view_title
+    }
+
     fun hideClose() {
         findViewById<RFrameLayout>(R.id.fl_close).hide()
     }

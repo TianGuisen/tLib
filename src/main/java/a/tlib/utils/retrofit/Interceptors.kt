@@ -3,17 +3,13 @@ package a.tlib.utils.retrofit
 import a.tlib.logger.Printer
 import a.tlib.logger.YLog2
 import a.tlib.utils.*
-import a.tlib.utils.encrypt.MD5Util
-import a.tlib.utils.retrofit.ApiTagManager
 import android.net.Uri
 import okhttp3.*
 import okio.Buffer
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.net.URLDecoder
 import java.nio.charset.Charset
-import java.util.*
 
 
 object Interceptors {
@@ -57,8 +53,8 @@ object Interceptors {
             //添加子类其他的请求头
             addHeaders(requestBuilder)
             var request = requestBuilder.build()
-            if (request.method.equals("POST") && request.body is FormBody) {  // post 请求数据拦截 ，将数据添加加密参数
-                request= request.newBuilder().url(request.url.toString()).post(addPostParams(request.body!!).build()).build()
+            if (request.method.equals("POST") && request.body is FormBody) { 
+            // post 请求数据拦截 ，将数据添加加密参数
 //                request = addPostParams(request)
             } 
             return chain.proceed(request)
@@ -81,10 +77,10 @@ object Interceptors {
                 val headers = orgRequest.headers
                 when (headers.get(ApiTagManager.REPEAT_KEY)) {
                     ApiTagManager.REPEAT_VALUE_CLOSE_AFTER -> {
-                        ApiTagManager.add1(Uri.decode(orgRequest.url.toString()), chain)
+                        ApiTagManager.addAfterRepeat(Uri.decode(orgRequest.url.toString()), chain)
                     }
                     ApiTagManager.REPEAT_VALUE_CLOSE_BEFORE -> {
-                        ApiTagManager.add2(Uri.decode(orgRequest.url.toString()), chain)
+                        ApiTagManager.addBeforeRepeat(Uri.decode(orgRequest.url.toString()), chain)
                     }
                 }
                 // chain.proceed开始请求
@@ -165,61 +161,4 @@ object Interceptors {
         }
     }
 
-    @JvmStatic
-    private fun addPostParams(requestBody: RequestBody): FormBody.Builder {
-        val builder = FormBody.Builder()
-        val stringMap = IdentityHashMap<String, String>()
-        for (i in 0 until (requestBody as FormBody).size) {
-            stringMap.put(URLDecoder.decode(requestBody.encodedName(i), "utf-8"),URLDecoder.decode(requestBody.encodedValue(i), "utf-8"))
-        }
-        stringMap.put("app_key", appKay)
-        stringMap.put("_time", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
-        var infoStr = ""
-        
-        val sortMap = TreeMap<String, String> { o1, o2 -> o1.compareTo(o2) }
-        sortMap.putAll(stringMap)
-        
-        for ((k, v) in sortMap) {
-            infoStr += "${k}${v}"
-        }
-        infoStr = appKay + infoStr + appSecret
-        stringMap.put("_sign", MD5Util.encode((MD5Util.encode(infoStr))))
-        for ((k, v) in stringMap) {
-            builder.add(k, v)
-        }
-        return builder
-    }
-
-//    /**
-//     * post 添加签名和公共参数
-//     */
-//    @Throws(UnsupportedEncodingException::class)
-//    private fun addPostParams(request: Request): Request {
-//        var request = request
-//        if (request.body is FormBody) {
-//            val bodyBuilder = FormBody.Builder()
-//            var formBody = request.body as FormBody
-//            for (i in 0 until formBody.size) {
-//                bodyBuilder.addEncoded(formBody.encodedName(i), formBody.encodedValue(i))
-//            }
-//            formBody = bodyBuilder.addEncoded("app_key", appKay)
-//                    .addEncoded("_time", (System.currentTimeMillis() / 1000 - TimeDifference).toString())
-//                    .build()
-//            val bodyMap: MutableMap<String, String> = HashMap()
-//            val nameList: MutableList<String> = ArrayList()
-//            for (i in 0 until formBody.size) {
-//                nameList.add(formBody.encodedName(i))
-//                bodyMap[formBody.encodedName(i)] = URLDecoder.decode(formBody.encodedValue(i), "UTF-8")
-//            }
-//            val builder = StringBuilder()
-//            for (i in nameList.indices) {
-//                builder.append("&").append(nameList[i]).append("=")
-//                        .append(URLDecoder.decode(bodyMap[nameList[i]], "UTF-8"))
-//            }
-//            formBody = bodyBuilder.addEncoded("sign", MD5Util.encode(builder.toString()))
-//                    .build()
-//            request = request.newBuilder().post(formBody).build()
-//        }
-//        return request
-//    }
 }

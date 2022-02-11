@@ -42,6 +42,7 @@ public class TCacheHandler<T> implements InvocationHandler {
                 //获取缓存
                 String cacheStr = ACache.get(LibApp.app).getAsString(getCacheKey(method, args));
                 if (cacheStr != null && !cacheStr.isEmpty()) {
+                    //只支持rxjava2，其他没用到就不写了
                     RxJava2CallAdapter callAdapter = (RxJava2CallAdapter) retrofit.nextCallAdapter(null, method.getGenericReturnType(), method.getAnnotations());
                     //获取返回类型
                     Type responseType = callAdapter.responseType();

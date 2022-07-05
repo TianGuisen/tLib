@@ -13,10 +13,9 @@
     <a.tlib.utils.retrofit.LoadView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_store_bg">
+        android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/srl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -26,6 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
     </a.tlib.utils.retrofit.LoadView>
 </LinearLayout>

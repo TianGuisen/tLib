@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="a.tlib">
     <!--    允许应用程序联网-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,6 +22,7 @@
     <application
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
+        
         <!--       usesCleartextTraffic glide加载https图片-->
         <!--        沉浸状态栏适配-->
         <!-- 适配华为（huawei）刘海屏 -->
@@ -45,6 +47,5 @@
             android:name="a.tlib.utils.glide.OkHttpGlideModule"
             android:value="AppGlideModule" />
     </application>
-
-
+  
 </manifest>

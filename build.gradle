@@ -94,8 +94,8 @@ dependencies {
     //kotlin
 //    api 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21'
     api "androidx.core:core-ktx:1.7.0-alpha01"
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3'
     //card
     api 'androidx.cardview:cardview:1.0.0'
     //屏幕适配https://github.com/JessYanCoding/AndroidAutoSize
@@ -112,6 +112,7 @@ dependencies {
     api "androidx.lifecycle:lifecycle-common-java8:2.3.1"
     //lifecycle协程
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
     //UI库,https://github.com/RuffianZhong/RWidgetHelper,需要及时检查使用最新版本
     api 'com.github.RuffianZhong:RWidgetHelper:androidx.v0.0.10'
 //    api 'com.tencent.bugly:crashreport_upgrade:1.4.2'
